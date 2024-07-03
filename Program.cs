@@ -1,8 +1,12 @@
+using warehouse_management.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<WarehouseService, WarehouseService>();
+builder.Services.AddDbContext<WarehouseContext, WarehouseContext>();
 
 var app = builder.Build();
 
@@ -16,6 +20,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+
 
 
 app.MapControllerRoute(
