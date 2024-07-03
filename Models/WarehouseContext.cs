@@ -33,6 +33,8 @@ public partial class WarehouseContext : DbContext
 
             entity.ToTable("products");
 
+            entity.HasIndex(e => e.ProductId, "Product_ID").IsUnique();
+
             entity.Property(e => e.ProductId)
                 .HasMaxLength(6)
                 .HasColumnName("Product_ID");
@@ -45,61 +47,67 @@ public partial class WarehouseContext : DbContext
             entity.Property(e => e.ProductPrice).HasColumnName("Product_Price");
             entity.Property(e => e.ProductQuantity).HasColumnName("Product_Quantity");
             entity.Property(e => e.ProductType)
-                .HasMaxLength(5)
+                .HasMaxLength(20)
                 .HasColumnName("Product_Type");
             entity.Property(e => e.ProductWeight).HasColumnName("Product_Weight");
         });
 
         modelBuilder.Entity<ProductPriceHistory>(entity =>
         {
-            entity.HasKey(e => e.ProductId).HasName("PRIMARY");
+            entity.HasKey(e => e.ProductPriceId).HasName("PRIMARY");
 
             entity.ToTable("product_price_history");
 
-            entity.HasIndex(e => e.ProductPriceId, "Product_Price_ID").IsUnique();
+            entity.HasIndex(e => e.ProductId, "Product Id Price");
 
-            entity.Property(e => e.ProductId)
-                .HasMaxLength(6)
-                .HasColumnName("Product_ID");
+            entity.HasIndex(e => e.ProductPriceId, "Product_Price_ID");
+
+            entity.HasIndex(e => e.ProductPriceId, "Product_Price_ID_2").IsUnique();
+
+            entity.HasIndex(e => e.ProductPriceId, "Product_Price_ID_3");
+
+            entity.Property(e => e.ProductPriceId)
+                .HasColumnType("int(11)")
+                .HasColumnName("Product_Price_ID");
             entity.Property(e => e.ChageTime)
                 .HasColumnType("datetime")
                 .HasColumnName("Chage_Time");
+            entity.Property(e => e.ProductId)
+                .HasMaxLength(6)
+                .HasColumnName("Product_ID");
             entity.Property(e => e.ProductPrice).HasColumnName("Product_Price");
-            entity.Property(e => e.ProductPriceId)
-                .ValueGeneratedOnAdd()
-                .HasColumnType("int(11)")
-                .HasColumnName("Product_Price_ID");
 
-            entity.HasOne(d => d.Product).WithOne(p => p.ProductPriceHistory)
-                .HasForeignKey<ProductPriceHistory>(d => d.ProductId)
+            entity.HasOne(d => d.Product).WithMany(p => p.ProductPriceHistories)
+                .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("Product_ID");
+                .HasConstraintName("Product Id Price");
         });
 
         modelBuilder.Entity<ProductQuantityHistory>(entity =>
         {
-            entity.HasKey(e => e.ProductId).HasName("PRIMARY");
+            entity.HasKey(e => e.ProductQuantityId).HasName("PRIMARY");
 
             entity.ToTable("product_quantity_history");
 
-            entity.HasIndex(e => e.ProductQuantityId, "Prudict_Quantity_ID").IsUnique();
+            entity.HasIndex(e => e.ProductId, "Product Id Quantity");
 
+            entity.HasIndex(e => e.ProductQuantityId, "Product_Quantity_ID").IsUnique();
+
+            entity.Property(e => e.ProductQuantityId)
+                .HasColumnType("int(10)")
+                .HasColumnName("Product_Quantity_ID");
+            entity.Property(e => e.ChangeTime)
+                .HasMaxLength(6)
+                .HasColumnName("Change_Time");
             entity.Property(e => e.ProductId)
                 .HasMaxLength(6)
                 .HasColumnName("Product_ID");
-            entity.Property(e => e.ChageTime)
-                .HasMaxLength(6)
-                .HasColumnName("Chage_Time");
             entity.Property(e => e.ProductQuantity).HasColumnName("Product_Quantity");
-            entity.Property(e => e.ProductQuantityId)
-                .ValueGeneratedOnAdd()
-                .HasColumnType("int(10)")
-                .HasColumnName("Product_Quantity_ID");
 
-            entity.HasOne(d => d.Product).WithOne(p => p.ProductQuantityHistory)
-                .HasForeignKey<ProductQuantityHistory>(d => d.ProductId)
+            entity.HasOne(d => d.Product).WithMany(p => p.ProductQuantityHistories)
+                .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("Product_Quantity_ID");
+                .HasConstraintName("Product Id Quantity");
         });
 
         OnModelCreatingPartial(modelBuilder);

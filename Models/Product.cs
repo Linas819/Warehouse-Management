@@ -19,7 +19,7 @@ public partial class Product
 
     public float ProductQuantity { get; set; }
 
-    public virtual ProductPriceHistory? ProductPriceHistory { get; set; }
+    public virtual ICollection<ProductPriceHistory> ProductPriceHistories { get; } = new List<ProductPriceHistory>();
 
-    public virtual ProductQuantityHistory? ProductQuantityHistory { get; set; }
+    public virtual ICollection<ProductQuantityHistory> ProductQuantityHistories { get; } = new List<ProductQuantityHistory>();
 }

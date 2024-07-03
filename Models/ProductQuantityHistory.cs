@@ -9,9 +9,9 @@ public partial class ProductQuantityHistory
 
     public string ProductId { get; set; } = null!;
 
-    public DateTime ChageTime { get; set; }
-
     public float ProductQuantity { get; set; }
+
+    public DateTime ChangeTime { get; set; }
 
     public virtual Product Product { get; set; } = null!;
 }
