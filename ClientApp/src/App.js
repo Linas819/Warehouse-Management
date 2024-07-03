@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import { Routes } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import './custom.css';
+import WarehouseInventory from './components/Warehouse/WarehouseInventory';
 
 export default class App extends Component {
-  static displayName = App.name;
-
   render() {
     return (
+      <div className='container'>
         <Routes>
+          <Route path="/" element={<WarehouseInventory/>}/>
         </Routes>
+      </div>
     );
   }
 }

@@ -1,7 +1,7 @@
 export const SET_WAREHOUSE_DATA = "SET_WAREHOUSE_DATA";
 
 const initialstate = {
-    warehouseData: {}
+    warehouseData: []
 }
 
 export const warehouseReducer = (state, action) => {
