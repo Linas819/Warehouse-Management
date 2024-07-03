@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Routes } from 'react-router-dom';
 import './custom.css';
 
 export default class App extends Component {
