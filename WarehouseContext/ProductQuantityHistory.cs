@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace warehouse_management.Models;
+namespace warehouse_management.WarehouseContext;
 
 public partial class ProductQuantityHistory
 {

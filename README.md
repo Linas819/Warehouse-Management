@@ -26,3 +26,7 @@ MySQL Entity Framework 7.
 3. Create functions to edit or delete items.
 ### Back-End
 Create database communication to achieve front-end functionalities.
+
+## DB scaffold command
+
+dotnet ef dbcontext scaffold "Server=localhost;Database=warehouse;user=root;password=;" MySql.EntityFrameworkCore -o WarehouseContext -f

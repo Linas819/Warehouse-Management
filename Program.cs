@@ -1,4 +1,5 @@
 using warehouse_management.Models;
+using warehouse_management.WarehouseContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
