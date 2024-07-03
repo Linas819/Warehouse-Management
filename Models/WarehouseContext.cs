@@ -1,0 +1,109 @@
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+
+namespace warehouse_management.Models;
+
+public partial class WarehouseContext : DbContext
+{
+    public WarehouseContext()
+    {
+    }
+
+    public WarehouseContext(DbContextOptions<WarehouseContext> options)
+        : base(options)
+    {
+    }
+
+    public virtual DbSet<Product> Products { get; set; }
+
+    public virtual DbSet<ProductPriceHistory> ProductPriceHistories { get; set; }
+
+    public virtual DbSet<ProductQuantityHistory> ProductQuantityHistories { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseMySQL("Server=localhost;Database=warehouse;user=root;password=;");
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Product>(entity =>
+        {
+            entity.HasKey(e => e.ProductId).HasName("PRIMARY");
+
+            entity.ToTable("products");
+
+            entity.Property(e => e.ProductId)
+                .HasMaxLength(6)
+                .HasColumnName("Product_ID");
+            entity.Property(e => e.ProductEan)
+                .HasMaxLength(11)
+                .HasColumnName("Product_EAN");
+            entity.Property(e => e.ProductName)
+                .HasMaxLength(10)
+                .HasColumnName("Product_Name");
+            entity.Property(e => e.ProductPrice).HasColumnName("Product_Price");
+            entity.Property(e => e.ProductQuantity).HasColumnName("Product_Quantity");
+            entity.Property(e => e.ProductType)
+                .HasMaxLength(5)
+                .HasColumnName("Product_Type");
+            entity.Property(e => e.ProductWeight).HasColumnName("Product_Weight");
+        });
+
+        modelBuilder.Entity<ProductPriceHistory>(entity =>
+        {
+            entity.HasKey(e => e.ProductId).HasName("PRIMARY");
+
+            entity.ToTable("product_price_history");
+
+            entity.HasIndex(e => e.ProductPriceId, "Product_Price_ID").IsUnique();
+
+            entity.Property(e => e.ProductId)
+                .HasMaxLength(6)
+                .HasColumnName("Product_ID");
+            entity.Property(e => e.ChageTime)
+                .HasColumnType("datetime")
+                .HasColumnName("Chage_Time");
+            entity.Property(e => e.ProductPrice).HasColumnName("Product_Price");
+            entity.Property(e => e.ProductPriceId)
+                .ValueGeneratedOnAdd()
+                .HasColumnType("int(11)")
+                .HasColumnName("Product_Price_ID");
+
+            entity.HasOne(d => d.Product).WithOne(p => p.ProductPriceHistory)
+                .HasForeignKey<ProductPriceHistory>(d => d.ProductId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("Product_ID");
+        });
+
+        modelBuilder.Entity<ProductQuantityHistory>(entity =>
+        {
+            entity.HasKey(e => e.ProductId).HasName("PRIMARY");
+
+            entity.ToTable("product_quantity_history");
+
+            entity.HasIndex(e => e.ProductQuantityId, "Prudict_Quantity_ID").IsUnique();
+
+            entity.Property(e => e.ProductId)
+                .HasMaxLength(6)
+                .HasColumnName("Product_ID");
+            entity.Property(e => e.ChageTime)
+                .HasMaxLength(6)
+                .HasColumnName("Chage_Time");
+            entity.Property(e => e.ProductQuantity).HasColumnName("Product_Quantity");
+            entity.Property(e => e.ProductQuantityId)
+                .ValueGeneratedOnAdd()
+                .HasColumnType("int(10)")
+                .HasColumnName("Product_Quantity_ID");
+
+            entity.HasOne(d => d.Product).WithOne(p => p.ProductQuantityHistory)
+                .HasForeignKey<ProductQuantityHistory>(d => d.ProductId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("Product_Quantity_ID");
+        });
+
+        OnModelCreatingPartial(modelBuilder);
+    }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+}
