@@ -13,6 +13,8 @@ export const warehouseReducer = (state, action) => {
                 warehouseData: action.warehouseData
             };
             break;
+        default:
+            break;
     }
     return state;
 }

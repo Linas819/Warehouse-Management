@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
+import { DeleteInventoryItem } from './WarehouseAction';
 
 class WarehouseActionButtons extends Component
 {
     onClickHandler = (event, data) => {
-        console.log(event);
+        const productId = this.props.data.productId;
+        switch(data.name) {
+            case "delete":
+                this.props.DeleteInventoryItem(productId);
+                break;
+            default:
+                break;
+        }
     }
     render() {
         return (
             <div>
-                <Button color='grey' onClick={this.onClickHandler}>VIEW</Button>
-                <Button color='blue' onClick={this.onClickHandler}>EDIT</Button>
-                <Button color='red' onClick={this.onClickHandler}>DELETE</Button>
+                <Button color='grey' onClick={this.onClickHandler} name = 'view'>VIEW</Button>
+                <Button color='blue' onClick={this.onClickHandler} name = 'edit'>EDIT</Button>
+                <Button color='red' onClick={this.onClickHandler} name = 'delete'>DELETE</Button>
             </div>
         );
     }
@@ -24,4 +32,4 @@ function MapStateToProps(state) {
     };
 }
 
-export default connect(MapStateToProps, {})(WarehouseActionButtons);
+export default connect( MapStateToProps, {DeleteInventoryItem})(WarehouseActionButtons);
