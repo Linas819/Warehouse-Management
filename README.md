@@ -29,4 +29,4 @@ Create database communication to achieve front-end functionalities.
 
 ## DB scaffold command
 
-dotnet ef dbcontext scaffold "Server=localhost;Database=warehouse;user=root;password=;" MySql.EntityFrameworkCore -o WarehouseContext -f
+dotnet ef dbcontext scaffold "Server=localhost;Database=warehouse;user=root;password=;" MySql.EntityFrameworkCore -o WarehouseDB -f
