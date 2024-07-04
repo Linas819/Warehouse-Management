@@ -10,7 +10,7 @@ export const warehouseReducer = (state, action) => {
         case SET_WAREHOUSE_DATA:
             state = {
                 ...state,
-                warehouseData: action.value
+                warehouseData: action.warehouseData
             };
             break;
     }
