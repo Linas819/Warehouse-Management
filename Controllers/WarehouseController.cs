@@ -9,7 +9,7 @@ namespace warehouse_management.Controllers;
 [Route("[controller]")]
 public class WarehouseController : ControllerBase
 {
-    private readonly WarehouseContext warehouseContext;
+    private WarehouseContext warehouseContext;
     private WarehouseService warehouseService;
     public WarehouseController(WarehouseService warehouseService, WarehouseContext warehouseContext)
     {
@@ -19,7 +19,7 @@ public class WarehouseController : ControllerBase
     [HttpGet]
     public IActionResult GetWarehouseInventory()
     {
-        List<Product> products = warehouseContext.Products.ToList();
+        List<Product> products = warehouseService.GetWarehouseInventory();
         return(Ok(new{
             Success = true,
             Data = products
@@ -28,8 +28,15 @@ public class WarehouseController : ControllerBase
     [HttpDelete("{*productId}")]
     public IActionResult DeleteWarehouseProduct(string productId)
     {
-        warehouseContext.Remove(warehouseContext.Products.Single(x => x.ProductId == productId));
-        warehouseContext.SaveChanges();
+        warehouseService.DeleteWarehouseProduct(productId);
+        try{
+            warehouseContext.SaveChanges();
+        }catch(Exception e){
+            return(Ok(new{
+                Success = false,
+                Messege = e.Message
+            }));
+        }
         return(Ok(new{
             Success = true
         }));
