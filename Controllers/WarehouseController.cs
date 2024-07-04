@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using warehouse_management.Models;
 using warehouse_management.WarehouseDB;
 
@@ -18,11 +19,19 @@ public class WarehouseController : ControllerBase
     [HttpGet]
     public IActionResult GetWarehouseInventory()
     {
-        List<Product> products = new List<Product>();
-        products = warehouseContext.Products.ToList();
+        List<Product> products = warehouseContext.Products.ToList();
         return(Ok(new{
             Success = true,
             Data = products
+        }));
+    }
+    [HttpDelete("{*productId}")]
+    public IActionResult DeleteWarehouseProduct(string productId)
+    {
+        warehouseContext.Remove(warehouseContext.Products.Single(x => x.ProductId == productId));
+        warehouseContext.SaveChanges();
+        return(Ok(new{
+            Success = true
         }));
     }
 }

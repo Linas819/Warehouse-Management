@@ -79,7 +79,6 @@ public partial class WarehouseContext : DbContext
 
             entity.HasOne(d => d.Product).WithMany(p => p.ProductPriceHistories)
                 .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("Product Id Price");
         });
 
@@ -106,7 +105,6 @@ public partial class WarehouseContext : DbContext
 
             entity.HasOne(d => d.Product).WithMany(p => p.ProductQuantityHistories)
                 .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("Product Id Quantity");
         });
 
