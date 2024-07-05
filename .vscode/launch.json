@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/net7.0/warehouse-management.dll",
+            "program": "${workspaceFolder}/bin/Debug/net7.0/Warehouse-Management.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
