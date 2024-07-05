@@ -22,6 +22,7 @@ public class WarehouseService
     }
     public DatabaseUpdateResponceModel AddWarehouseProduct (Product product)
     {
+        product.ProductCreatedDate = DateTime.Now;
         warehouseContext.Products.Add(product);
         DatabaseUpdateResponceModel responseModel = SaveWarehouseDatabaseChanges();
         return responseModel;
