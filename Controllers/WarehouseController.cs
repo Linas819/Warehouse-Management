@@ -26,10 +26,19 @@ public class WarehouseController : ControllerBase
     [HttpDelete("{*productId}")]
     public IActionResult DeleteWarehouseProduct(string productId)
     {
-        DatabaseUpdateResponceModel responseModel = warehouseService.DeleteWarehouseProduct(productId);
+        DatabaseUpdateResponceModel responceModel = warehouseService.DeleteWarehouseProduct(productId);
         return(Ok(new{
-            Success = responseModel.Success,
-            Message = responseModel.Message
+            Success = responceModel.Success,
+            Message = responceModel.Message
+        }));
+    }
+    [HttpPost]
+    public IActionResult AddItem([FromBody] Product product)
+    {
+        DatabaseUpdateResponceModel responceModel = new DatabaseUpdateResponceModel();
+        return(Ok(new{
+            Success = responceModel.Success,
+            Message = responceModel.Message
         }));
     }
 }

@@ -14,11 +14,21 @@ public class WarehouseService
     {
         return warehouseContext.Products.ToList();
     }
-
     public DatabaseUpdateResponceModel DeleteWarehouseProduct(string productId)
     {
-        DatabaseUpdateResponceModel responseModel = new DatabaseUpdateResponceModel();
         warehouseContext.Remove(warehouseContext.Products.Single(x => x.ProductId == productId));
+        DatabaseUpdateResponceModel responseModel = SaveWarehouseDatabaseChanges();
+        return responseModel;
+    }
+    public DatabaseUpdateResponceModel AddItem (Product product)
+    {
+        warehouseContext.Products.Add(product);
+        DatabaseUpdateResponceModel responseModel = SaveWarehouseDatabaseChanges();
+        return responseModel;
+    }
+    public DatabaseUpdateResponceModel SaveWarehouseDatabaseChanges()
+    {
+        DatabaseUpdateResponceModel responseModel = new DatabaseUpdateResponceModel();
         try{
             warehouseContext.SaveChanges();
         }catch(Exception e){
