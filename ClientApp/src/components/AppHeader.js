@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GridColumn, Grid, Button } from 'semantic-ui-react'
-
+import { GridColumn, Grid, Button } from 'semantic-ui-react';
 import { Header } from 'semantic-ui-react';
+import { SetProductCreateModal } from './ProductCreateModal/ProductCreateModalAction';
+
 class AppHeader extends Component {
     onClickHandler = (event, data) => {
-
+        switch(data.name) {
+            case "createProduct":
+                this.props.SetProductCreateModal(true);
+                break;
+            default:
+                break;
+        }
     }
     render() {
         return (
@@ -29,4 +36,4 @@ function MapStateToProps(state) {
     };
 }
 
-export default connect( MapStateToProps, {})(AppHeader);
+export default connect( MapStateToProps, {SetProductCreateModal})(AppHeader);

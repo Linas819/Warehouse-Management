@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { mainReducer } from './MainReducer';
 import { warehouseReducer } from './Warehouse/WarehouseReducer';
+import { productCreateModalReducer } from './ProductCreateModal/ProductCreateModalReducer';
 
 const enhancers = [];
 
@@ -11,7 +12,8 @@ if(isDevelopment && typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXT
 export const store = configureStore({
     reducer: {
         main: mainReducer,
-        warehouse: warehouseReducer
+        warehouse: warehouseReducer,
+        productCreateModal: productCreateModalReducer
     },
     compose: enhancers
 })
