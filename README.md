@@ -21,12 +21,12 @@ MySQL Entity Framework 7.
 
 ## To Do:
 ### Front-End
-1. Develop the page to show all items in inventory.
+1. ~Develop the page to show all items in inventory.~
 2. create a form to add new items.
-3. Create functions to edit or delete items.
+3. Create functions to edit ~or delete~ items.
 ### Back-End
-Create database communication to achieve front-end functionalities.
+~Create database communication to achieve front-end functionalities.~
 
-## DB scaffold command
-
+## DB scaffold commands
+### Warehouse
 dotnet ef dbcontext scaffold "Server=localhost;Database=warehouse;user=root;password=;" MySql.EntityFrameworkCore -o WarehouseDB -f
