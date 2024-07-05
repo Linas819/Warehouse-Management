@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Header } from 'semantic-ui-react';
 import { AgGridReact } from 'ag-grid-react';
 import { warehouseInventoryColumnDefs } from './WarehouseInventoryUtils';
 import { GetWarehouseInventory } from './WarehouseAction';
+import AppHeader from './../AppHeader';
+
 
 class WarehouseInventory extends Component
 {
@@ -12,12 +13,14 @@ class WarehouseInventory extends Component
     }
     render() {
         return(
-            <div className='ag-theme-quartz' style={{width: '100%', height: '100%'}}>
-                <Header as="h1">Warehouse Inventory</Header>
-                <AgGridReact
-                    rowData={this.props.warehouse.warehouseData}
-                    columnDefs={warehouseInventoryColumnDefs}
-                />
+            <div className='container'>
+                <AppHeader/>
+                <div className='ag-theme-quartz' style={{width: '100%', height: '100%'}}>
+                    <AgGridReact
+                        rowData={this.props.warehouse.warehouseData}
+                        columnDefs={warehouseInventoryColumnDefs}
+                    />
+                </div>
             </div>
         );
     }

@@ -1,4 +1,4 @@
-using warehouse_management.Models;
+using warehouse_management.Services;
 using warehouse_management.WarehouseDB;
 
 var builder = WebApplication.CreateBuilder(args);
