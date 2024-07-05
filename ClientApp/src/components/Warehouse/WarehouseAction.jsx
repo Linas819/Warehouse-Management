@@ -10,7 +10,7 @@ export const GetWarehouseInventory = () => {
 
 export const DeleteInventoryItem = (productId) => {
     return async (dispatch) => {
-        let result = await axios.delete(`warehouse/${productId}`);
+        await axios.delete(`warehouse/${productId}`);
         dispatch(GetWarehouseInventory());
     }
 }

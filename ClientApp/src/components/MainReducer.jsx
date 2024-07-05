@@ -21,6 +21,8 @@ export const mainReducer = (state, action) => {
                 isLoggedIn: action.value
             };
             break;
+        default:
+            break;
     }
     return state;
 }
