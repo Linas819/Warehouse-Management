@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GridColumn, Grid } from 'semantic-ui-react'
+import { GridColumn, Grid, Button } from 'semantic-ui-react'
 
 import { Header } from 'semantic-ui-react';
 class AppHeader extends Component {
+    onClickHandler = (event, data) => {
+
+    }
     render() {
         return (
             <Grid columns={3}>
                 <GridColumn textAlign='center'>
-
                 </GridColumn>
                 <GridColumn textAlign='center'>
                     <Header as="h1">Warehouse Inventory</Header>
                 </GridColumn>
                 <GridColumn textAlign='center'>
-                    
+                    <Button color='green' name='createProduct' onClick={this.onClickHandler}>Create Product</Button>
                 </GridColumn>
             </Grid>
         );
