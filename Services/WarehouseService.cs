@@ -20,7 +20,7 @@ public class WarehouseService
         DatabaseUpdateResponceModel responseModel = SaveWarehouseDatabaseChanges();
         return responseModel;
     }
-    public DatabaseUpdateResponceModel AddItem (Product product)
+    public DatabaseUpdateResponceModel AddWarehouseItem (Product product)
     {
         warehouseContext.Products.Add(product);
         DatabaseUpdateResponceModel responseModel = SaveWarehouseDatabaseChanges();
