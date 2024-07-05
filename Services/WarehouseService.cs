@@ -10,7 +10,7 @@ public class WarehouseService
     {
         this.warehouseContext = warehouseContext;
     }
-    public List<Product> GetWarehouseInventory()
+    public List<Product> GetWarehouseProducts()
     {
         return warehouseContext.Products.ToList();
     }
@@ -20,7 +20,7 @@ public class WarehouseService
         DatabaseUpdateResponceModel responseModel = SaveWarehouseDatabaseChanges();
         return responseModel;
     }
-    public DatabaseUpdateResponceModel AddWarehouseItem (Product product)
+    public DatabaseUpdateResponceModel AddWarehouseProduct (Product product)
     {
         warehouseContext.Products.Add(product);
         DatabaseUpdateResponceModel responseModel = SaveWarehouseDatabaseChanges();

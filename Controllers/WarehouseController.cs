@@ -15,9 +15,9 @@ public class WarehouseController : ControllerBase
         this.warehouseService = warehouseService;
     }
     [HttpGet]
-    public IActionResult GetWarehouseInventory()
+    public IActionResult GetWarehouseProducts()
     {
-        List<Product> products = warehouseService.GetWarehouseInventory();
+        List<Product> products = warehouseService.GetWarehouseProducts();
         return(Ok(new{
             Success = true,
             Data = products
@@ -33,9 +33,9 @@ public class WarehouseController : ControllerBase
         }));
     }
     [HttpPost]
-    public IActionResult AddWarehouseItem([FromBody] Product product)
+    public IActionResult AddWarehouseProduct([FromBody] Product product)
     {
-        DatabaseUpdateResponceModel responceModel = warehouseService.AddWarehouseItem(product);
+        DatabaseUpdateResponceModel responceModel = warehouseService.AddWarehouseProduct(product);
         return(Ok(new{
             Success = responceModel.Success,
             Message = responceModel.Message
