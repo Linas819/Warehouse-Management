@@ -19,7 +19,6 @@ class WarehouseActionButtons extends Component
         return (
             <div>
                 <Button color='grey' onClick={this.onClickHandler} name = 'view'>VIEW</Button>
-                <Button color='blue' onClick={this.onClickHandler} name = 'edit'>EDIT</Button>
                 <Button color='red' onClick={this.onClickHandler} name = 'delete'>DELETE</Button>
             </div>
         );

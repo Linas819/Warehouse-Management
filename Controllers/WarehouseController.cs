@@ -26,7 +26,7 @@ public class WarehouseController : ControllerBase
     [HttpDelete("{*productId}")]
     public IActionResult DeleteWarehouseProduct(string productId)
     {
-        DatabaseUpdateResponceModel responceModel = warehouseService.DeleteWarehouseProduct(productId);
+        DatabaseUpdateResponce responceModel = warehouseService.DeleteWarehouseProduct(productId);
         return(Ok(new{
             Success = responceModel.Success,
             Message = responceModel.Message
@@ -35,7 +35,36 @@ public class WarehouseController : ControllerBase
     [HttpPost]
     public IActionResult AddWarehouseProduct([FromBody] Product product)
     {
-        DatabaseUpdateResponceModel responceModel = warehouseService.AddWarehouseProduct(product);
+        DatabaseUpdateResponce responceModel = warehouseService.AddWarehouseProduct(product);
+        return(Ok(new{
+            Success = responceModel.Success,
+            Message = responceModel.Message
+        }));
+    }
+    [HttpPut]
+    public IActionResult UpdateWarehouseProduct([FromBody] ProductValueUpdateForm productUpdateForm)
+    {
+        DatabaseUpdateResponce responceModel = warehouseService.UpdateWarehouseProduct(productUpdateForm);
+        return(Ok(new{
+            Success = responceModel.Success,
+            Message = responceModel.Message
+        }));
+    }
+    [HttpPut]
+    [Route("priceChange")]
+    public IActionResult UpdateWarehouseProductPrice([FromBody] ProductValueUpdateForm productUpdateForm)
+    {
+        DatabaseUpdateResponce responceModel = warehouseService.AddWarehouseProductPriceHistory(productUpdateForm);
+        return(Ok(new{
+            Success = responceModel.Success,
+            Message = responceModel.Message
+        }));
+    }
+    [HttpPut]
+    [Route("quantityChange")]
+    public IActionResult UpdateWarehouseProductQuantity([FromBody] ProductValueUpdateForm productUpdateForm)
+    {
+        DatabaseUpdateResponce responceModel = warehouseService.AddWarehouseProductQuantityHistory(productUpdateForm);
         return(Ok(new{
             Success = responceModel.Success,
             Message = responceModel.Message

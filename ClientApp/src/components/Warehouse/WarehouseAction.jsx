@@ -18,8 +18,29 @@ export const DeleteInventoryItem = (productId) => {
 
 export const AddInventoryProduct = (product) => {
     return async (dispatch) => {
-        let result = await axios.post(`warehouse`, product)
+        await axios.post(`warehouse`, product)
         dispatch(GetWarehouseInventory());
         dispatch(SetProductCreateModal(false));
+    }
+}
+
+export const UpdateInventoryProduct = (productUpdate) => {
+    return async(dispatch) => {
+        await axios.put(`warehouse`, productUpdate)
+        dispatch(GetWarehouseInventory());
+    }
+}
+
+export const UpdateProductPrice = (productUpdate) => {
+    return async(dispatch) => {
+        await axios.put(`warehouse/priceChange`, productUpdate);
+        dispatch(GetWarehouseInventory());
+    }
+}
+
+export const UpdateProductQuantity = (productUpdate) => {
+    return async(dispatch) => {
+        await axios.put(`warehouse/quantityChange`, productUpdate);
+        dispatch(GetWarehouseInventory());
     }
 }
