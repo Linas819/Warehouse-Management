@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using warehouse_management.Models;
+using warehouse_management.Services;
 using warehouse_management.WarehouseDB;
+using warehouse_management.Models;
 
 namespace warehouse_management.Controllers;
 
@@ -9,12 +9,10 @@ namespace warehouse_management.Controllers;
 [Route("[controller]")]
 public class WarehouseController : ControllerBase
 {
-    private WarehouseContext warehouseContext;
     private WarehouseService warehouseService;
-    public WarehouseController(WarehouseService warehouseService, WarehouseContext warehouseContext)
+    public WarehouseController(WarehouseService warehouseService)
     {
         this.warehouseService = warehouseService;
-        this.warehouseContext = warehouseContext;
     }
     [HttpGet]
     public IActionResult GetWarehouseInventory()
@@ -28,17 +26,10 @@ public class WarehouseController : ControllerBase
     [HttpDelete("{*productId}")]
     public IActionResult DeleteWarehouseProduct(string productId)
     {
-        warehouseService.DeleteWarehouseProduct(productId);
-        try{
-            warehouseContext.SaveChanges();
-        }catch(Exception e){
-            return(Ok(new{
-                Success = false,
-                Messege = e.Message
-            }));
-        }
+        DatabaseUpdateResponceModel responseModel = warehouseService.DeleteWarehouseProduct(productId);
         return(Ok(new{
-            Success = true
+            Success = responseModel.Success,
+            Message = responseModel.Message
         }));
     }
 }
