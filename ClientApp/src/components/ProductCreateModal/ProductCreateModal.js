@@ -2,30 +2,49 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, FormField, Input, Modal, ModalActions, ModalContent, ModalHeader } from 'semantic-ui-react';
 import { SetProductCreateModal } from './ProductCreateModalAction';
+import { AddInventoryProduct } from '../Warehouse/WarehouseAction';
 
 class ProductCreateModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            productId: "",
             productName: "",
             productEan: "",
             productType: "",
-            productWeight: "",
-            productPrice: "",
-            productQuantity: "",
+            productWeight: 0,
+            productPrice: 0,
+            productQuantity: 0
         }
     }
     onModalClose = () => {
         this.props.SetProductCreateModal(false);
     }
     onClickHandler = () => {
-        
+        this.props.AddInventoryProduct(this.state);
     }
     onChangeHandler = (event, data) => {
-        this.setState({
-            ...this.state,
-            [data.name]: data.value
-        });
+        switch(data.name){
+            case "productId":
+            case "productName":
+            case "productEan":
+            case "productType":
+                this.setState({
+                    ...this.state,
+                    [data.name]: data.value
+                });
+                break;
+            case "productWeight":
+            case "productPrice":
+            case "productQuantity":
+                this.setState({
+                    ...this.state,
+                    [data.name]: parseFloat(data.value)
+                });
+                break;
+            default:
+                break;
+        }
     }
     render() {
         return (
@@ -34,22 +53,25 @@ class ProductCreateModal extends Component {
                 <ModalContent>
                     <Form>
                         <FormField>
-                            <Input placeholder='Product Name' name='productName'></Input>
+                            <Input placeholder='Product Id' name='productId' onChange={this.onChangeHandler}></Input>
                         </FormField>
                         <FormField>
-                            <Input placeholder='Product EAN' name='productEan'></Input>
+                            <Input placeholder='Product Name' name='productName' onChange={this.onChangeHandler}></Input>
                         </FormField>
                         <FormField>
-                            <Input placeholder='Product Type' name='productType'></Input>
+                            <Input placeholder='Product EAN' name='productEan' onChange={this.onChangeHandler}></Input>
                         </FormField>
                         <FormField>
-                            <Input placeholder='Product Weight' type='number' name='productWeight' min='0' step='0.01'></Input>
+                            <Input placeholder='Product Type' name='productType' onChange={this.onChangeHandler}></Input>
                         </FormField>
                         <FormField>
-                            <Input placeholder='Product Price' type='number' name='productPrice' min='0' step='0.01'></Input>
+                            <Input placeholder='Product Weight' onChange={this.onChangeHandler} type='number' name='productWeight' min='0' step='0.01'></Input>
                         </FormField>
                         <FormField>
-                            <Input placeholder='Product Quantity' type='number' name='productQuantity' min='0' step='0.01'></Input>
+                            <Input placeholder='Product Price' onChange={this.onChangeHandler} type='number' name='productPrice' min='0' step='0.01'></Input>
+                        </FormField>
+                        <FormField>
+                            <Input placeholder='Product Quantity' onChange={this.onChangeHandler} type='number' name='productQuantity' min='0' step='1'></Input>
                         </FormField>
                     </Form>
                 </ModalContent>
@@ -67,4 +89,4 @@ function MapStateToProps(state) {
     };
 }
 
-export default connect( MapStateToProps, {SetProductCreateModal})(ProductCreateModal);
+export default connect( MapStateToProps, {SetProductCreateModal, AddInventoryProduct})(ProductCreateModal);

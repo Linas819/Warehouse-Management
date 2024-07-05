@@ -19,6 +19,8 @@ public partial class Product
 
     public float ProductQuantity { get; set; }
 
+    public DateTime ProductCreatedDate { get; set; }
+
     public virtual ICollection<ProductPriceHistory> ProductPriceHistories { get; } = new List<ProductPriceHistory>();
 
     public virtual ICollection<ProductQuantityHistory> ProductQuantityHistories { get; } = new List<ProductQuantityHistory>();

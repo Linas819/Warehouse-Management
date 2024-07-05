@@ -38,6 +38,9 @@ public partial class WarehouseContext : DbContext
             entity.Property(e => e.ProductId)
                 .HasMaxLength(6)
                 .HasColumnName("Product_ID");
+            entity.Property(e => e.ProductCreatedDate)
+                .HasMaxLength(6)
+                .HasColumnName("Product_Created_Date");
             entity.Property(e => e.ProductEan)
                 .HasMaxLength(11)
                 .HasColumnName("Product_EAN");
