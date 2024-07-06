@@ -5,6 +5,7 @@ import { warehouseInventoryColumnDefs } from './WarehouseInventoryUtils';
 import { GetWarehouseProducts, UpdateWarehouseProduct, UpdateWarehouseProductPrice, UpdateWarehouseProductQuantity } from './WarehouseAction';
 import AppHeader from './../AppHeader';
 import ProductCreateModal from './ProductCreateModal/ProductCreateModal';
+import ProductViewModal from './ProductViewModal/ProductViewModal';
 
 
 class WarehouseInventory extends Component
@@ -46,8 +47,9 @@ class WarehouseInventory extends Component
                         columnDefs={warehouseInventoryColumnDefs}
                         onCellValueChanged={this.onCellValueChanged}
                     />
-                    <ProductCreateModal/>
                 </div>
+                <ProductCreateModal/>
+                <ProductViewModal/>
             </div>
         );
     }

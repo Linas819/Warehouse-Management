@@ -1,4 +1,4 @@
-export const SET_MODAL = "SET_MODAL";
+export const SET_PRODUCT_CREATE_MODAL = "SET_PRODUCT_CREATE_MODAL";
 
 const initialState = {
     productCreateModalOpen: false
@@ -7,7 +7,7 @@ const initialState = {
 export const productCreateModalReducer = (state, action) => {
     state = state || initialState;
     switch(action.type){
-        case SET_MODAL:
+        case SET_PRODUCT_CREATE_MODAL:
             state = {
                 ...state,
                 productCreateModalOpen: action.open

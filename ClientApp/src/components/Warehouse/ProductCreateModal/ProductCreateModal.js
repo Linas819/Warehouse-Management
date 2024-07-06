@@ -64,10 +64,10 @@ class ProductCreateModal extends Component {
                             <Input placeholder='Product Type' name='productType' onChange={this.onChangeHandler}></Input>
                         </FormField>
                         <FormField>
-                            <Input placeholder='Product Weight' onChange={this.onChangeHandler} type='number' name='productWeight' min='0' step='0.01'></Input>
+                            <Input placeholder='Product Weight (kg)' onChange={this.onChangeHandler} type='number' name='productWeight' min='0' step='0.01'></Input>
                         </FormField>
                         <FormField>
-                            <Input placeholder='Product Price' onChange={this.onChangeHandler} type='number' name='productPrice' min='0' step='0.01'></Input>
+                            <Input placeholder='Product Price ($)' onChange={this.onChangeHandler} type='number' name='productPrice' min='0' step='0.01'></Input>
                         </FormField>
                         <FormField>
                             <Input placeholder='Product Quantity' onChange={this.onChangeHandler} type='number' name='productQuantity' min='0' step='1'></Input>
