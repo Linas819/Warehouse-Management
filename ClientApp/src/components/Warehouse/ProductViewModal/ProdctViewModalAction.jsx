@@ -1,4 +1,4 @@
-import { SET_PRODUCT_VIEW_MODAL, SET_PRODUCT_VIEW_MODAL_HEADER, SET_PRODUCT_VIEW_MODAL_CONTENT } from "./ProductViewModalReducer";
+import { SET_PRODUCT_VIEW_MODAL, SET_PRODUCT_VIEW_MODAL_HEADER, SET_PRODUCT_VIEW_MODAL_CONTENT, SET_INITIAL_STATE } from "./ProductViewModalReducer";
 
 export const SetProductViewModal = (open) => {
     return (dispatch) => {
@@ -12,5 +12,11 @@ export const SetProductViewModalContentHeader = (productId) => {
         const product = products.find(x => x.productId == productId);
         dispatch({type: SET_PRODUCT_VIEW_MODAL_HEADER, header: product.productId+"|"+product.productName});
         dispatch({type: SET_PRODUCT_VIEW_MODAL_CONTENT, product: product});
+    }
+}
+
+export const SetInitialState = () => {
+    return (dispatch) => {
+        dispatch({type: SET_INITIAL_STATE});
     }
 }

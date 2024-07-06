@@ -1,6 +1,7 @@
 export const SET_PRODUCT_VIEW_MODAL = "SET_PRODUCT_VIEW_MODAL";
 export const SET_PRODUCT_VIEW_MODAL_HEADER = "SET_MODAL_HEADER";
 export const SET_PRODUCT_VIEW_MODAL_CONTENT = "SET_MODAL_PRODUCT_VIEW";
+export const SET_INITIAL_STATE = "SET_INITIAL_STATE";
 
 const initialState = {
     productViewModalOpen: false,
@@ -28,6 +29,9 @@ export const productViewModalReducer = (state, action) => {
                 ...state,
                 productViewContent: action.product
             };
+            break;
+        case SET_INITIAL_STATE:
+            state = initialState;
             break;
         default:
             break;

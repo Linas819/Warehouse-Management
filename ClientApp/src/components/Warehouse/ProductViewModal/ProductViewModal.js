@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Modal, ModalContent, ModalHeader, Tab } from 'semantic-ui-react';
-import { SetProductViewModal } from './ProdctViewModalAction';
+import { SetProductViewModal, SetInitialState } from './ProdctViewModalAction';
 import ProductViewModalProductInfoTab from './ProductViewModalProductInfoTab';
 
 const panes = [
@@ -12,6 +12,7 @@ const panes = [
 
 class ProductViewModal extends Component {
     onModalClose = () => {
+        this.props.SetInitialState();
         this.props.SetProductViewModal(false);
     }
     render() {
@@ -33,4 +34,4 @@ function MapStateToProps(state) {
     };
 }
 
-export default connect( MapStateToProps, {SetProductViewModal})(ProductViewModal);
+export default connect( MapStateToProps, {SetProductViewModal, SetInitialState})(ProductViewModal);
