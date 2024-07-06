@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, FormField, Input, Modal, ModalActions, ModalContent, ModalHeader } from 'semantic-ui-react';
 import { SetProductCreateModal } from './ProductCreateModalAction';
-import { AddInventoryProduct } from '../Warehouse/WarehouseAction';
+import { PostInventoryProduct } from './ProductCreateModalAction';
 
 class ProductCreateModal extends Component {
     constructor(props) {
@@ -21,7 +21,7 @@ class ProductCreateModal extends Component {
         this.props.SetProductCreateModal(false);
     }
     onClickHandler = () => {
-        this.props.AddInventoryProduct(this.state);
+        this.props.PostInventoryProduct(this.state);
     }
     onChangeHandler = (event, data) => {
         switch(data.name){
@@ -89,4 +89,4 @@ function MapStateToProps(state) {
     };
 }
 
-export default connect( MapStateToProps, {SetProductCreateModal, AddInventoryProduct})(ProductCreateModal);
+export default connect( MapStateToProps, {SetProductCreateModal, PostInventoryProduct})(ProductCreateModal);

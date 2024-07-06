@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { AgGridReact } from 'ag-grid-react';
 import { warehouseInventoryColumnDefs } from './WarehouseInventoryUtils';
-import { GetWarehouseInventory, UpdateInventoryProduct, UpdateProductPrice, UpdateProductQuantity } from './WarehouseAction';
+import { GetWarehouseProducts, UpdateWarehouseProduct, UpdateWarehouseProductPrice, UpdateWarehouseProductQuantity } from './WarehouseAction';
 import AppHeader from './../AppHeader';
 import ProductCreateModal from '../ProductCreateModal/ProductCreateModal';
 
@@ -10,7 +10,7 @@ import ProductCreateModal from '../ProductCreateModal/ProductCreateModal';
 class WarehouseInventory extends Component
 {
     componentDidMount = () => {
-        this.props.GetWarehouseInventory();
+        this.props.GetWarehouseProducts();
     }
     onCellValueChanged = (event) => {
         event.data[event.colDef.field] = event.oldValue; //Prevent error in change of data value from AGGrid before redux dispatch
@@ -24,13 +24,13 @@ class WarehouseInventory extends Component
             case "productEan":
             case "productType":
             case "productWeight":
-                this.props.UpdateInventoryProduct(productUpdate)
+                this.props.UpdateWarehouseProduct(productUpdate)
                 break;
             case "productPrice":
-                this.props.UpdateProductPrice(productUpdate)
+                this.props.UpdateWarehouseProductPrice(productUpdate)
                 break;
             case "productQuantity":
-                this.props.UpdateProductQuantity(productUpdate)
+                this.props.UpdateWarehouseProductQuantity(productUpdate)
                 break;
             default:
                 break;
@@ -60,4 +60,4 @@ function MapStateToProps(state) {
     };
 }
 
-export default connect(MapStateToProps, {GetWarehouseInventory, UpdateInventoryProduct, UpdateProductPrice, UpdateProductQuantity})(WarehouseInventory);
+export default connect(MapStateToProps, {GetWarehouseProducts, UpdateWarehouseProduct, UpdateWarehouseProductPrice, UpdateWarehouseProductQuantity})(WarehouseInventory);

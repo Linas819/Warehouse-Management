@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
-import { DeleteInventoryItem } from './WarehouseAction';
+import { DeleteWarehouseProduct } from './WarehouseAction';
 
 class WarehouseActionButtons extends Component
 {
@@ -9,7 +9,7 @@ class WarehouseActionButtons extends Component
         const productId = this.props.data.productId;
         switch(data.name) {
             case "delete":
-                this.props.DeleteInventoryItem(productId);
+                this.props.DeleteWarehouseProduct(productId);
                 break;
             default:
                 break;
@@ -31,4 +31,4 @@ function MapStateToProps(state) {
     };
 }
 
-export default connect( MapStateToProps, {DeleteInventoryItem})(WarehouseActionButtons);
+export default connect( MapStateToProps, {DeleteWarehouseProduct})(WarehouseActionButtons);

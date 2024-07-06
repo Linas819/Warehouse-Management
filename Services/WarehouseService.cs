@@ -20,7 +20,7 @@ public class WarehouseService
         DatabaseUpdateResponce responseModel = SaveWarehouseDatabaseChanges();
         return responseModel;
     }
-    public DatabaseUpdateResponce AddWarehouseProduct (Product product)
+    public DatabaseUpdateResponce UpdateWarehouseProduct (Product product)
     {
         product.ProductCreatedDate = DateTime.Now;
         warehouseContext.Products.Add(product);

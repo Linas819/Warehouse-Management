@@ -33,9 +33,9 @@ public class WarehouseController : ControllerBase
         }));
     }
     [HttpPost]
-    public IActionResult AddWarehouseProduct([FromBody] Product product)
+    public IActionResult UpdateWarehouseProduct([FromBody] Product product)
     {
-        DatabaseUpdateResponce responceModel = warehouseService.AddWarehouseProduct(product);
+        DatabaseUpdateResponce responceModel = warehouseService.UpdateWarehouseProduct(product);
         return(Ok(new{
             Success = responceModel.Success,
             Message = responceModel.Message
