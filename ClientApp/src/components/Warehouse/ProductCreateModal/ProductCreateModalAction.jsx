@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { SET_MODAL } from './ProductCreateModalReducer'
-import { GetWarehouseProducts } from '../Warehouse/WarehouseAction';
+import { GetWarehouseProducts } from '../WarehouseAction';
 
 export const SetProductCreateModal = (open) => {
     return (dispatch) => {

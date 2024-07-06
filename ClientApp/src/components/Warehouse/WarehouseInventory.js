@@ -4,7 +4,7 @@ import { AgGridReact } from 'ag-grid-react';
 import { warehouseInventoryColumnDefs } from './WarehouseInventoryUtils';
 import { GetWarehouseProducts, UpdateWarehouseProduct, UpdateWarehouseProductPrice, UpdateWarehouseProductQuantity } from './WarehouseAction';
 import AppHeader from './../AppHeader';
-import ProductCreateModal from '../ProductCreateModal/ProductCreateModal';
+import ProductCreateModal from './ProductCreateModal/ProductCreateModal';
 
 
 class WarehouseInventory extends Component

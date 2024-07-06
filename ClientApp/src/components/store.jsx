@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { mainReducer } from './MainReducer';
 import { warehouseReducer } from './Warehouse/WarehouseReducer';
-import { productCreateModalReducer } from './ProductCreateModal/ProductCreateModalReducer';
+import { productCreateModalReducer } from './Warehouse/ProductCreateModal/ProductCreateModalReducer';
 
 const enhancers = [];
 

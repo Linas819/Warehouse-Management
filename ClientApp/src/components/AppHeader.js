@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GridColumn, Grid, Button } from 'semantic-ui-react';
 import { Header } from 'semantic-ui-react';
-import { SetProductCreateModal } from './ProductCreateModal/ProductCreateModalAction';
+import { SetProductCreateModal } from './Warehouse/ProductCreateModal/ProductCreateModalAction';
 
 class AppHeader extends Component {
     onClickHandler = (event, data) => {

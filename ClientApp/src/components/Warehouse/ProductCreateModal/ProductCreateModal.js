@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, FormField, Input, Modal, ModalActions, ModalContent, ModalHeader } from 'semantic-ui-react';
-import { SetProductCreateModal } from './ProductCreateModalAction';
-import { PostInventoryProduct } from './ProductCreateModalAction';
+import { SetProductCreateModal, PostInventoryProduct } from './ProductCreateModalAction';
 
 class ProductCreateModal extends Component {
     constructor(props) {
