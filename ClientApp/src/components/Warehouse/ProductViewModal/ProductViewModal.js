@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { Modal, ModalContent, ModalHeader, Tab } from 'semantic-ui-react';
 import { SetProductViewModal, SetInitialState } from './ProdctViewModalAction';
 import ProductViewModalProductInfoTab from './ProductViewModalProductInfoTab';
+import ProductViewModalPriceHistoryTab from './ProductViewModalPriceHistoryTab';
 
 const panes = [
     {menuItem: 'Product info', render: () => <ProductViewModalProductInfoTab/>},
-    {menuItem: 'Price history', render: () => <></>},
+    {menuItem: 'Price history', render: () => <ProductViewModalPriceHistoryTab/>},
     {menuItem: 'Quantity history', render: () => <></>}
 ];
 

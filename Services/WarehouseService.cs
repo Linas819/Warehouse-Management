@@ -14,6 +14,13 @@ public class WarehouseService
     {
         return warehouseContext.Products.ToList();
     }
+    public List<ProductPriceHistory> GetWarehouseProductPriceHistory(string productId, int limit)
+    {
+        List<ProductPriceHistory> productPriceHistories = limit == 0 ?
+            warehouseContext.ProductPriceHistories.Where(x => x.ProductId == productId).ToList() : 
+            warehouseContext.ProductPriceHistories.Where(x => x.ProductId == productId).Take(limit).ToList();
+        return productPriceHistories;
+    }
     public DatabaseUpdateResponce DeleteWarehouseProduct(string productId)
     {
         warehouseContext.Remove(warehouseContext.Products.Single(x => x.ProductId == productId));

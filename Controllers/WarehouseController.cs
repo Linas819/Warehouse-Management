@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using warehouse_management.Services;
 using warehouse_management.WarehouseDB;
 using warehouse_management.Models;
+using Org.BouncyCastle.Asn1.Iana;
 
 namespace warehouse_management.Controllers;
 
@@ -21,6 +22,16 @@ public class WarehouseController : ControllerBase
         return(Ok(new{
             Success = true,
             Data = products
+        }));
+    }
+    [HttpGet]
+    [Route("priceHistory")]
+    public IActionResult GetWarehouseProductPriceHistory(string productId, int limit)
+    {
+        List<ProductPriceHistory> productPriceHistory = warehouseService.GetWarehouseProductPriceHistory(productId, limit);
+        return(Ok(new{
+            Success = true,
+            Data = productPriceHistory
         }));
     }
     [HttpDelete("{*productId}")]
