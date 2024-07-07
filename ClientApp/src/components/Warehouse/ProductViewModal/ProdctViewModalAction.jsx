@@ -25,7 +25,8 @@ export const GetProductViewPriceHistory = (productId, limit) => {
             productId: productId,
             limit: limit
         }});
-        dispatch({type: SET_PRODUCT_VIEW_PRICE_HISTORY, priceHistory: result.data.data});
+        await dispatch({type: SET_PRODUCT_VIEW_PRICE_HISTORY, priceHistory: result.data.data});
+        return result.data.data;
     }
 }
 
@@ -36,6 +37,7 @@ export const GetProductViewQuantityHistory = (productId, limit) => {
             limit: limit
         }});
         dispatch({type: SET_PRODUCT_VIEW_QUANTITY_HISTORY, quantityHistory: result.data.data});
+        return result.data.data;
     }
 }
 
