@@ -9,7 +9,7 @@ public partial class ProductPriceHistory
 
     public string ProductId { get; set; } = null!;
 
-    public DateTime ChageTime { get; set; }
+    public DateTime ChangeTime { get; set; }
 
     public float ProductPrice { get; set; }
 

@@ -72,9 +72,9 @@ public partial class WarehouseContext : DbContext
             entity.Property(e => e.ProductPriceId)
                 .HasColumnType("int(11)")
                 .HasColumnName("Product_Price_ID");
-            entity.Property(e => e.ChageTime)
+            entity.Property(e => e.ChangeTime)
                 .HasColumnType("datetime")
-                .HasColumnName("Chage_Time");
+                .HasColumnName("Change_Time");
             entity.Property(e => e.ProductId)
                 .HasMaxLength(6)
                 .HasColumnName("Product_ID");

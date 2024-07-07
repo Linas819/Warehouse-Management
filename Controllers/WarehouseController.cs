@@ -34,6 +34,16 @@ public class WarehouseController : ControllerBase
             Data = productPriceHistory
         }));
     }
+    [HttpGet]
+    [Route("quantityHistory")]
+    public IActionResult GetWarehouseProductQuantityHistory(string productId, int limit)
+    {
+        List<ProductQuantityHistory> productPriceHistory = warehouseService.GetWarehouseProductQuantityHistory(productId, limit);
+        return(Ok(new{
+            Success = true,
+            Data = productPriceHistory
+        }));
+    }
     [HttpDelete("{*productId}")]
     public IActionResult DeleteWarehouseProduct(string productId)
     {

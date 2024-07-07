@@ -29,21 +29,21 @@ const options = {
     ]
   };
 
-class PriceHistoryTab extends Component {
+  class QuantityHistoryTab extends Component {
     render() {
-        const { productPriceHistory } = this.props.productView;
-        options.series[0].data = productPriceHistory.map((element) => {return element.productPrice});
-        options.xAxis.categories = productPriceHistory.map((element) => {return element.changeTime.replace("T", " ")})
+        const { productQuantityHistory } = this.props.productView;
+        options.series[0].data = productQuantityHistory.map((element) => {return element.productQuantity});
+        options.xAxis.categories = productQuantityHistory.map((element) => {return element.changeTime.replace("T", " ")})
         return(
             <HighchartsReact highcharts = {Highcharts} options={options}/>
         );
     }
-}
+  }
 
-function MapStateToProps(state) {
+  function MapStateToProps(state) {
     return {
         productView: state.productViewModal
     };
 }
 
-export default connect( MapStateToProps, {})(PriceHistoryTab);
+export default connect( MapStateToProps, {})(QuantityHistoryTab);

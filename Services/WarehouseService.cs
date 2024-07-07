@@ -21,6 +21,13 @@ public class WarehouseService
             warehouseContext.ProductPriceHistories.Where(x => x.ProductId == productId).Take(limit).ToList();
         return productPriceHistories;
     }
+    public List<ProductQuantityHistory> GetWarehouseProductQuantityHistory(string productId, int limit)
+    {
+        List<ProductQuantityHistory> productPriceHistories = limit == 0 ?
+            warehouseContext.ProductQuantityHistories.Where(x => x.ProductId == productId).ToList() : 
+            warehouseContext.ProductQuantityHistories.Where(x => x.ProductId == productId).Take(limit).ToList();
+        return productPriceHistories;
+    }
     public DatabaseUpdateResponce DeleteWarehouseProduct(string productId)
     {
         warehouseContext.Remove(warehouseContext.Products.Single(x => x.ProductId == productId));
@@ -51,7 +58,7 @@ public class WarehouseService
         ProductPriceHistory newProductPrice = new ProductPriceHistory
         {
             ProductId = productValueUpdateForm.ProductId,
-            ChageTime = DateTime.Now,
+            ChangeTime = DateTime.Now,
             ProductPrice = float.Parse(productValueUpdateForm.NewValue)
         };
         warehouseContext.ProductPriceHistories.Add(newProductPrice);
