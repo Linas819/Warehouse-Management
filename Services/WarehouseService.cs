@@ -17,15 +17,15 @@ public class WarehouseService
     public List<ProductPriceHistory> GetWarehouseProductPriceHistory(string productId, int limit)
     {
         List<ProductPriceHistory> productPriceHistories = limit == 0 ?
-            warehouseContext.ProductPriceHistories.Where(x => x.ProductId == productId).ToList() : 
-            warehouseContext.ProductPriceHistories.Where(x => x.ProductId == productId).Take(limit).ToList();
+            warehouseContext.ProductPriceHistories.Where(x => x.ProductId == productId).OrderBy(x => x.ChangeTime).ToList() : 
+            warehouseContext.ProductPriceHistories.Where(x => x.ProductId == productId).OrderBy(x => x.ChangeTime).Take(limit).ToList();
         return productPriceHistories;
     }
     public List<ProductQuantityHistory> GetWarehouseProductQuantityHistory(string productId, int limit)
     {
         List<ProductQuantityHistory> productPriceHistories = limit == 0 ?
-            warehouseContext.ProductQuantityHistories.Where(x => x.ProductId == productId).ToList() : 
-            warehouseContext.ProductQuantityHistories.Where(x => x.ProductId == productId).Take(limit).ToList();
+            warehouseContext.ProductQuantityHistories.Where(x => x.ProductId == productId).OrderBy(x => x.ChangeTime).ToList() : 
+            warehouseContext.ProductQuantityHistories.Where(x => x.ProductId == productId).OrderBy(x => x.ChangeTime).Take(limit).ToList();
         return productPriceHistories;
     }
     public DatabaseUpdateResponce DeleteWarehouseProduct(string productId)
