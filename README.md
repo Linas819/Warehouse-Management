@@ -22,10 +22,16 @@ MySQL Entity Framework 7.
 ## To Do:
 ### Front-End
 1. ~Develop the page to show all items in inventory.~
-2. ~create a form to add new items.~
+2. ~Create a form to add new items.~
 3. ~Create functions to edit or delete items.~
+4. ~Make Quantity and Price fields editable to change database data~
+5. ~Show Quantiyt and Price changes in the Product View Modal~
+6. ~Show a specific number of changes for Price/Quantity~
+7. Create Log in page and menu
 ### Back-End
-~Create database communication to achieve front-end functionalities.~
+1. ~Create database communication to achieve front-end functionalities.~
+2. ~Update database of any changes for Item's price/quantity~
+3. Log In authentication
 
 ## DB scaffold commands
 ### Warehouse
