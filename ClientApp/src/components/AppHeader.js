@@ -7,9 +7,16 @@ import { withRouter } from 'react-router-dom';
 
 class AppHeader extends Component {
     onClickHandler = (event, data) => {
+        const { history } = this.props
         switch(data.name) {
             case "createProduct":
                 this.props.SetProductCreateModal(true);
+                break;
+            case "menu":
+                history.push("/menu");
+                break;
+            case "logout":
+                history.push("/");
                 break;
             default:
                 break;
@@ -20,10 +27,15 @@ class AppHeader extends Component {
         return (
             <Grid columns={3}>
                 <GridColumn textAlign='center'>
+                    {pathname === "/menu" ? <Button color='red' name='logout' onClick={this.onClickHandler}>Logout</Button> : 
+                        pathname === "/warehouseinventory" ? <Button color='red' name='menu' onClick={this.onClickHandler}>Menu</Button> : ""}
                 </GridColumn>
                 <GridColumn textAlign='center'>
-                    {pathname === "/" ? <Header as="h1">Log In</Header> : 
-                        pathname === "/warehouseinventory" ? <Header as="h1">Warehouse Inventory</Header> : ""}
+                    <Header as="h1">
+                        {pathname === "/" ? "Login" :
+                            pathname === "/menu" ? "Menu" :
+                            pathname === "/warehouseinventory" ? "Warehouse Inventory" : ""}
+                    </Header>
                 </GridColumn>
                 <GridColumn textAlign='center'>
                     {pathname === "/warehouseinventory" ? <Button color='green' name='createProduct' onClick={this.onClickHandler}>Create Product</Button> : ""}
