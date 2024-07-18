@@ -27,11 +27,19 @@ MySQL Entity Framework 7.
 4. ~Make Quantity and Price fields editable to change database data~
 5. ~Show Quantiyt and Price changes in the Product View Modal~
 6. ~Show a specific number of changes for Price/Quantity~
-7. Create Log in page and menu
+7. ~Create Log in page and menu~
+8. Create orders page
+9. Create order creation and assigning page
+10. Create order payslip generation
 ### Back-End
 1. ~Create database communication to achieve front-end functionalities.~
 2. ~Update database of any changes for Item's price/quantity~
 3. Log In authentication
+4. Add Users database
+5. Create User back-end functionaity (Log in, register, assign rights)
+6. Add orders database
+7. Add order creation functions.
+8. Add Payslip pdf generation and saving
 
 ## DB scaffold commands
 ### Warehouse
