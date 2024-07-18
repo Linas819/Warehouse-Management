@@ -14,7 +14,7 @@ public class UserController : ControllerBase
         this.userService = userService;
     }
     [HttpPost]
-    public IActionResult LogIn([FromBody] User user)
+    public IActionResult LogIn([FromBody] LoginUser user)
     {
         return(Ok(new{
             Token = user.Token

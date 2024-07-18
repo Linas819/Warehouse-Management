@@ -1,7 +1,7 @@
 
 
 namespace warehouse_management.Models;
-public class User
+public class LoginUser
 {
     public string Username { get; set; } = "";
     public string UserId { get; set; } = "";
