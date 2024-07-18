@@ -37,8 +37,8 @@ class Login extends Component
             <div className='container'>
                 <AppHeader/>
                 <div className='containerItems'>
-                    <Input placeholder='Username' name='username' style={{marginTop: '20px'}}></Input>
-                    <Input placeholder='Password' name='password' type='password' style={{marginTop: '20px'}}></Input>
+                    <Input placeholder='Username' name='username' style={{marginTop: '20px'}} onChange={this.onChangehandler}></Input>
+                    <Input placeholder='Password' name='password' type='password' style={{marginTop: '20px'}} onChange={this.onChangehandler}></Input>
                     <Button color='green' name='login' onClick={this.onClickHandler} style={{marginTop: '20px'}}>Login</Button>
                     <Button color='blue' name='register' onClick={this.onClickHandler} style={{marginTop: '20px'}}>Register</Button>
                 </div>
