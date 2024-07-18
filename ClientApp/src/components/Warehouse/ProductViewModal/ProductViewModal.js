@@ -5,6 +5,7 @@ import { SetProductViewModal, SetInitialState } from './ProdctViewModalAction';
 import ProductViewModalProductInfoTab from './ProductViewModalProductInfoTab';
 import ProductViewModalPriceHistoryTab from './ProductViewModalPriceHistoryTab';
 import ProductViewModalQuantityHistoryTab from './ProductViewModalQuantityHistoryTab';
+import { withRouter } from 'react-router-dom';
 
 const panes = [
     {menuItem: 'Product info', render: () => <ProductViewModalProductInfoTab/>},
@@ -36,4 +37,6 @@ function MapStateToProps(state) {
     };
 }
 
-export default connect( MapStateToProps, {SetProductViewModal, SetInitialState})(ProductViewModal);
+export default withRouter(
+    connect( MapStateToProps, {SetProductViewModal, SetInitialState})
+    (ProductViewModal));

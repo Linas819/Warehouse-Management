@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid, GridColumn, GridRow } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
+
 class ProductInfoTab extends Component {
     render() {
         let product = this.props.productView.productViewContent;
@@ -86,4 +88,5 @@ function MapStateToProps(state) {
     };
 }
 
-export default connect( MapStateToProps, {})(ProductInfoTab);
+export default withRouter(
+    connect( MapStateToProps, {})(ProductInfoTab));

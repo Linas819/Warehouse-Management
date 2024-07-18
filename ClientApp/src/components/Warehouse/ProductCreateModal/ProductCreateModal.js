@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, FormField, Input, Modal, ModalActions, ModalContent, ModalHeader } from 'semantic-ui-react';
 import { SetProductCreateModal, PostInventoryProduct } from './ProductCreateModalAction';
+import { withRouter } from 'react-router-dom';
 
 class ProductCreateModal extends Component {
     constructor(props) {
@@ -88,4 +89,6 @@ function MapStateToProps(state) {
     };
 }
 
-export default connect( MapStateToProps, {SetProductCreateModal, PostInventoryProduct})(ProductCreateModal);
+export default withRouter(
+    connect( MapStateToProps, {SetProductCreateModal, PostInventoryProduct})
+    (ProductCreateModal));

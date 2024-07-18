@@ -6,7 +6,7 @@ import { GetWarehouseProducts, UpdateWarehouseProduct, UpdateWarehouseProductPri
 import AppHeader from './../AppHeader';
 import ProductCreateModal from './ProductCreateModal/ProductCreateModal';
 import ProductViewModal from './ProductViewModal/ProductViewModal';
-
+import { withRouter } from 'react-router-dom';
 
 class WarehouseInventory extends Component
 {
@@ -61,4 +61,6 @@ function MapStateToProps(state) {
     };
 }
 
-export default connect(MapStateToProps, {GetWarehouseProducts, UpdateWarehouseProduct, UpdateWarehouseProductPrice, UpdateWarehouseProductQuantity})(WarehouseInventory);
+export default withRouter(
+    connect(MapStateToProps, {GetWarehouseProducts, UpdateWarehouseProduct, UpdateWarehouseProductPrice, UpdateWarehouseProductQuantity})
+    (WarehouseInventory));

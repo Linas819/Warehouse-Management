@@ -4,6 +4,7 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { Input } from 'semantic-ui-react';
 import { GetProductViewQuantityHistory } from './ProdctViewModalAction';
+import { withRouter } from 'react-router-dom';
 
   class QuantityHistoryTab extends Component {
     constructor(props) {
@@ -76,4 +77,6 @@ import { GetProductViewQuantityHistory } from './ProdctViewModalAction';
     };
 }
 
-export default connect( MapStateToProps, {GetProductViewQuantityHistory})(QuantityHistoryTab);
+export default withRouter(
+    connect( MapStateToProps, {GetProductViewQuantityHistory})
+    (QuantityHistoryTab));

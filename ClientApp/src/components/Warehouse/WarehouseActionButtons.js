@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 import { DeleteWarehouseProduct } from './WarehouseAction';
 import { SetProductViewModal, SetProductViewModalContentHeader } from './ProductViewModal/ProdctViewModalAction';
-import { withRouter } from 'react-router-dom/cjs/react-router-dom';
+import { withRouter } from 'react-router-dom';
+
 
 class WarehouseActionButtons extends Component
 {

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { GridColumn, Grid, Button } from 'semantic-ui-react';
 import { Header } from 'semantic-ui-react';
 import { SetProductCreateModal } from './Warehouse/ProductCreateModal/ProductCreateModalAction';
+import { withRouter } from 'react-router-dom';
 
 class AppHeader extends Component {
     onClickHandler = (event, data) => {
@@ -38,4 +39,6 @@ function MapStateToProps(state) {
     };
 }
 
-export default connect( MapStateToProps, {SetProductCreateModal})(AppHeader);
+export default withRouter(
+    connect( MapStateToProps, {SetProductCreateModal})
+    (AppHeader));
