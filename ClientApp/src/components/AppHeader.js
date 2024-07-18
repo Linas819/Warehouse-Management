@@ -15,15 +15,17 @@ class AppHeader extends Component {
         }
     }
     render() {
+        let pathname = window.location.pathname;
         return (
             <Grid columns={3}>
                 <GridColumn textAlign='center'>
                 </GridColumn>
                 <GridColumn textAlign='center'>
-                    <Header as="h1">Warehouse Inventory</Header>
+                    {pathname === "/" ? <Header as="h1">Log In</Header> : 
+                        pathname === "/warehouseinventory" ? <Header as="h1">Warehouse Inventory</Header> : ""}
                 </GridColumn>
                 <GridColumn textAlign='center'>
-                    <Button color='green' name='createProduct' onClick={this.onClickHandler}>Create Product</Button>
+                    {pathname === "/warehouseinventory" ? <Button color='green' name='createProduct' onClick={this.onClickHandler}>Create Product</Button> : ""}
                 </GridColumn>
             </Grid>
         );

@@ -8,3 +8,10 @@
     width: 100%;
     flex-direction: column;
 }
+
+.containerItems {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-evenly;
+    align-items: center;
+}

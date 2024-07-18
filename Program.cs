@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using warehouse_management.Services;
 using warehouse_management.WarehouseDB;
 
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<WarehouseService, WarehouseService>();
+builder.Services.AddScoped<UserService, UserService>();
 builder.Services.AddDbContext<WarehouseContext>();
 
 var app = builder.Build();

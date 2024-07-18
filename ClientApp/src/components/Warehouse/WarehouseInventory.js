@@ -57,7 +57,6 @@ class WarehouseInventory extends Component
 
 function MapStateToProps(state) {
     return {
-        main: state.main,
         warehouse: state.warehouse
     };
 }

@@ -17,7 +17,7 @@ public class UserController : ControllerBase
     public IActionResult LogIn([FromBody] User user)
     {
         return(Ok(new{
-            Token = user.token
+            Token = user.Token
         }));
     }
 }
