@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import AppHeader from './../AppHeader';
 import { Button, Input } from 'semantic-ui-react';
 import { LoginUser } from './LoginAction';
+import { withRouter } from 'react-router-dom';
 
 class Login extends Component
 {
@@ -17,7 +18,7 @@ class Login extends Component
     onClickHandler = (event, data) => {
         switch(data.name) {
             case "login":
-                this.props.LoginUser(this.state);
+                this.props.LoginUser(this.state, this.props.history);
                 break;
             case "register":
                 break;
@@ -52,4 +53,6 @@ function MapStateToProps(state) {
     };
 }
 
-export default connect(MapStateToProps, {LoginUser})(Login);
+export default withRouter(
+    connect(MapStateToProps, {LoginUser})
+(Login));

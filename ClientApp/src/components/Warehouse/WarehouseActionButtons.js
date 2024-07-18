@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 import { DeleteWarehouseProduct } from './WarehouseAction';
 import { SetProductViewModal, SetProductViewModalContentHeader } from './ProductViewModal/ProdctViewModalAction';
+import { withRouter } from 'react-router-dom/cjs/react-router-dom';
 
 class WarehouseActionButtons extends Component
 {
@@ -36,4 +37,6 @@ function MapStateToProps(state) {
     };
 }
 
-export default connect( MapStateToProps, {DeleteWarehouseProduct, SetProductViewModal, SetProductViewModalContentHeader})(WarehouseActionButtons);
+export default withRouter(
+    connect( MapStateToProps, {DeleteWarehouseProduct, SetProductViewModal, SetProductViewModalContentHeader})
+(WarehouseActionButtons));
