@@ -31,6 +31,8 @@ MySQL Entity Framework 7.
 8. Create orders page
 9. Create order creation and assigning page
 10. Create order payslip generation
+11. Create an error modal
+12. Create functionality based on user access
 ### Back-End
 1. ~Create database communication to achieve front-end functionalities.~
 2. ~Update database of any changes for Item's price/quantity~
@@ -40,6 +42,7 @@ MySQL Entity Framework 7.
 6. Add orders database
 7. Add order creation functions.
 8. Add Payslip pdf generation and saving
+9. Set access and send back to Fornt-End
 
 ## DB scaffold commands
 ### Warehouse
