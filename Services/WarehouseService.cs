@@ -45,11 +45,11 @@ public class WarehouseService
     {
         //Changing the first letter of FieldName to match Product property names
         productValueUpdateForm.FieldName = char.ToUpper(productValueUpdateForm.FieldName[0])+productValueUpdateForm.FieldName.Substring(1);
-        Product UpdateProduct = warehouseContext.Products.Where(x => x.ProductId == productValueUpdateForm.ProductId).First();
+        Product UpdateProduct = warehouseContext.Products.Where(x => x.ProductId == productValueUpdateForm.ProductId).FirstOrDefault()!;
         if(productValueUpdateForm.FieldName == "ProductWeight" || productValueUpdateForm.FieldName == "ProductPrice" || productValueUpdateForm.FieldName == "ProductQuantity")
-            UpdateProduct.GetType().GetProperty(productValueUpdateForm.FieldName).SetValue(UpdateProduct, float.Parse(productValueUpdateForm.NewValue));
+            UpdateProduct.GetType().GetProperty(productValueUpdateForm.FieldName)!.SetValue(UpdateProduct, float.Parse(productValueUpdateForm.NewValue));
         else 
-            UpdateProduct.GetType().GetProperty(productValueUpdateForm.FieldName).SetValue(UpdateProduct, productValueUpdateForm.NewValue);
+            UpdateProduct.GetType().GetProperty(productValueUpdateForm.FieldName)!.SetValue(UpdateProduct, productValueUpdateForm.NewValue);
         DatabaseUpdateResponce responseModel = SaveWarehouseDatabaseChanges();
         return responseModel;
     }

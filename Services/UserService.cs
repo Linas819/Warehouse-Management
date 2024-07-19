@@ -17,44 +17,54 @@ public class UserService
     }
     public LoginUser Login(LoginUser user)
     {
-        user = GetToken(user);
-        user.UserAccesses = GetUsersAccesses(user);
-        return user;
-    }
-    public LoginUser GetToken (LoginUser user)
-    {
         User dbUser = usersContext.Users.Where(x => x.Username == user.Username && x.Password == user.Password).FirstOrDefault()!;
         if(dbUser != null)
         {
-            user.Login = true;
-            user.UserId = dbUser.UserId;
-            var issuer = configuration["Jwt:Issuer"];
-            var audience = configuration["Jwt:Audience"];
-            var key = Encoding.ASCII.GetBytes(configuration["Jwt:Key"]!);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim("Id", Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Sub, user.Username),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-                }),
-                Expires = DateTime.UtcNow.AddHours(5),
-                Issuer = issuer,
-                Audience = audience,
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
-            };
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var jwtToken = tokenHandler.WriteToken(token);
-            user.Token = tokenHandler.WriteToken(token);
+            user = user.DbUserToLoginUser(dbUser, user);
+            user.Token = GetToken(user.UserId);
+            user.UserAccesses = GetUsersAccesses(user.UserId);
         }
         return user;
     }
-    public List<string> GetUsersAccesses (LoginUser user)
+    public LoginUser LoginToken(string userId)
+    {
+        LoginUser loginUser = new LoginUser();
+        User dbUser = usersContext.Users.Where(x => x.UserId == userId).FirstOrDefault()!;
+        if(dbUser != null)
+        {
+            loginUser.DbUserToLoginUser(dbUser, loginUser);
+            loginUser.Token = GetToken(loginUser.UserId);
+            loginUser.UserAccesses = GetUsersAccesses(userId);
+        }
+        return loginUser;
+    }
+    public string GetToken (string userId)
+    {
+        string issuer = configuration["Jwt:Issuer"]!;
+        string audience = configuration["Jwt:Audience"]!;
+        var key = Encoding.ASCII.GetBytes(configuration["Jwt:Key"]!);
+        SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(new[]
+            {
+                new Claim("Id", Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.SerialNumber, userId),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            }),
+            Expires = DateTime.UtcNow.AddHours(5),
+            Issuer = issuer,
+            Audience = audience,
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
+        };
+        JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        string jwtToken = tokenHandler.WriteToken(token);
+        return jwtToken;
+    }
+    public List<string> GetUsersAccesses (string userId)
     {
         List<string> usersAccesses = new List<string>();
-        usersAccesses = usersContext.UsersAccesses.Where(x => x.UserId == user.UserId).Select(x => x.AccessId).ToList();
+        usersAccesses = usersContext.UsersAccesses.Where(x => x.UserId == userId).Select(x => x.AccessId).ToList();
         return usersAccesses;
     }
 }
