@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import AppHeader from './../AppHeader';
+import AppHeader from '../AppHeader';
 import { Button, Input } from 'semantic-ui-react';
-import { LoginUser } from './LoginAction';
+import { LoginUser } from './UserAction';
 import { withRouter } from 'react-router-dom';
 
 class Login extends Component
@@ -11,8 +11,8 @@ class Login extends Component
     {
         super(props);
         this.state = {
-            username: "",
-            password: ""
+            username: "admin",
+            password: "admin"
         }
     }
     onClickHandler = (event, data) => {
