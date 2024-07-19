@@ -8,4 +8,5 @@ public class LoginUser
     public string Password { get; set; } = "";
     public string Token { get; set; } = "";
     public bool Login { get; set; } = false;
+    public List<string> UserAccesses { get; set; } = new List<string>();
 }

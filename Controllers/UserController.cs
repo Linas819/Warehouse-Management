@@ -19,7 +19,7 @@ public class UserController : ControllerBase
     [HttpPost]
     public IActionResult LogIn([FromBody] LoginUser user)
     {
-        user = userService.GetToken(user);
+        user = userService.Login(user);
         return(Ok(new{
             User = user
         }));

@@ -15,9 +15,15 @@ public class UserService
         this.usersContext = usersContext;
         this.configuration = configuration;
     }
+    public LoginUser Login(LoginUser user)
+    {
+        user = GetToken(user);
+        user.UserAccesses = GetUsersAccesses(user);
+        return user;
+    }
     public LoginUser GetToken (LoginUser user)
     {
-        User dbUser = usersContext.Users.Where(x => x.Username == user.Username && x.Password == user.Password).First();
+        User dbUser = usersContext.Users.Where(x => x.Username == user.Username && x.Password == user.Password).FirstOrDefault()!;
         if(dbUser != null)
         {
             user.Login = true;
@@ -44,5 +50,11 @@ public class UserService
             user.Token = tokenHandler.WriteToken(token);
         }
         return user;
+    }
+    public List<string> GetUsersAccesses (LoginUser user)
+    {
+        List<string> usersAccesses = new List<string>();
+        usersAccesses = usersContext.UsersAccesses.Where(x => x.UserId == user.UserId).Select(x => x.AccessId).ToList();
+        return usersAccesses;
     }
 }
