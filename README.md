@@ -34,8 +34,8 @@ MySQL Entity Framework 7.
 ### Back-End
 1. ~Create database communication to achieve front-end functionalities.~
 2. ~Update database of any changes for Item's price/quantity~
-3. Log In authentication
-4. Add Users database
+3. ~Log In authentication~
+4. ~Add Users database~
 5. Create User back-end functionaity (Log in, register, assign rights)
 6. Add orders database
 7. Add order creation functions.
