@@ -15,16 +15,8 @@ class Login extends Component
             password: "admin"
         }
     }
-    onClickHandler = (event, data) => {
-        switch(data.name) {
-            case "login":
-                this.props.LoginUser(this.state, this.props.history);
-                break;
-            case "register":
-                break;
-            default:
-                break;
-        }
+    onClickHandler = () => {
+        this.props.LoginUser(this.state, this.props.history);
     }
     onChangehandler = (event, data) => {
         this.setState({
@@ -40,7 +32,6 @@ class Login extends Component
                     <Input placeholder='Username' name='username' style={{marginTop: '20px'}} onChange={this.onChangehandler}></Input>
                     <Input placeholder='Password' name='password' type='password' style={{marginTop: '20px'}} onChange={this.onChangehandler}></Input>
                     <Button color='green' name='login' onClick={this.onClickHandler} style={{marginTop: '20px'}}>Login</Button>
-                    <Button color='blue' name='register' onClick={this.onClickHandler} style={{marginTop: '20px'}}>Register</Button>
                 </div>
             </div>
         );

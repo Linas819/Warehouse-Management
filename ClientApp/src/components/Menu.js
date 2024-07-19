@@ -15,6 +15,9 @@ export default class Menu extends Component {
                     <Link to="/orders">
                         <Button color='blue' style={{marginTop: '20px'}}>Orders</Button>
                     </Link>
+                    <Link to="/register">
+                        <Button color='yellow' style={{marginTop: '20px'}}>Register</Button>
+                    </Link>
                 </div>
             </div>
         );
