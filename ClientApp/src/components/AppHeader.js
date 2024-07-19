@@ -23,7 +23,7 @@ class AppHeader extends Component {
         }
     }
     render() {
-        let pathname = window.location.pathname;
+        const { pathname } = this.props.history.location;
         return (
             <Grid columns={3}>
                 <GridColumn textAlign='center'>

@@ -4,14 +4,8 @@ import './custom.css';
 import WarehouseInventory from './components/Warehouse/WarehouseInventory';
 import Login from './components/User/Login';
 import Menu from './components/Menu';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { LoginAuthentication } from './components/User/UserAction';
 
-class App extends Component {
-  componentDidMount = () => {
-    this.props.LoginAuthentication(this.props.history)
-  }
+export default class App extends Component {
   render() {
     return (
       <Switch>
@@ -22,13 +16,3 @@ class App extends Component {
     );
   }
 }
-
-function MapStateToProps(state) {
-  return {
-      warehouse: state.warehouse
-  };
-}
-
-export default withRouter(
-  connect(MapStateToProps, {LoginAuthentication})
-  (App));

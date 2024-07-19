@@ -1,34 +1,42 @@
 import axios from 'axios';
+import { SET_LOGIN, SET_USER_ID } from '../MainReducer';
 
 export const LoginUser = (user, history) => {
-    return async () => {
+    return async (dispatch) => {
         let result = await axios.post(`user`, user);
         if(result.data.login)
         {
-            sessionStorage.setItem('token', result.data.token);
-            axios.defaults.headers.common['Authorization'] = "Bearer " + result.data.token;
+            dispatch(SetAuthorizationToken(result.data.token));
+            dispatch({type: SET_LOGIN, value: true});
+            dispatch({type: SET_USER_ID, value: result.data.userId});
             history.push("/menu");
         }
     }
 }
 
 export const LoginAuthentication = (history) => {
-    return async (dispatch) => {
-        let token = sessionStorage.getItem('token');
-        if(token)
+    return async (dispatch, getstate) => {
+        const { isLoggedIn } = getstate().main; 
+        if(!isLoggedIn)
         {
-            dispatch(SetAuthorizationToken(token));
-            let result = await axios.get(`user`);
-            if(result.data.login)
+            let token = sessionStorage.getItem('token');
+            if(token)
             {
-                dispatch(SetAuthorizationToken(result.data.token));
-                history.push(history.location.pathname);
+                dispatch(SetAuthorizationToken(token));
+                let result = await axios.get(`user`);
+                if(result.data.login)
+                {
+                    dispatch(SetAuthorizationToken(result.data.token));
+                    dispatch({type: SET_LOGIN, value: true});
+                    dispatch({type: SET_USER_ID, value: result.data.userId});
+                    history.push(history.location.pathname);
+                }
+                else
+                    history.push("/");
             }
             else
                 history.push("/");
         }
-        else
-            history.push("/");
     }
 }
 

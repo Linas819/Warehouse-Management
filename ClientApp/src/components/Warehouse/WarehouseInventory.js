@@ -7,10 +7,12 @@ import AppHeader from './../AppHeader';
 import ProductCreateModal from './ProductCreateModal/ProductCreateModal';
 import ProductViewModal from './ProductViewModal/ProductViewModal';
 import { withRouter } from 'react-router-dom';
+import { LoginAuthentication } from '../User/UserAction';
 
 class WarehouseInventory extends Component
 {
     componentDidMount = () => {
+        this.props.LoginAuthentication(this.props.history);
         this.props.GetWarehouseProducts();
     }
     onCellValueChanged = (event) => {
@@ -62,5 +64,5 @@ function MapStateToProps(state) {
 }
 
 export default withRouter(
-    connect(MapStateToProps, {GetWarehouseProducts, UpdateWarehouseProduct, UpdateWarehouseProductPrice, UpdateWarehouseProductQuantity})
+    connect(MapStateToProps, {GetWarehouseProducts, UpdateWarehouseProduct, UpdateWarehouseProductPrice, UpdateWarehouseProductQuantity, LoginAuthentication})
     (WarehouseInventory));
