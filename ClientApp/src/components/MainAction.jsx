@@ -25,17 +25,14 @@ export const LoginAuthentication = (history) => {
         {
             dispatch(SetAuthorizationToken(token));
             let result = await axios.get(`user`);
-            if(result.data.login)
-            {
-                dispatch(SetAuthorizationToken(result.data.token));
-                dispatch({type: SET_LOGIN, value: true});
-                dispatch({type: SET_USER_ID, value: result.data.userId});
-                dispatch({type: SET_USER_ACCESS, value: result.data.userAccess});
-                history.push(history.location.pathname);
-            }
-            else
-                history.push("/");
+            dispatch(SetAuthorizationToken(result.data.token));
+            dispatch({type: SET_LOGIN, value: true});
+            dispatch({type: SET_USER_ID, value: result.data.userId});
+            dispatch({type: SET_USER_ACCESS, value: result.data.userAccess});
+            history.push(history.location.pathname);
         }
+        else
+            history.push("/");
     }
 }
 
