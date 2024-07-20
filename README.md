@@ -31,7 +31,7 @@ MySQL Entity Framework 7.
 8. Create orders page
 9. Create order creation and assigning page
 10. Create order payslip generation
-11. Create an error modal
+11. ~Create an error modal~
 12. ~Create functionality based on user access~
 13. Create registration page
 ### Back-End
