@@ -3,7 +3,9 @@ import { Button } from 'semantic-ui-react';
 import AppHeader from './AppHeader';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { LoginAuthentication } from './User/UserAction';
+import { LoginAuthentication } from './MainAction';
+import ErrorModal from './ErrorModal';
+import { SetErrorModal } from './MainAction';
 
 class Menu extends Component {
     componentDidMount = () => {
@@ -16,6 +18,8 @@ class Menu extends Component {
         const { userAccess } = this.props.main;
         if(userAccess.includes(accessId))
             this.props.history.push(pathname);
+        else
+            this.props.SetErrorModal(true, "User does not have access for this page");
     }
     render() {
         return(
@@ -26,6 +30,7 @@ class Menu extends Component {
                     <Button color='blue' style={{marginTop: '20px'}} name="ord002|orders" onClick={this.onClickHandler}>Orders</Button>
                     <Button color='yellow' style={{marginTop: '20px'}} name="reg003|register" onClick={this.onClickHandler}>Register</Button>
                 </div>
+                <ErrorModal/>
             </div>
         );
     }
@@ -38,5 +43,5 @@ function MapStateToProps(state) {
 }
 
 export default withRouter(
-    connect(MapStateToProps, {LoginAuthentication})
+    connect(MapStateToProps, {LoginAuthentication, SetErrorModal})
 (Menu));

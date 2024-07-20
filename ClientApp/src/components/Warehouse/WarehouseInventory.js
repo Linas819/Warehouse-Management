@@ -7,7 +7,8 @@ import AppHeader from './../AppHeader';
 import ProductCreateModal from './ProductCreateModal/ProductCreateModal';
 import ProductViewModal from './ProductViewModal/ProductViewModal';
 import { withRouter } from 'react-router-dom';
-import { LoginAuthentication } from '../User/UserAction';
+import { LoginAuthentication } from '../MainAction';
+import ErrorModal from '../ErrorModal';
 
 class WarehouseInventory extends Component
 {
@@ -52,6 +53,7 @@ class WarehouseInventory extends Component
                 </div>
                 <ProductCreateModal/>
                 <ProductViewModal/>
+                <ErrorModal/>
             </div>
         );
     }

@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import AppHeader from '../AppHeader';
 import { Button, Input } from 'semantic-ui-react';
-import { LoginUser } from './UserAction';
+import { LoginUser } from '../MainAction';
 import { withRouter } from 'react-router-dom';
+import ErrorModal from '../ErrorModal';
 
 class Login extends Component
 {
@@ -32,6 +33,7 @@ class Login extends Component
                     <Input placeholder='Username' name='username' style={{marginTop: '20px'}} onChange={this.onChangehandler}></Input>
                     <Input placeholder='Password' name='password' type='password' style={{marginTop: '20px'}} onChange={this.onChangehandler}></Input>
                     <Button color='green' name='login' onClick={this.onClickHandler} style={{marginTop: '20px'}}>Login</Button>
+                    <ErrorModal/>
                 </div>
             </div>
         );

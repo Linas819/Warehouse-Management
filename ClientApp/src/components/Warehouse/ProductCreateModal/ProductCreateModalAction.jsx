@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { SET_PRODUCT_CREATE_MODAL } from './ProductCreateModalReducer'
 import { GetWarehouseProducts } from '../WarehouseAction';
+import { SetErrorModal } from '../../MainAction';
 
 export const SetProductCreateModal = (open) => {
     return (dispatch) => {
@@ -13,8 +14,13 @@ export const PostInventoryProduct = (product) => {
         const userId = getstate().main.userId;
         product.createdUserId = userId;
         product.updatedUserId = userId;
-        await axios.post(`warehouse`, product)
-        dispatch(GetWarehouseProducts());
-        dispatch(SetProductCreateModal(false));
+        let result = await axios.post(`warehouse`, product);
+        if(result.data.success)
+        {
+            dispatch(GetWarehouseProducts());
+            dispatch(SetProductCreateModal(false));
+        } else {
+            dispatch(SetErrorModal(true, result.data.message));
+        }
     }
 }

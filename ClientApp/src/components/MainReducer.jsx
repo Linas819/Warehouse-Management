@@ -1,13 +1,17 @@
 export const SET_LOGIN = "SET_LOGIN";
 export const SET_BUTTON_LOADING = "SET_BUTTON_LOADING";
 export const SET_USER_ID = "SET_USER_ID";
-export const SET_USER_ACCESS = "SET_USER_ACCESS"
+export const SET_USER_ACCESS = "SET_USER_ACCESS";
+export const SET_ERROR_MODAL = "SET_ERROR_MODAL";
+export const SET_ERROR_MESSAGE = "SET_ERROR_MESSEGE";
 
 const initialState = {
     isLoggedIn: false,
     isButtonLoading: false,
     userId: "",
-    userAccess: []
+    userAccess: [],
+    errorMessage: "",
+    errorModal: false
 }
 
 export const mainReducer = (state, action) => {
@@ -35,6 +39,18 @@ export const mainReducer = (state, action) => {
             state = {
                 ...state,
                 userAccess: action.value
+            };
+            break;
+        case SET_ERROR_MODAL:
+            state = {
+                ...state,
+                errorModal: action.open
+            };
+            break;
+        case SET_ERROR_MESSAGE:
+            state = {
+                ...state,
+                errorMessage: action.value
             };
             break;
         default:
