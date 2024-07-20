@@ -13,5 +13,7 @@ public partial class ProductPriceHistory
 
     public float ProductPrice { get; set; }
 
+    public string CreatedUserId { get; set; } = null!;
+
     public virtual Product Product { get; set; } = null!;
 }

@@ -21,6 +21,8 @@ public partial class Product
 
     public DateTime ProductCreatedDate { get; set; }
 
+    public string CreatedUserId { get; set; } = null!;
+
     public virtual ICollection<ProductPriceHistory> ProductPriceHistories { get; } = new List<ProductPriceHistory>();
 
     public virtual ICollection<ProductQuantityHistory> ProductQuantityHistories { get; } = new List<ProductQuantityHistory>();
