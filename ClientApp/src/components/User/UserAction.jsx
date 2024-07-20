@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { SET_LOGIN, SET_USER_ID } from '../MainReducer';
+import { SET_USER_ACCESS } from '../MainReducer';
 
 export const LoginUser = (user, history) => {
     return async (dispatch) => {
@@ -9,6 +10,7 @@ export const LoginUser = (user, history) => {
             dispatch(SetAuthorizationToken(result.data.token));
             dispatch({type: SET_LOGIN, value: true});
             dispatch({type: SET_USER_ID, value: result.data.userId});
+            dispatch({type: SET_USER_ACCESS, value: result.data.userAccess});
             history.push("/menu");
         }
     }
@@ -29,6 +31,7 @@ export const LoginAuthentication = (history) => {
                     dispatch(SetAuthorizationToken(result.data.token));
                     dispatch({type: SET_LOGIN, value: true});
                     dispatch({type: SET_USER_ID, value: result.data.userId});
+                    dispatch({type: SET_USER_ACCESS, value: result.data.userAccess});
                     history.push(history.location.pathname);
                 }
                 else

@@ -1,11 +1,13 @@
 export const SET_LOGIN = "SET_LOGIN";
 export const SET_BUTTON_LOADING = "SET_BUTTON_LOADING";
 export const SET_USER_ID = "SET_USER_ID";
+export const SET_USER_ACCESS = "SET_USER_ACCESS"
 
 const initialState = {
     isLoggedIn: false,
     isButtonLoading: false,
-    UserId: ""
+    userId: "",
+    userAccess: []
 }
 
 export const mainReducer = (state, action) => {
@@ -26,7 +28,13 @@ export const mainReducer = (state, action) => {
         case SET_USER_ID:
             state = {
                 ...state,
-                UserId: action.value
+                userId: action.value
+            };
+            break;
+        case SET_USER_ACCESS:
+            state = {
+                ...state,
+                userAccess: action.value
             };
             break;
         default:

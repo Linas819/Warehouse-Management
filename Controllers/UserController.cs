@@ -24,18 +24,20 @@ public class UserController : ControllerBase
         return(Ok(new{
             Login = user.Login,
             UserId = user.UserId,
-            Token = user.Token
+            Token = user.Token,
+            UserAccess = user.UserAccesses
         }));
     }
     [HttpGet]
     public IActionResult GetLoginToken()
     {
         string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
-        LoginUser loginUser = userService.LoginToken(userId);
+        LoginUser user = userService.LoginToken(userId);
         return(Ok(new{
-            Login = loginUser.Login,
-            UserId = loginUser.UserId,
-            Token = loginUser.Token
+            Login = user.Login,
+            UserId = user.UserId,
+            Token = user.Token,
+            UserAccess = user.UserAccesses
         }));
     }
 
