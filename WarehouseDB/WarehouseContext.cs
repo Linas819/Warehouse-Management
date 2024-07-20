@@ -37,6 +37,8 @@ public partial class WarehouseContext : DbContext
 
             entity.HasIndex(e => e.ProductId, "Product_ID").IsUnique();
 
+            entity.HasIndex(e => e.UpdatedUserId, "Updated User");
+
             entity.HasIndex(e => e.CreatedUserId, "User");
 
             entity.Property(e => e.ProductId)
@@ -59,7 +61,13 @@ public partial class WarehouseContext : DbContext
             entity.Property(e => e.ProductType)
                 .HasMaxLength(20)
                 .HasColumnName("Product_Type");
+            entity.Property(e => e.ProductUpdateDate)
+                .HasMaxLength(6)
+                .HasColumnName("Product_Update_Date");
             entity.Property(e => e.ProductWeight).HasColumnName("Product_Weight");
+            entity.Property(e => e.UpdatedUserId)
+                .HasMaxLength(20)
+                .HasColumnName("Updated_User_ID");
         });
 
         modelBuilder.Entity<ProductPriceHistory>(entity =>
@@ -81,9 +89,9 @@ public partial class WarehouseContext : DbContext
             entity.Property(e => e.ProductPriceId)
                 .HasColumnType("int(11)")
                 .HasColumnName("Product_Price_ID");
-            entity.Property(e => e.ChangeTime)
+            entity.Property(e => e.CreatedTime)
                 .HasColumnType("datetime")
-                .HasColumnName("Change_Time");
+                .HasColumnName("Created_Time");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(20)
                 .HasColumnName("Created_User_ID");
@@ -112,9 +120,9 @@ public partial class WarehouseContext : DbContext
             entity.Property(e => e.ProductQuantityId)
                 .HasColumnType("int(10)")
                 .HasColumnName("Product_Quantity_ID");
-            entity.Property(e => e.ChangeTime)
+            entity.Property(e => e.CreatedTime)
                 .HasMaxLength(6)
-                .HasColumnName("Change_Time");
+                .HasColumnName("Created_Time");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(20)
                 .HasColumnName("Created_User_ID");

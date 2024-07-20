@@ -3,6 +3,7 @@ using warehouse_management.Services;
 using warehouse_management.WarehouseDB;
 using warehouse_management.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace warehouse_management.Controllers;
 
@@ -55,9 +56,9 @@ public class WarehouseController : ControllerBase
         }));
     }
     [HttpPost]
-    public IActionResult UpdateWarehouseProduct([FromBody] Product product)
+    public IActionResult AddWarehouseProduct([FromBody] Product product)
     {
-        DatabaseUpdateResponce responceModel = warehouseService.UpdateWarehouseProduct(product);
+        DatabaseUpdateResponce responceModel = warehouseService.AddWarehouseProduct(product);
         return(Ok(new{
             Success = responceModel.Success,
             Message = responceModel.Message
@@ -66,7 +67,8 @@ public class WarehouseController : ControllerBase
     [HttpPut]
     public IActionResult UpdateWarehouseProduct([FromBody] ProductValueUpdateForm productUpdateForm)
     {
-        DatabaseUpdateResponce responceModel = warehouseService.UpdateWarehouseProduct(productUpdateForm);
+        string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
+        DatabaseUpdateResponce responceModel = warehouseService.UpdateWarehouseProduct(productUpdateForm, userId);
         return(Ok(new{
             Success = responceModel.Success,
             Message = responceModel.Message
@@ -76,7 +78,8 @@ public class WarehouseController : ControllerBase
     [Route("priceChange")]
     public IActionResult UpdateWarehouseProductPrice([FromBody] ProductValueUpdateForm productUpdateForm)
     {
-        DatabaseUpdateResponce responceModel = warehouseService.AddWarehouseProductPriceHistory(productUpdateForm);
+        string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
+        DatabaseUpdateResponce responceModel = warehouseService.AddWarehouseProductPriceHistory(productUpdateForm, userId);
         return(Ok(new{
             Success = responceModel.Success,
             Message = responceModel.Message
@@ -86,7 +89,8 @@ public class WarehouseController : ControllerBase
     [Route("quantityChange")]
     public IActionResult UpdateWarehouseProductQuantity([FromBody] ProductValueUpdateForm productUpdateForm)
     {
-        DatabaseUpdateResponce responceModel = warehouseService.AddWarehouseProductQuantityHistory(productUpdateForm);
+        string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
+        DatabaseUpdateResponce responceModel = warehouseService.AddWarehouseProductQuantityHistory(productUpdateForm, userId);
         return(Ok(new{
             Success = responceModel.Success,
             Message = responceModel.Message

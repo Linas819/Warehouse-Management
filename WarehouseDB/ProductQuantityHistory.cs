@@ -11,7 +11,7 @@ public partial class ProductQuantityHistory
 
     public float ProductQuantity { get; set; }
 
-    public DateTime ChangeTime { get; set; }
+    public DateTime CreatedTime { get; set; }
 
     public string CreatedUserId { get; set; } = null!;
 

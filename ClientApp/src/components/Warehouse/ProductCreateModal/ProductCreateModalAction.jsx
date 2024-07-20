@@ -9,7 +9,10 @@ export const SetProductCreateModal = (open) => {
 }
 
 export const PostInventoryProduct = (product) => {
-    return async (dispatch) => {
+    return async (dispatch, getstate) => {
+        const userId = getstate().main.userId;
+        product.createdUserId = userId;
+        product.updatedUserId = userId;
         await axios.post(`warehouse`, product)
         dispatch(GetWarehouseProducts());
         dispatch(SetProductCreateModal(false));
