@@ -21,7 +21,12 @@ import { withRouter } from 'react-router-dom';
                     title: {
                         text: "Changed date"
                     },
-                    categories: this.props.productView.productQuantityHistory.map((element) => {return element.changeTime})
+                    categories: this.props.productView.productQuantityHistory.map((element) => {
+                        const changeDate = new Date(element.createdTime);
+                        const formatedUpdateDate = changeDate.getFullYear() + "-" + (changeDate.getMonth()+1) + "-" + changeDate.getDate() 
+                            + " " + changeDate.getHours() + ":" + changeDate.getMinutes() + ":" + changeDate.getSeconds();
+                        return formatedUpdateDate + '\n' + element.createdUserId
+                    })
                 },
                 yAxis: {
                     title: {
@@ -48,7 +53,12 @@ import { withRouter } from 'react-router-dom';
                     title: {
                         text: "Changed date"
                     },
-                    categories: quantityHistory.map((element) => {return element.changeTime})
+                    categories: quantityHistory.map((element) => {
+                        const changeDate = new Date(element.createdTime);
+                        const formatedUpdateDate = changeDate.getFullYear() + "-" + (changeDate.getMonth()+1) + "-" + changeDate.getDate() 
+                            + " " + changeDate.getHours() + ":" + changeDate.getMinutes() + ":" + changeDate.getSeconds();
+                        return formatedUpdateDate + "\n" + element.createdUserId
+                    })
                 },
                 series: [
                     {

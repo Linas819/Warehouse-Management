@@ -21,7 +21,12 @@ class PriceHistoryTab extends Component {
                     title: {
                         text: "Changed date"
                     },
-                    categories: this.props.productView.productPriceHistory.map((element) => {return element.changeTime})
+                    categories: this.props.productView.productQuantityHistory.map((element) => {
+                        const changeDate = new Date(element.createdTime);
+                        const formatedUpdateDate = changeDate.getFullYear() + "-" + (changeDate.getMonth()+1) + "-" + changeDate.getDate() 
+                            + " " + changeDate.getHours() + ":" + changeDate.getMinutes() + ":" + changeDate.getSeconds();
+                        return formatedUpdateDate + "\n" + element.createdUserId
+                    })
                 },
                 yAxis: {
                     title: {
@@ -48,7 +53,12 @@ class PriceHistoryTab extends Component {
                     title: {
                         text: "Changed date"
                     },
-                    categories: priceHistory.map((element) => {return element.changeTime})
+                    categories: priceHistory.map((element) => {
+                        const changeDate = new Date(element.createdTime);
+                        const formatedUpdateDate = changeDate.getFullYear() + "-" + (changeDate.getMonth()+1) + "-" + changeDate.getDate() 
+                            + " " + changeDate.getHours() + ":" + changeDate.getMinutes() + ":" + changeDate.getSeconds();
+                        return formatedUpdateDate + "\n" + element.createdUserId
+                    })
                 },
                 series: [
                     {

@@ -9,6 +9,9 @@ class ProductInfoTab extends Component {
         let productCreationDate = new Date(product.productCreatedDate);
         let formatedCreationDate = productCreationDate.getFullYear() + "-" + (productCreationDate.getMonth()+1) + "-" + productCreationDate.getDate() 
             + " " + productCreationDate.getHours() + ":" + productCreationDate.getMinutes() + ":" + productCreationDate.getSeconds();
+        let productUpdateDate = new Date(product.productUpdateDate);
+        let formatedUpdateDate = productUpdateDate.getFullYear() + "-" + (productUpdateDate.getMonth()+1) + "-" + productUpdateDate.getDate() 
+            + " " + productUpdateDate.getHours() + ":" + productUpdateDate.getMinutes() + ":" + productUpdateDate.getSeconds();
         return (
             <Grid columns={2} divided='vertically'>
                 <GridRow/>
@@ -22,7 +25,7 @@ class ProductInfoTab extends Component {
                 </GridRow>
                 <GridRow>
                     <GridColumn width={3}>
-                    <b>Product name: </b>
+                        <b>Product name: </b>
                     </GridColumn>
                     <GridColumn>
                         {product.productName}
@@ -30,7 +33,7 @@ class ProductInfoTab extends Component {
                 </GridRow>
                 <GridRow>
                     <GridColumn width={3}>
-                    <b>Product EAN: </b>
+                        <b>Product EAN: </b>
                     </GridColumn>
                     <GridColumn>
                         {product.productEan}
@@ -38,7 +41,7 @@ class ProductInfoTab extends Component {
                 </GridRow>
                 <GridRow>
                     <GridColumn width={3}>
-                    <b>Product type: </b>
+                        <b>Product type: </b>
                     </GridColumn>
                     <GridColumn>
                         {product.productType}
@@ -46,7 +49,7 @@ class ProductInfoTab extends Component {
                 </GridRow>
                 <GridRow>
                     <GridColumn width={3}>
-                    <b>Product weight: </b>
+                        <b>Product weight: </b>
                     </GridColumn>
                     <GridColumn>
                         {product.productWeight} (kg)
@@ -54,7 +57,7 @@ class ProductInfoTab extends Component {
                 </GridRow>
                 <GridRow>
                     <GridColumn width={3}>
-                    <b>Product price: </b>
+                        <b>Product price: </b>
                     </GridColumn>
                     <GridColumn>
                         ${product.productPrice}
@@ -62,7 +65,7 @@ class ProductInfoTab extends Component {
                 </GridRow>
                 <GridRow>
                     <GridColumn width={3}>
-                    <b>Product quantity: </b>
+                        <b>Product quantity: </b>
                     </GridColumn>
                     <GridColumn>
                         {product.productQuantity}
@@ -70,10 +73,34 @@ class ProductInfoTab extends Component {
                 </GridRow>
                 <GridRow>
                     <GridColumn width={3}>
-                    <b>Product creation date: </b>
+                        <b>Product creation date: </b>
                     </GridColumn>
                     <GridColumn>
                         {formatedCreationDate}
+                    </GridColumn>
+                </GridRow>
+                <GridRow>
+                    <GridColumn width={3}>
+                        <b>Product created by: </b>
+                    </GridColumn>
+                    <GridColumn>
+                        {product.createdUserId}
+                    </GridColumn>
+                </GridRow>
+                <GridRow>
+                    <GridColumn width={3}>
+                        <b>Product update date: </b>
+                    </GridColumn>
+                    <GridColumn>
+                        {formatedUpdateDate}
+                    </GridColumn>
+                </GridRow>
+                <GridRow>
+                    <GridColumn width={3}>
+                        <b>Product updated by: </b>
+                    </GridColumn>
+                    <GridColumn>
+                        {product.updatedUserId}
                     </GridColumn>
                 </GridRow>
                 <GridRow/>
