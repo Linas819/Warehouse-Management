@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import ErrorModal from '../ErrorModal';
 import { accessRights } from '../MainAction';
 import { LoginAuthentication, RegisterUser } from '../MainAction';
+import { SetErrorModal } from '../MainAction';
 
 class Register extends Component {
     constructor(props)
@@ -51,6 +52,33 @@ class Register extends Component {
         }
     }
     onClickHandler = () => {
+        const state = this.state;
+        if(state.username === "")
+        {
+            this.props.SetErrorModal(true, "Username is required");
+            return;
+        }
+        if(state.password === "")
+        {
+            this.props.SetErrorModal(true, "Password is required");
+            return;
+        }
+        if(state.firstName === "")
+        {
+            this.props.SetErrorModal(true, "First Name is required");
+            return;
+        }
+        if(state.lastName === "")
+        {
+            this.props.SetErrorModal(true, "Last Name is required");
+            return;
+        }
+        if(state.userRights.inventory === false && state.userRights.orders === false
+            && state.userRights.register === false
+        ) {
+            this.props.SetErrorModal(true, "At least one User access right is required");
+            return;
+        }
         this.props.RegisterUser(this.state, this.props.history);
     }
     render() {
@@ -83,5 +111,5 @@ function MapStateToProps(state) {
 }
 
 export default withRouter(
-    connect(MapStateToProps, {LoginAuthentication, RegisterUser})
+    connect(MapStateToProps, {LoginAuthentication, RegisterUser, SetErrorModal})
 (Register));

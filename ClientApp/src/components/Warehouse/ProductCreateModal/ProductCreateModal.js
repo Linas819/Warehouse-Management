@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Form, FormField, Input, Modal, ModalActions, ModalContent, ModalHeader } from 'semantic-ui-react';
 import { SetProductCreateModal, PostInventoryProduct } from './ProductCreateModalAction';
 import { withRouter } from 'react-router-dom';
+import { SetErrorModal } from '../../MainAction';
 
 class ProductCreateModal extends Component {
     constructor(props) {
@@ -21,6 +22,42 @@ class ProductCreateModal extends Component {
         this.props.SetProductCreateModal(false);
     }
     onClickHandler = () => {
+        const state = this.state;
+        if(state.productId === "")
+        {
+            this.props.SetErrorModal(true, "Product ID is required");
+            return;
+        }
+        if(state.productName === "")
+        {
+            this.props.SetErrorModal(true, "Product name is required");
+            return;
+        }
+        if(state.productEan === "")
+        {
+            this.props.SetErrorModal(true, "Product EAN is required");
+            return;
+        }
+        if(state.productType === "")
+        {
+            this.props.SetErrorModal(true, "Product type is required");
+            return;
+        }
+        if(state.productWeight === 0)
+        {
+            this.props.SetErrorModal(true, "Product weight must be more than 0");
+            return;
+        }
+        if(state.productPrice === 0)
+        {
+            this.props.SetErrorModal(true, "Product price must be more than 0");
+            return;
+        }
+        if(state.productQuantity === 0)
+        {
+            this.props.SetErrorModal(true, "Product quantity must be more than 0");
+            return;
+        }
         this.props.PostInventoryProduct(this.state);
     }
     onChangeHandler = (event, data) => {
@@ -90,5 +127,5 @@ function MapStateToProps(state) {
 }
 
 export default withRouter(
-    connect( MapStateToProps, {SetProductCreateModal, PostInventoryProduct})
+    connect( MapStateToProps, {SetProductCreateModal, PostInventoryProduct, SetErrorModal})
     (ProductCreateModal));
