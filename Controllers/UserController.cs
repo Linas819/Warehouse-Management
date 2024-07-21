@@ -28,6 +28,16 @@ public class UserController : ControllerBase
             UserAccess = user.UserAccesses
         }));
     }
+    [HttpPost]
+    [Route("register")]
+    public IActionResult Register([FromBody] RegisterUser user)
+    {
+        DatabaseUpdateResponce responce = userService.Register(user);
+        return(Ok(new{
+            Success = responce.Success,
+            Message = responce.Message
+        }));
+    }
     [HttpGet]
     public IActionResult GetLoginToken()
     {

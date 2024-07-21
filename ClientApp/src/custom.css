@@ -15,3 +15,11 @@
     justify-content: space-evenly;
     align-items: center;
 }
+
+.rightsCheckbox {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-evenly;
+    align-items: left;
+    margin-top: 10px;
+}

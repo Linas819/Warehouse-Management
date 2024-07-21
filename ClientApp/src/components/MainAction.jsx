@@ -4,14 +4,17 @@ import { SET_ERROR_MESSAGE, SET_ERROR_MODAL, SET_LOGIN, SET_USER_ID, SET_USER_AC
 export const accessRights = [
     {
         accessId: "inv001",
+        accessName: "Inventory",
         pathname: "/warehouseinventory"
     },
     {
         accessId: "ord002",
+        accessName: "Orders",
         pathname: "/orders"
     },
     {
         accessId: "reg003",
+        accessName: "Register",
         pathname: "/register"
     },
 ]
@@ -28,6 +31,18 @@ export const LoginUser = (user, history) => {
             history.push("/menu");
         } else {
             dispatch(SetErrorModal(true, "User not found"))
+        }
+    }
+}
+
+export const RegisterUser = (user, history) => {
+    return async (dispatch) => {
+        let result = await axios.post(`user/register`, user)
+        if(result.data.success)
+        {
+            history.push("/menu");
+        } else {
+            dispatch(SetErrorModal(true, result.data.message));
         }
     }
 }

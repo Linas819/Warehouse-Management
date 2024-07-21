@@ -4,10 +4,17 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
 
 namespace warehouse_management.Services;
 public class UserService
 {
+    Dictionary<string, string> userAccessRightsNames = new Dictionary<string, string>()
+    {
+        {"Inventory", "Inventory Check"},
+        {"Orders", "Order Creation"},
+        {"Register", "Register User"}
+    };
     private UsersContext usersContext;
     private readonly IConfiguration configuration;
     public UserService(UsersContext usersContext, IConfiguration configuration)
@@ -25,6 +32,33 @@ public class UserService
             user.UserAccesses = GetUsersAccesses(user.UserId);
         }
         return user;
+    }
+    public DatabaseUpdateResponce Register(RegisterUser user)
+    {
+        User registerUser = user.RegisterUserToDbUser(user);
+        usersContext.Users.Add(registerUser);
+        DatabaseUpdateResponce responce = SaveUserDatabaseChanges();
+        if(!responce.Success)
+        {
+            return responce;
+        }
+        PropertyInfo[] properties = user.userRights.GetType().GetProperties();
+        foreach(PropertyInfo property in properties)
+        {
+            bool hasAccessRight = (bool)property.GetValue(user.userRights)!;
+            if(hasAccessRight)
+            {
+                string accessId = usersContext.AccessFunctions.Where(x => x.AccessName == userAccessRightsNames[property.Name]).Select(x => x.AccessId).First();
+                UsersAccess usersAccess = new UsersAccess{
+                    AccessId = accessId,
+                    UserId = registerUser.UserId,
+                    CreatedDate = DateTime.Now
+                };
+                usersContext.UsersAccesses.Add(usersAccess);
+            }
+        }
+        responce = SaveUserDatabaseChanges();
+        return responce;
     }
     public LoginUser LoginToken(string userId)
     {
@@ -66,5 +100,16 @@ public class UserService
         List<string> usersAccesses = new List<string>();
         usersAccesses = usersContext.UsersAccesses.Where(x => x.UserId == userId).Select(x => x.AccessId).ToList();
         return usersAccesses;
+    }
+    public DatabaseUpdateResponce SaveUserDatabaseChanges()
+    {
+        DatabaseUpdateResponce responseModel = new DatabaseUpdateResponce();
+        try{
+            usersContext.SaveChanges();
+        }catch(Exception e){
+            responseModel.Success = false;
+            responseModel.Message = e.Message;
+        }
+        return responseModel;
     }
 }
