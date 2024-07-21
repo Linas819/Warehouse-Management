@@ -6,18 +6,19 @@ import { connect } from 'react-redux';
 import { LoginAuthentication } from './MainAction';
 import ErrorModal from './ErrorModal';
 import { SetErrorModal } from './MainAction';
+import { accessRights } from './MainAction';
 
 class Menu extends Component {
     componentDidMount = () => {
         this.props.LoginAuthentication(this.props.history);
     }
     onClickHandler = (event, data) => {
-        const names = data.name.split("|");
-        const pathname = "/"+names[1];
-        const accessId = names[0];
+        const buttonIndex = parseFloat(data.name);
         const { userAccess } = this.props.main;
-        if(userAccess.includes(accessId))
-            this.props.history.push(pathname);
+        const pageAccessRight = accessRights[buttonIndex];
+        const userAccessRightIndex = userAccess.findIndex(element => element === pageAccessRight.accessId);
+        if(userAccessRightIndex>-1)
+            this.props.history.push(pageAccessRight.pathname);
         else
             this.props.SetErrorModal(true, "User does not have access for this page");
     }
@@ -26,9 +27,9 @@ class Menu extends Component {
             <div className='container'>
                 <AppHeader/>
                 <div className='containerItems'>
-                    <Button color='green' style={{marginTop: '20px'}} name="inv001|warehouseinventory" onClick={this.onClickHandler}>Inventory</Button>
-                    <Button color='blue' style={{marginTop: '20px'}} name="ord002|orders" onClick={this.onClickHandler}>Orders</Button>
-                    <Button color='yellow' style={{marginTop: '20px'}} name="reg003|register" onClick={this.onClickHandler}>Register</Button>
+                    <Button color='green' style={{marginTop: '20px'}} name="0" onClick={this.onClickHandler}>Inventory</Button>
+                    <Button color='blue' style={{marginTop: '20px'}} name="1" onClick={this.onClickHandler}>Orders</Button>
+                    <Button color='yellow' style={{marginTop: '20px'}} name="2" onClick={this.onClickHandler}>Register</Button>
                 </div>
                 <ErrorModal/>
             </div>
