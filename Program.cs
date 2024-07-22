@@ -1,6 +1,7 @@
 using warehouse_management.Services;
 using warehouse_management.WarehouseDB;
 using warehouse_management.UsersDB;
+using warehouse_management.OrdersDB;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -13,8 +14,10 @@ var config = builder.Configuration;
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<WarehouseService, WarehouseService>();
 builder.Services.AddScoped<UserService, UserService>();
+builder.Services.AddScoped<OrderServices, OrderServices>();
 builder.Services.AddDbContext<WarehouseContext>();
 builder.Services.AddDbContext<UsersContext>();
+builder.Services.AddDbContext<OrdersContext>();
 
 builder.Services.AddAuthentication(options => {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
