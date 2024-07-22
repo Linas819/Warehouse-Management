@@ -28,7 +28,7 @@ class AppHeader extends Component {
             <Grid columns={3}>
                 <GridColumn textAlign='center'>
                     {pathname === "/menu" ? <Button color='red' name='logout' onClick={this.onClickHandler}>Logout</Button> : 
-                        pathname === "/warehouseinventory" || pathname === "/register" || pathname === "/order" ? 
+                        pathname === "/warehouseinventory" || pathname === "/register" || pathname === "/orders" ? 
                             <Button color='red' name='menu' onClick={this.onClickHandler}>Menu</Button> : ""}
                 </GridColumn>
                 <GridColumn textAlign='center'>
@@ -36,7 +36,8 @@ class AppHeader extends Component {
                         {pathname === "/" ? "Login" :
                             pathname === "/menu" ? "Menu" :
                             pathname === "/warehouseinventory" ? "Warehouse Inventory" : 
-                            pathname === "/register" ? "Register User" : ""}
+                            pathname === "/register" ? "Register User" : 
+                            pathname === "/orders" ? "Orders" : ""}
                     </Header>
                 </GridColumn>
                 <GridColumn textAlign='center'>
