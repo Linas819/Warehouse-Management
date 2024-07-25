@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using warehouse_management.Models;
 using warehouse_management.OrdersDB;
 using warehouse_management.Services;
 
@@ -22,6 +23,15 @@ public class OrderController : ControllerBase
         return(Ok(new{
             Success = true,
             Data = orders
+        }));
+    }
+    [HttpDelete("{*orderId}")]
+    public IActionResult DeleteOrder(string orderId)
+    {
+        DatabaseUpdateResponce responceModel = orderServices.DeleteOrder(orderId);
+        return(Ok(new{
+            Success = responceModel.Success,
+            Data = responceModel.Message
         }));
     }
 }
