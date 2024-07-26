@@ -44,4 +44,14 @@ public class OrderController : ControllerBase
             Data = responceModel.Message
         }));
     }
+    [HttpDelete]
+    [Route("products")]
+    public IActionResult DeleteOrderProduct(string orderId, string productId)
+    {
+        DatabaseUpdateResponce responceModel = orderServices.DeleteOrderProduct(orderId, productId);
+        return(Ok(new{
+            Success = responceModel.Success,
+            Message = responceModel.Message
+        }));
+    }
 }

@@ -1,4 +1,5 @@
 import OrdersActionButtons from "./OrdersActionButtons";
+import OrderProductDelete from "./OrderProducts/OrderProductDelete";
 
 
 export const ordersListColumnDefs = [
@@ -16,5 +17,5 @@ export const orderProductsColumnDefs = [
     {headerName: "Product name", field: "productName", filter: true, sortable: true, flex: 2, resizable: true, floatingFilter: true},
     {headerName: "Created by", field: "createdBy", filter: true, sortable: true, flex: 1, resizable: true, floatingFilter: true},
     {headerName: "Created date", field: "createdDateTime", filter: true, sortable: true, flex: 2, resizable: true, floatingFilter: true},
-    {headerName: "Delete", field: "delete", flex: 1, resizable: true},
+    {headerName: "Delete", field: "delete", flex: 1, resizable: true, cellRenderer: OrderProductDelete},
 ]

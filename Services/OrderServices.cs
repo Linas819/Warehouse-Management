@@ -38,6 +38,12 @@ public class OrderServices
         DatabaseUpdateResponce responce = SaveOrdersDatabaseChanges();
         return responce;
     }
+    public DatabaseUpdateResponce DeleteOrderProduct(string orderId, string productId)
+    {
+        ordersContext.OrderProductLines.Remove(ordersContext.OrderProductLines.Single(x => x.OrderId == orderId && x.ProductId == productId));
+        DatabaseUpdateResponce responce = SaveOrdersDatabaseChanges();
+        return responce;
+    }
     public DatabaseUpdateResponce SaveOrdersDatabaseChanges()
     {
         DatabaseUpdateResponce responce = new DatabaseUpdateResponce();
