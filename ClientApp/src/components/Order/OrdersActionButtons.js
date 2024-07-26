@@ -3,12 +3,15 @@ import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { DeleteOrderData } from './OrderAction';
+import { SetOrderProductsModal, GetOrderProducts } from './OrderProducts/OrderProductsAction';
 
 class OrdersActionButtons extends Component {
     onClickHandler = (event, data) => {
         const orderId = this.props.data.orderId;
         switch(data.name) {
             case "view":
+                this.props.GetOrderProducts(orderId);
+                this.props.SetOrderProductsModal(true);
                 break;
             case "changeAddress":
                 break;
@@ -37,5 +40,5 @@ function MapStateToProps(state) {
 }
 
 export default withRouter(
-    connect( MapStateToProps, {DeleteOrderData})
+    connect( MapStateToProps, {DeleteOrderData, SetOrderProductsModal, GetOrderProducts})
 (OrdersActionButtons));

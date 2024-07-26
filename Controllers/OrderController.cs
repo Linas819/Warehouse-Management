@@ -25,6 +25,16 @@ public class OrderController : ControllerBase
             Data = orders
         }));
     }
+    [HttpGet]
+    [Route("products")]
+    public IActionResult GetOrderProducts(string orderId)
+    {
+        List<OrderProductsList> orderProducts = orderServices.GetOrderProducts(orderId);
+        return(Ok(new{
+            Success = true,
+            Data = orderProducts
+        }));
+    }
     [HttpDelete("{*orderId}")]
     public IActionResult DeleteOrder(string orderId)
     {

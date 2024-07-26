@@ -4,6 +4,7 @@ import { warehouseReducer } from './Warehouse/WarehouseReducer';
 import { productCreateModalReducer } from './Warehouse/ProductCreateModal/ProductCreateModalReducer';
 import { productViewModalReducer } from './Warehouse/ProductViewModal/ProductViewModalReducer';
 import { ordersReducer } from './Order/OrderReducer';
+import { orderProductsModalReducer } from './Order/OrderProducts/OrderProductsReducer';
 
 const enhancers = [];
 
@@ -17,7 +18,8 @@ export const store = configureStore({
         warehouse: warehouseReducer,
         productCreateModal: productCreateModalReducer,
         productViewModal :productViewModalReducer,
-        orders: ordersReducer
+        orders: ordersReducer,
+        orderProducts: orderProductsModalReducer
     },
     compose: enhancers
 })

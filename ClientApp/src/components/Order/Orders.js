@@ -7,6 +7,7 @@ import { GetOrdersData } from './OrderAction';
 import AppHeader from '../AppHeader';
 import { LoginAuthentication } from '../MainAction';
 import { ordersListColumnDefs } from './OrdersUtils';
+import OrderProductsModal from './OrderProducts/OrderProductsModal';
 
 class Orders extends Component
 {
@@ -25,6 +26,7 @@ class Orders extends Component
                     />
                 </div>
                 <ErrorModal/>
+                <OrderProductsModal/>
             </div>
         );
     }

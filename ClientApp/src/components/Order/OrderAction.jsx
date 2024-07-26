@@ -5,6 +5,12 @@ import { SetErrorModal } from "../MainAction";
 export const GetOrdersData = () => {
     return async(dispatch) => {
         let result = await axios.get(`order`);
+        result.data.data.map((element) => {
+            const changeDate = new Date(element.createdDate);
+            const formatedUpdateDate = changeDate.getFullYear() + "-" + (changeDate.getMonth()+1) + "-" + changeDate.getDate() 
+                + " " + changeDate.getHours() + ":" + changeDate.getMinutes() + ":" + changeDate.getSeconds();
+            element.createdDate = formatedUpdateDate;
+        })
         dispatch({type: SET_ORDERS_DATA, ordersData: result.data.data});
     }
 }

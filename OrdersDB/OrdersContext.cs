@@ -21,6 +21,8 @@ public partial class OrdersContext : DbContext
 
     public virtual DbSet<OrderProductLine> OrderProductLines { get; set; }
 
+    public virtual DbSet<ProductsView> ProductsViews { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseMySQL("Server=localhost;Database=orders;user=root;password=;");
@@ -138,6 +140,41 @@ public partial class OrdersContext : DbContext
             entity.HasOne(d => d.Order).WithMany(p => p.OrderProductLines)
                 .HasForeignKey(d => d.OrderId)
                 .HasConstraintName("Order");
+        });
+
+        modelBuilder.Entity<ProductsView>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("products_view");
+
+            entity.Property(e => e.CreatedUserId)
+                .HasMaxLength(20)
+                .HasColumnName("Created_User_ID");
+            entity.Property(e => e.ProductCreatedDate)
+                .HasMaxLength(6)
+                .HasColumnName("Product_Created_Date");
+            entity.Property(e => e.ProductEan)
+                .HasMaxLength(11)
+                .HasColumnName("Product_EAN");
+            entity.Property(e => e.ProductId)
+                .HasMaxLength(6)
+                .HasColumnName("Product_ID");
+            entity.Property(e => e.ProductName)
+                .HasMaxLength(10)
+                .HasColumnName("Product_Name");
+            entity.Property(e => e.ProductPrice).HasColumnName("Product_Price");
+            entity.Property(e => e.ProductQuantity).HasColumnName("Product_Quantity");
+            entity.Property(e => e.ProductType)
+                .HasMaxLength(20)
+                .HasColumnName("Product_Type");
+            entity.Property(e => e.ProductUpdateDate)
+                .HasMaxLength(6)
+                .HasColumnName("Product_Update_Date");
+            entity.Property(e => e.ProductWeight).HasColumnName("Product_Weight");
+            entity.Property(e => e.UpdatedUserId)
+                .HasMaxLength(20)
+                .HasColumnName("Updated_User_ID");
         });
 
         OnModelCreatingPartial(modelBuilder);
