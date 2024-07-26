@@ -93,9 +93,9 @@ public partial class OrdersContext : DbContext
             entity.Property(e => e.CreatedBy)
                 .HasMaxLength(20)
                 .HasColumnName("Created_By");
-            entity.Property(e => e.CreatedDate)
+            entity.Property(e => e.CreatedDateTime)
                 .HasMaxLength(6)
-                .HasColumnName("Created_Date");
+                .HasColumnName("Created_Date_Time");
 
             entity.HasOne(d => d.AddressFromNavigation).WithMany(p => p.OrderAddressFromNavigations)
                 .HasForeignKey(d => d.AddressFrom)
@@ -126,9 +126,9 @@ public partial class OrdersContext : DbContext
             entity.Property(e => e.CreatedBy)
                 .HasMaxLength(20)
                 .HasColumnName("Created_By");
-            entity.Property(e => e.CreatedDate)
+            entity.Property(e => e.CreatedDateTime)
                 .HasMaxLength(6)
-                .HasColumnName("Created_Date");
+                .HasColumnName("Created_Date_Time");
             entity.Property(e => e.OrderId)
                 .HasMaxLength(20)
                 .HasColumnName("Order_ID");
@@ -148,12 +148,12 @@ public partial class OrdersContext : DbContext
                 .HasNoKey()
                 .ToView("products_view");
 
+            entity.Property(e => e.CreatedDateTime)
+                .HasMaxLength(6)
+                .HasColumnName("Created_Date_Time");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(20)
                 .HasColumnName("Created_User_ID");
-            entity.Property(e => e.ProductCreatedDate)
-                .HasMaxLength(6)
-                .HasColumnName("Product_Created_Date");
             entity.Property(e => e.ProductEan)
                 .HasMaxLength(11)
                 .HasColumnName("Product_EAN");
@@ -168,10 +168,10 @@ public partial class OrdersContext : DbContext
             entity.Property(e => e.ProductType)
                 .HasMaxLength(20)
                 .HasColumnName("Product_Type");
-            entity.Property(e => e.ProductUpdateDate)
-                .HasMaxLength(6)
-                .HasColumnName("Product_Update_Date");
             entity.Property(e => e.ProductWeight).HasColumnName("Product_Weight");
+            entity.Property(e => e.UpdateDateTime)
+                .HasMaxLength(6)
+                .HasColumnName("Update_Date_Time");
             entity.Property(e => e.UpdatedUserId)
                 .HasMaxLength(20)
                 .HasColumnName("Updated_User_ID");

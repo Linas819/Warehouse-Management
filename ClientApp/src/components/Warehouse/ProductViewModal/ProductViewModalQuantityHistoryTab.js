@@ -21,12 +21,7 @@ import { withRouter } from 'react-router-dom';
                     title: {
                         text: "Changed date"
                     },
-                    categories: this.props.productView.productQuantityHistory.map((element) => {
-                        const changeDate = new Date(element.createdTime);
-                        const formatedUpdateDate = changeDate.getFullYear() + "-" + (changeDate.getMonth()+1) + "-" + changeDate.getDate() 
-                            + " " + changeDate.getHours() + ":" + changeDate.getMinutes() + ":" + changeDate.getSeconds();
-                        return formatedUpdateDate + '\n' + element.createdUserId
-                    })
+                    categories: this.props.productView.productQuantityHistory.map((element) => {return element.createdDateTime + " " + element.createdUserId})
                 },
                 yAxis: {
                     title: {
@@ -53,17 +48,12 @@ import { withRouter } from 'react-router-dom';
                     title: {
                         text: "Changed date"
                     },
-                    categories: quantityHistory.map((element) => {
-                        const changeDate = new Date(element.createdTime);
-                        const formatedUpdateDate = changeDate.getFullYear() + "-" + (changeDate.getMonth()+1) + "-" + changeDate.getDate() 
-                            + " " + changeDate.getHours() + ":" + changeDate.getMinutes() + ":" + changeDate.getSeconds();
-                        return formatedUpdateDate + "\n" + element.createdUserId
-                    })
+                    categories: quantityHistory.map((element) => {return element.createdDateTime + " " + element.createdUserId})
                 },
                 series: [
                     {
                         name: 'Price history',
-                        data: quantityHistory.map((element) => {return element.productQuantity})
+                        data: quantityHistory.map((element) => {return element.productQuantity + " " + element.createdUserId})
                     }
                 ]
             }

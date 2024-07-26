@@ -6,12 +6,6 @@ import { withRouter } from 'react-router-dom';
 class ProductInfoTab extends Component {
     render() {
         let product = this.props.productView.productViewContent;
-        let productCreationDate = new Date(product.productCreatedDate);
-        let formatedCreationDate = productCreationDate.getFullYear() + "-" + (productCreationDate.getMonth()+1) + "-" + productCreationDate.getDate() 
-            + " " + productCreationDate.getHours() + ":" + productCreationDate.getMinutes() + ":" + productCreationDate.getSeconds();
-        let productUpdateDate = new Date(product.productUpdateDate);
-        let formatedUpdateDate = productUpdateDate.getFullYear() + "-" + (productUpdateDate.getMonth()+1) + "-" + productUpdateDate.getDate() 
-            + " " + productUpdateDate.getHours() + ":" + productUpdateDate.getMinutes() + ":" + productUpdateDate.getSeconds();
         return (
             <Grid columns={2} divided='vertically'>
                 <GridRow/>
@@ -76,7 +70,7 @@ class ProductInfoTab extends Component {
                         <b>Product creation date: </b>
                     </GridColumn>
                     <GridColumn>
-                        {formatedCreationDate}
+                        {product.createdDateTime}
                     </GridColumn>
                 </GridRow>
                 <GridRow>
@@ -92,7 +86,7 @@ class ProductInfoTab extends Component {
                         <b>Product update date: </b>
                     </GridColumn>
                     <GridColumn>
-                        {formatedUpdateDate}
+                        {product.updateDateTime}
                     </GridColumn>
                 </GridRow>
                 <GridRow>

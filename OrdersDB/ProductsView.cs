@@ -19,9 +19,9 @@ public partial class ProductsView
 
     public float ProductQuantity { get; set; }
 
-    public DateTime ProductCreatedDate { get; set; }
+    public DateTime CreatedDateTime { get; set; }
 
-    public DateTime ProductUpdateDate { get; set; }
+    public DateTime UpdateDateTime { get; set; }
 
     public string CreatedUserId { get; set; } = null!;
 

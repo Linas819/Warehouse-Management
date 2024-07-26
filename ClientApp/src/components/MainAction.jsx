@@ -101,3 +101,10 @@ export const SetErrorModal = (open, message) => {
         dispatch({type: SET_ERROR_MODAL, open: open});
     }
 }
+
+export function SetDateTimeFormat(date) {
+    const dateTime = new Date(date);
+    const formatedDate = dateTime.getFullYear() + "-" + (dateTime.getMonth()+1) + "-" + dateTime.getDate() 
+        + " " + dateTime.getHours() + ":" + dateTime.getMinutes() + ":" + dateTime.getSeconds();
+    return formatedDate;
+}

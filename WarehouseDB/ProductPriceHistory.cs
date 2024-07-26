@@ -9,7 +9,7 @@ public partial class ProductPriceHistory
 
     public string ProductId { get; set; } = null!;
 
-    public DateTime CreatedTime { get; set; }
+    public DateTime CreatedDateTime { get; set; }
 
     public float ProductPrice { get; set; }
 

@@ -15,7 +15,7 @@ public partial class User
 
     public string LastName { get; set; } = null!;
 
-    public DateTime CreatedDate { get; set; }
+    public DateTime CreatedDateTime { get; set; }
 
     public virtual ICollection<UsersAccess> UsersAccesses { get; } = new List<UsersAccess>();
 }

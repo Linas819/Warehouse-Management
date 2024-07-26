@@ -12,7 +12,7 @@ public class RegisterUser
             Password = user.Password,
             FirstName = user.FirstName,
             LastName = user.Lastname,
-            CreatedDate = DateTime.Now
+            CreatedDateTime = DateTime.Now
         };
         return dbUser;
     }

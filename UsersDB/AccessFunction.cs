@@ -9,7 +9,7 @@ public partial class AccessFunction
 
     public string AccessName { get; set; } = null!;
 
-    public DateTime CreatedDate { get; set; }
+    public DateTime CreatedDateTime { get; set; }
 
     public virtual ICollection<UsersAccess> UsersAccesses { get; } = new List<UsersAccess>();
 }

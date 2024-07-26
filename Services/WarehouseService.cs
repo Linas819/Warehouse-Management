@@ -17,15 +17,15 @@ public class WarehouseService
     public List<ProductPriceHistory> GetWarehouseProductPriceHistory(string productId, int limit)
     {
         List<ProductPriceHistory> productPriceHistories = limit == 0 ?
-            warehouseContext.ProductPriceHistories.Where(x => x.ProductId == productId).OrderBy(x => x.CreatedTime).ToList() : 
-            warehouseContext.ProductPriceHistories.Where(x => x.ProductId == productId).OrderBy(x => x.CreatedTime).Take(limit).ToList();
+            warehouseContext.ProductPriceHistories.Where(x => x.ProductId == productId).OrderBy(x => x.CreatedDateTime).ToList() : 
+            warehouseContext.ProductPriceHistories.Where(x => x.ProductId == productId).OrderBy(x => x.CreatedDateTime).Take(limit).ToList();
         return productPriceHistories;
     }
     public List<ProductQuantityHistory> GetWarehouseProductQuantityHistory(string productId, int limit)
     {
         List<ProductQuantityHistory> productPriceHistories = limit == 0 ?
-            warehouseContext.ProductQuantityHistories.Where(x => x.ProductId == productId).OrderBy(x => x.CreatedTime).ToList() : 
-            warehouseContext.ProductQuantityHistories.Where(x => x.ProductId == productId).OrderBy(x => x.CreatedTime).Take(limit).ToList();
+            warehouseContext.ProductQuantityHistories.Where(x => x.ProductId == productId).OrderBy(x => x.CreatedDateTime).ToList() : 
+            warehouseContext.ProductQuantityHistories.Where(x => x.ProductId == productId).OrderBy(x => x.CreatedDateTime).Take(limit).ToList();
         return productPriceHistories;
     }
     public DatabaseUpdateResponce DeleteWarehouseProduct(string productId)
@@ -36,8 +36,8 @@ public class WarehouseService
     }
     public DatabaseUpdateResponce AddWarehouseProduct (Product product)
     {
-        product.ProductCreatedDate = DateTime.Now;
-        product.ProductUpdateDate = DateTime.Now;
+        product.CreatedDateTime = DateTime.Now;
+        product.UpdateDateTime = DateTime.Now;
         warehouseContext.Products.Add(product);
         DatabaseUpdateResponce responseModel = SaveWarehouseDatabaseChanges();
         return responseModel;
@@ -47,7 +47,7 @@ public class WarehouseService
         //Changing the first letter of FieldName to match Product property names
         productValueUpdateForm.FieldName = char.ToUpper(productValueUpdateForm.FieldName[0])+productValueUpdateForm.FieldName.Substring(1);
         Product UpdateProduct = warehouseContext.Products.Where(x => x.ProductId == productValueUpdateForm.ProductId).FirstOrDefault()!;
-        UpdateProduct.ProductUpdateDate = DateTime.Now;
+        UpdateProduct.UpdateDateTime = DateTime.Now;
         UpdateProduct.UpdatedUserId = userId;
         if(productValueUpdateForm.FieldName == "ProductWeight" || productValueUpdateForm.FieldName == "ProductPrice" || productValueUpdateForm.FieldName == "ProductQuantity")
             UpdateProduct.GetType().GetProperty(productValueUpdateForm.FieldName)!.SetValue(UpdateProduct, float.Parse(productValueUpdateForm.NewValue));
@@ -61,7 +61,7 @@ public class WarehouseService
         ProductPriceHistory newProductPrice = new ProductPriceHistory
         {
             ProductId = productValueUpdateForm.ProductId,
-            CreatedTime = DateTime.Now,
+            CreatedDateTime = DateTime.Now,
             ProductPrice = float.Parse(productValueUpdateForm.NewValue),
             CreatedUserId = userId
         };
@@ -74,7 +74,7 @@ public class WarehouseService
         ProductQuantityHistory newProductQuantity = new ProductQuantityHistory
         {
             ProductId = productValueUpdateForm.ProductId,
-            CreatedTime = DateTime.Now,
+            CreatedDateTime = DateTime.Now,
             ProductQuantity = float.Parse(productValueUpdateForm.NewValue),
             CreatedUserId = userId
         };

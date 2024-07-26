@@ -41,9 +41,9 @@ public partial class UsersContext : DbContext
             entity.Property(e => e.AccessName)
                 .HasMaxLength(20)
                 .HasColumnName("Access_Name");
-            entity.Property(e => e.CreatedDate)
+            entity.Property(e => e.CreatedDateTime)
                 .HasMaxLength(6)
-                .HasColumnName("Created_date");
+                .HasColumnName("Created_Date_Time");
         });
 
         modelBuilder.Entity<User>(entity =>
@@ -57,9 +57,9 @@ public partial class UsersContext : DbContext
             entity.Property(e => e.UserId)
                 .HasMaxLength(20)
                 .HasColumnName("User_ID");
-            entity.Property(e => e.CreatedDate)
+            entity.Property(e => e.CreatedDateTime)
                 .HasMaxLength(6)
-                .HasColumnName("Created_Date");
+                .HasColumnName("Created_Date_Time");
             entity.Property(e => e.FirstName)
                 .HasMaxLength(20)
                 .HasColumnName("First_Name");
@@ -88,9 +88,9 @@ public partial class UsersContext : DbContext
             entity.Property(e => e.AccessId)
                 .HasMaxLength(20)
                 .HasColumnName("Access_ID");
-            entity.Property(e => e.CreatedDate)
+            entity.Property(e => e.CreatedDateTime)
                 .HasMaxLength(6)
-                .HasColumnName("Created_Date");
+                .HasColumnName("Created_Date_Time");
             entity.Property(e => e.UserId)
                 .HasMaxLength(20)
                 .HasColumnName("User_ID");

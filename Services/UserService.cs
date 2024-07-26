@@ -52,7 +52,7 @@ public class UserService
                 UsersAccess usersAccess = new UsersAccess{
                     AccessId = accessId,
                     UserId = registerUser.UserId,
-                    CreatedDate = DateTime.Now
+                    CreatedDateTime = DateTime.Now
                 };
                 usersContext.UsersAccesses.Add(usersAccess);
             }

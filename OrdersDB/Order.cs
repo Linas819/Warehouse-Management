@@ -11,7 +11,7 @@ public partial class Order
 
     public string AddressTo { get; set; } = null!;
 
-    public DateTime CreatedDate { get; set; }
+    public DateTime CreatedDateTime { get; set; }
 
     public string CreatedBy { get; set; } = null!;
 

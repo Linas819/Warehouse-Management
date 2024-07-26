@@ -28,7 +28,7 @@ public class OrderServices
                 OrderProductQuantity = order.OrderProductQuantity,
                 ProductName = prod.ProductName,
                 CreatedBy = order.CreatedBy,
-                CreatedDate = order.CreatedDate
+                CreatedDateTime = order.CreatedDateTime
             }).ToList();
         return orderProducts;
     }

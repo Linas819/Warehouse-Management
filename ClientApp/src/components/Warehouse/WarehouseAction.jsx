@@ -1,12 +1,16 @@
 import axios from 'axios';
 import { SET_WAREHOUSE_DATA } from './WarehouseReducer';
-import { SetErrorModal } from '../MainAction';
+import { SetDateTimeFormat, SetErrorModal } from '../MainAction';
 
 export const GetWarehouseProducts = () => {
     return async (dispatch) => {
         let result = await axios.get(`warehouse`);
         if(result.data.success)
         {
+            result.data.data.map((element) => {
+                element.createdDateTime = SetDateTimeFormat(element.createdDateTime);
+                element.updateDateTime = SetDateTimeFormat(element.updateDateTime);
+            });
             dispatch({type: SET_WAREHOUSE_DATA, warehouseData: result.data.data})
         } else {
             dispatch(SetErrorModal(true, result.data.message));

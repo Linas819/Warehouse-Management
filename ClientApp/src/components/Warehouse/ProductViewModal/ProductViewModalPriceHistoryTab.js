@@ -21,12 +21,7 @@ class PriceHistoryTab extends Component {
                     title: {
                         text: "Changed date"
                     },
-                    categories: this.props.productView.productQuantityHistory.map((element) => {
-                        const changeDate = new Date(element.createdTime);
-                        const formatedUpdateDate = changeDate.getFullYear() + "-" + (changeDate.getMonth()+1) + "-" + changeDate.getDate() 
-                            + " " + changeDate.getHours() + ":" + changeDate.getMinutes() + ":" + changeDate.getSeconds();
-                        return formatedUpdateDate + "\n" + element.createdUserId
-                    })
+                    categories: this.props.productView.productQuantityHistory.map((element) => {return element.createdDateTime + " " + element.createdUserId})
                 },
                 yAxis: {
                     title: {
@@ -53,17 +48,12 @@ class PriceHistoryTab extends Component {
                     title: {
                         text: "Changed date"
                     },
-                    categories: priceHistory.map((element) => {
-                        const changeDate = new Date(element.createdTime);
-                        const formatedUpdateDate = changeDate.getFullYear() + "-" + (changeDate.getMonth()+1) + "-" + changeDate.getDate() 
-                            + " " + changeDate.getHours() + ":" + changeDate.getMinutes() + ":" + changeDate.getSeconds();
-                        return formatedUpdateDate + "\n" + element.createdUserId
-                    })
+                    categories: priceHistory.map((element) => {return element.createdDateTime + " " + element.createdUserId})
                 },
                 series: [
                     {
                         name: 'Price history',
-                        data: priceHistory.map((element) => {return element.productPrice})
+                        data: priceHistory.map((element) => {return element.productPrice + " " + element.createdUserId})
                     }
                 ]
             }

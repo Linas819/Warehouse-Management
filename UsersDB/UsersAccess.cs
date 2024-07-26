@@ -11,7 +11,7 @@ public partial class UsersAccess
 
     public string UserId { get; set; } = null!;
 
-    public DateTime CreatedDate { get; set; }
+    public DateTime CreatedDateTime { get; set; }
 
     public virtual AccessFunction Access { get; set; } = null!;
 

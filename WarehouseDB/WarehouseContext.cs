@@ -44,12 +44,12 @@ public partial class WarehouseContext : DbContext
             entity.Property(e => e.ProductId)
                 .HasMaxLength(6)
                 .HasColumnName("Product_ID");
+            entity.Property(e => e.CreatedDateTime)
+                .HasMaxLength(6)
+                .HasColumnName("Created_Date_Time");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(20)
                 .HasColumnName("Created_User_ID");
-            entity.Property(e => e.ProductCreatedDate)
-                .HasMaxLength(6)
-                .HasColumnName("Product_Created_Date");
             entity.Property(e => e.ProductEan)
                 .HasMaxLength(11)
                 .HasColumnName("Product_EAN");
@@ -61,10 +61,10 @@ public partial class WarehouseContext : DbContext
             entity.Property(e => e.ProductType)
                 .HasMaxLength(20)
                 .HasColumnName("Product_Type");
-            entity.Property(e => e.ProductUpdateDate)
-                .HasMaxLength(6)
-                .HasColumnName("Product_Update_Date");
             entity.Property(e => e.ProductWeight).HasColumnName("Product_Weight");
+            entity.Property(e => e.UpdateDateTime)
+                .HasMaxLength(6)
+                .HasColumnName("Update_Date_Time");
             entity.Property(e => e.UpdatedUserId)
                 .HasMaxLength(20)
                 .HasColumnName("Updated_User_ID");
@@ -89,9 +89,9 @@ public partial class WarehouseContext : DbContext
             entity.Property(e => e.ProductPriceId)
                 .HasColumnType("int(11)")
                 .HasColumnName("Product_Price_ID");
-            entity.Property(e => e.CreatedTime)
+            entity.Property(e => e.CreatedDateTime)
                 .HasColumnType("datetime")
-                .HasColumnName("Created_Time");
+                .HasColumnName("Created_Date_Time");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(20)
                 .HasColumnName("Created_User_ID");
@@ -120,9 +120,9 @@ public partial class WarehouseContext : DbContext
             entity.Property(e => e.ProductQuantityId)
                 .HasColumnType("int(10)")
                 .HasColumnName("Product_Quantity_ID");
-            entity.Property(e => e.CreatedTime)
+            entity.Property(e => e.CreatedDateTime)
                 .HasMaxLength(6)
-                .HasColumnName("Created_Time");
+                .HasColumnName("Created_Date_Time");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(20)
                 .HasColumnName("Created_User_ID");
@@ -141,21 +141,6 @@ public partial class WarehouseContext : DbContext
             entity
                 .HasNoKey()
                 .ToView("users_view");
-
-            entity.Property(e => e.CreatedDate)
-                .HasMaxLength(6)
-                .HasColumnName("Created_Date");
-            entity.Property(e => e.FirstName)
-                .HasMaxLength(20)
-                .HasColumnName("First_Name");
-            entity.Property(e => e.LastName)
-                .HasMaxLength(20)
-                .HasColumnName("Last_Name");
-            entity.Property(e => e.Password).HasMaxLength(20);
-            entity.Property(e => e.UserId)
-                .HasMaxLength(20)
-                .HasColumnName("User_ID");
-            entity.Property(e => e.Username).HasMaxLength(20);
         });
 
         OnModelCreatingPartial(modelBuilder);
