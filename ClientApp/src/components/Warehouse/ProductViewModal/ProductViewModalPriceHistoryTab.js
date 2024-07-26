@@ -53,7 +53,7 @@ class PriceHistoryTab extends Component {
                 series: [
                     {
                         name: 'Price history',
-                        data: priceHistory.map((element) => {return element.productPrice + " " + element.createdUserId})
+                        data: priceHistory.map((element) => {return element.productPrice})
                     }
                 ]
             }

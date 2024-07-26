@@ -53,7 +53,7 @@ import { withRouter } from 'react-router-dom';
                 series: [
                     {
                         name: 'Price history',
-                        data: quantityHistory.map((element) => {return element.productQuantity + " " + element.createdUserId})
+                        data: quantityHistory.map((element) => {return element.productQuantity})
                     }
                 ]
             }

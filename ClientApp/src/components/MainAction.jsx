@@ -104,7 +104,17 @@ export const SetErrorModal = (open, message) => {
 
 export function SetDateTimeFormat(date) {
     const dateTime = new Date(date);
-    const formatedDate = dateTime.getFullYear() + "-" + (dateTime.getMonth()+1) + "-" + dateTime.getDate() 
-        + " " + dateTime.getHours() + ":" + dateTime.getMinutes() + ":" + dateTime.getSeconds();
+    let month = (dateTime.getMonth()+1);
+    month = month >= 10 ? month : "0" + month;
+    let day = dateTime.getDate();
+    day = day >= 10 ? day : "0" + day;
+    let hours = dateTime.getHours();
+    hours = hours >= 10 ? hours : "0" + hours;
+    let minutes = dateTime.getMinutes();
+    minutes = minutes >= 10 ? minutes : "0" + minutes;
+    let seconds = dateTime.getSeconds();
+    seconds = seconds >= 10 ? seconds : "0" + seconds;
+    let formatedDate = dateTime.getFullYear() + "-" + month + "-" + day 
+        + " " + hours + ":" + minutes + ":" + seconds;
     return formatedDate;
 }
