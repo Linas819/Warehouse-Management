@@ -7,9 +7,11 @@ namespace warehouse_management.Services;
 public class OrderServices
 {
     private OrdersContext ordersContext;
-    public OrderServices(OrdersContext ordersContext)
+    private WarehouseContext warehouseContext;
+    public OrderServices(OrdersContext ordersContext, WarehouseContext warehouseContext)
     {
         this.ordersContext = ordersContext;
+        this.warehouseContext = warehouseContext;
     }
     public List<Order> GetOrders()
     {
@@ -31,6 +33,28 @@ public class OrderServices
                 CreatedDateTime = order.CreatedDateTime
             }).ToList();
         return orderProducts;
+    }
+    public DatabaseUpdateResponce SetNewOrderProduct(NewOrderProduct newOrderProduct, string userId)
+    {
+        DatabaseUpdateResponce responce = new DatabaseUpdateResponce();
+        var product = warehouseContext.Products.Where(x => x.ProductId == newOrderProduct.ProductId 
+            && x.ProductQuantity >= newOrderProduct.productQuantity).FirstOrDefault();
+        if(product != null)
+        {
+            OrderProductLine productLine = new OrderProductLine{
+            OrderId = newOrderProduct.OrderId,
+            ProductId = newOrderProduct.ProductId,
+            OrderProductQuantity = newOrderProduct.productQuantity,
+            CreatedDateTime = DateTime.Now,
+            CreatedBy = userId
+            };
+            ordersContext.OrderProductLines.Add(productLine);
+            responce = SaveOrdersDatabaseChanges();
+        } else {
+            responce.Success = false;
+            responce.Message = "Not enaugh product quantity in warehouse. Add product with lower quantity";
+        }
+        return responce;
     }
     public DatabaseUpdateResponce DeleteOrder(string orderId)
     {

@@ -1,11 +1,13 @@
 export const SET_ORDER_PRODUCTS = "SET_ORDER_PRODUCTS";
 export const SET_ORDER_PRODUCTS_MODAL = "SET_ORDER_PRODUCTS_MODAL";
 export const SET_ORDER_ID = "SET_ORDER_ID";
+export const SET_PRODUCT_OPTIONS = "SET_PRODUCT_OPTIONS";
 
 const initialstate = {
     orderProducts: [],
     orderProductsModalOpen: false,
-    orderId: ""
+    orderId: "",
+    dropdownProducts: []
 }
 
 export const orderProductsModalReducer = (state, action) => {
@@ -27,6 +29,12 @@ export const orderProductsModalReducer = (state, action) => {
             state = {
                 ...state,
                 orderId: action.orderId
+            };
+            break;
+        case SET_PRODUCT_OPTIONS:
+            state = {
+                ...state,
+                dropdownProducts: action.value
             };
             break;
         default:

@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using warehouse_management.Models;
@@ -35,23 +36,34 @@ public class OrderController : ControllerBase
             Data = orderProducts
         }));
     }
+    [HttpPost]
+    [Route("neworderproduct")]
+    public IActionResult SetNewOrderProduct(NewOrderProduct newOrderProduct)
+    {
+        string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
+        DatabaseUpdateResponce responce = orderServices.SetNewOrderProduct(newOrderProduct, userId);
+        return(Ok(new{
+            Success = responce.Success,
+            Message = responce.Message
+        }));
+    }
     [HttpDelete("{*orderId}")]
     public IActionResult DeleteOrder(string orderId)
     {
-        DatabaseUpdateResponce responceModel = orderServices.DeleteOrder(orderId);
+        DatabaseUpdateResponce responce = orderServices.DeleteOrder(orderId);
         return(Ok(new{
-            Success = responceModel.Success,
-            Data = responceModel.Message
+            Success = responce.Success,
+            Message = responce.Message
         }));
     }
     [HttpDelete]
     [Route("products")]
     public IActionResult DeleteOrderProduct(string orderId, string productId)
     {
-        DatabaseUpdateResponce responceModel = orderServices.DeleteOrderProduct(orderId, productId);
+        DatabaseUpdateResponce responce = orderServices.DeleteOrderProduct(orderId, productId);
         return(Ok(new{
-            Success = responceModel.Success,
-            Message = responceModel.Message
+            Success = responce.Success,
+            Message = responce.Message
         }));
     }
 }

@@ -5,7 +5,7 @@ import { SetDateTimeFormat, SetErrorModal } from "../MainAction";
 export const GetOrdersData = () => {
     return async(dispatch) => {
         let result = await axios.get(`order`);
-        result.data.data.map((element) => {element.createdDateTime = SetDateTimeFormat(element.createdDateTime)});
+        result.data.data.map((element) => {return element.createdDateTime = SetDateTimeFormat(element.createdDateTime)});
         dispatch({type: SET_ORDERS_DATA, ordersData: result.data.data});
     }
 }

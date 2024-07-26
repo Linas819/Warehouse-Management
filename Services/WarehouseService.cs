@@ -28,6 +28,11 @@ public class WarehouseService
             warehouseContext.ProductQuantityHistories.Where(x => x.ProductId == productId).OrderBy(x => x.CreatedDateTime).Take(limit).ToList();
         return productPriceHistories;
     }
+    public List<Product> GetProductOptions()
+    {
+        List<Product> products = warehouseContext.Products.Where(x => x.ProductQuantity > 0).ToList();
+        return products;
+    }
     public DatabaseUpdateResponce DeleteWarehouseProduct(string productId)
     {
         warehouseContext.Remove(warehouseContext.Products.Single(x => x.ProductId == productId));
