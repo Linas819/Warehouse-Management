@@ -59,8 +59,20 @@ public class OrderServices
                 CreatedDateTime = DateTime.Now,
                 CreatedBy = userId
                 };
-                ordersContext.OrderProductLines.Add(productLine);
-                responce = SaveOrdersDatabaseChanges();
+                product.ProductQuantity = product.ProductQuantity - newOrderProduct.productQuantity;
+                product.UpdateDateTime = DateTime.Now;
+                product.UpdatedUserId = userId;
+                try{
+                    warehouseContext.SaveChanges();
+                } catch(Exception e) {
+                    responce.Success = false;
+                    responce.Message = e.Message;
+                }
+                if(responce.Success)
+                {
+                    ordersContext.OrderProductLines.Add(productLine);
+                    responce = SaveOrdersDatabaseChanges();
+                }
             } else {
                 responce.Success = false;
                 responce.Message = "Not enaugh product quantity in warehouse. Add product with lower quantity";
