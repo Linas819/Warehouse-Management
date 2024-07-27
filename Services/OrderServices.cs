@@ -93,16 +93,39 @@ public class OrderServices
         DatabaseUpdateResponce responce = SaveOrdersDatabaseChanges();
         return responce;
     }
-    public DatabaseUpdateResponce DeleteOrder(string orderId)
+    public DatabaseUpdateResponce DeleteOrder(string orderId, string userId)
     {
+        DatabaseUpdateResponce responce = new DatabaseUpdateResponce();
+        List<string> productIds = ordersContext.OrderProductLines.Where(x => x.OrderId == orderId).Select(x => x.ProductId).ToList();
+        foreach(string productId in productIds)
+        {
+            responce = DeleteOrderProduct(orderId, productId, userId);
+            if(!responce.Success)
+                return responce;
+        }
         ordersContext.Remove(ordersContext.Orders.Where(x => x.OrderId == orderId).First());
-        DatabaseUpdateResponce responce = SaveOrdersDatabaseChanges();
+        responce = SaveOrdersDatabaseChanges();
         return responce;
     }
-    public DatabaseUpdateResponce DeleteOrderProduct(string orderId, string productId)
+    public DatabaseUpdateResponce DeleteOrderProduct(string orderId, string productId, string userId)
     {
-        ordersContext.OrderProductLines.Remove(ordersContext.OrderProductLines.Where(x => x.OrderId == orderId && x.ProductId == productId).First());
-        DatabaseUpdateResponce responce = SaveOrdersDatabaseChanges();
+        DatabaseUpdateResponce responce = new DatabaseUpdateResponce();
+        Product product = warehouseContext.Products.Where(x => x.ProductId == productId).First();
+        float orderProductQuantity = ordersContext.OrderProductLines.Where(x => x.OrderId == orderId && x.ProductId == productId).Select(x => x.OrderProductQuantity).First();
+        product.ProductQuantity = product.ProductQuantity+orderProductQuantity;
+        product.UpdateDateTime = DateTime.Now;
+        product.UpdatedUserId = userId;
+        try{
+            warehouseContext.SaveChanges();
+        } catch(Exception e) {
+            responce.Success = false;
+            responce.Message = e.Message;
+        }
+        if(responce.Success)
+        {
+            ordersContext.OrderProductLines.Remove(ordersContext.OrderProductLines.Where(x => x.OrderId == orderId && x.ProductId == productId).First());
+            responce = SaveOrdersDatabaseChanges();
+        }
         return responce;
     }
     public DatabaseUpdateResponce SaveOrdersDatabaseChanges()

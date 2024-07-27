@@ -70,7 +70,8 @@ public class OrderController : ControllerBase
     [HttpDelete("{*orderId}")]
     public IActionResult DeleteOrder(string orderId)
     {
-        DatabaseUpdateResponce responce = orderServices.DeleteOrder(orderId);
+        string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
+        DatabaseUpdateResponce responce = orderServices.DeleteOrder(orderId, userId);
         return(Ok(new{
             Success = responce.Success,
             Message = responce.Message
@@ -80,7 +81,8 @@ public class OrderController : ControllerBase
     [Route("products")]
     public IActionResult DeleteOrderProduct(string orderId, string productId)
     {
-        DatabaseUpdateResponce responce = orderServices.DeleteOrderProduct(orderId, productId);
+        string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
+        DatabaseUpdateResponce responce = orderServices.DeleteOrderProduct(orderId, productId, userId);
         return(Ok(new{
             Success = responce.Success,
             Message = responce.Message
