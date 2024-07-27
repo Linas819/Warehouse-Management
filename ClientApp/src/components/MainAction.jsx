@@ -1,5 +1,6 @@
 import axios from "axios";
-import { SET_ERROR_MESSAGE, SET_ERROR_MODAL, SET_LOGIN, SET_USER_ID, SET_USER_ACCESS } from "./MainReducer";
+import { SET_ERROR_MESSAGE, SET_ERROR_MODAL, SET_LOGIN, SET_USER_ID, SET_USER_ACCESS,
+    SET_BUTTON_LOADING } from "./MainReducer";
 
 export const accessRights = [
     {
@@ -17,10 +18,17 @@ export const accessRights = [
         accessName: "Register",
         pathname: "/register"
     },
-]
+];
+
+export const SetButtonLoading = (loading) => {
+    return(dispatch) => {
+        dispatch({type: SET_BUTTON_LOADING, value: loading});
+    }
+}
 
 export const LoginUser = (user, history) => {
     return async (dispatch) => {
+        dispatch(SetButtonLoading(true));
         let result = await axios.post(`user`, user);
         if(result.data.login)
         {
@@ -32,11 +40,13 @@ export const LoginUser = (user, history) => {
         } else {
             dispatch(SetErrorModal(true, "User not found"))
         }
+        dispatch(SetButtonLoading(false));
     }
 }
 
 export const RegisterUser = (user, history) => {
     return async (dispatch) => {
+        dispatch(SetButtonLoading(true));
         let result = await axios.post(`user/register`, user)
         if(result.data.success)
         {
@@ -44,6 +54,7 @@ export const RegisterUser = (user, history) => {
         } else {
             dispatch(SetErrorModal(true, result.data.message));
         }
+        dispatch(SetButtonLoading(false));
     }
 }
 

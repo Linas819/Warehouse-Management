@@ -1,6 +1,6 @@
 import axios from "axios";
 import { SET_ORDER_ID, SET_ORDER_PRODUCTS, SET_ORDER_PRODUCTS_MODAL, SET_PRODUCT_OPTIONS } from "./OrderProductsReducer";
-import { SetDateTimeFormat, SetErrorModal } from "../../MainAction";
+import { SetButtonLoading, SetDateTimeFormat, SetErrorModal } from "../../MainAction";
 
 export const GetOrderProducts = (orderId) => {
     return async(dispatch) => {
@@ -34,6 +34,7 @@ export const SetNewProductOptions = () => {
 
 export const SetNewProductToOrder = (orderId, productId, productQuantity) => {
     return async(dispatch) => {
+        dispatch(SetButtonLoading(true));
         const payload = {
             orderId: orderId,
             productId: productId,
@@ -45,12 +46,14 @@ export const SetNewProductToOrder = (orderId, productId, productQuantity) => {
             dispatch(GetOrderProducts(orderId));
         } else {
             dispatch(SetErrorModal(true, result.data.message));
-        }  
+        }
+        dispatch(SetButtonLoading(false));
     }
 }
 
 export const DeleteOrderProduct = (orderId, productId) => {
     return async(dispatch) => {
+        dispatch(SetButtonLoading(true));
         const result = await axios.delete(`order/products`, {params: {orderId: orderId, productId: productId}});
         if(result.data.success)
         {
@@ -58,5 +61,6 @@ export const DeleteOrderProduct = (orderId, productId) => {
         } else {
             dispatch(SetErrorModal(true, result.data.message));
         }   
+        dispatch(SetButtonLoading(false));
     }
 }

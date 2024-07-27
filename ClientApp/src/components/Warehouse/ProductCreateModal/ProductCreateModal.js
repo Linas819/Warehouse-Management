@@ -113,7 +113,7 @@ class ProductCreateModal extends Component {
                     </Form>
                 </ModalContent>
                 <ModalActions>
-                    <Button onClick={this.onClickHandler} color='green'>Confirm</Button>
+                    <Button onClick={this.onClickHandler} loading={this.props.main.isButtonLoading} color='green'>Confirm</Button>
                 </ModalActions>
             </Modal>
         );
@@ -122,7 +122,8 @@ class ProductCreateModal extends Component {
 
 function MapStateToProps(state) {
     return {
-        productCreate: state.productCreateModal
+        productCreate: state.productCreateModal,
+        main: state.main
     };
 }
 

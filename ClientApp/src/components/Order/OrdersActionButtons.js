@@ -27,7 +27,7 @@ class OrdersActionButtons extends Component {
             <div>
                 <Button color='blue' name='view' onClick={this.onClickHandler}>View</Button>
                 <Button color='green' name='changeAddress' onClick={this.onClickHandler}>Change address</Button>
-                <Button color='red' name='delete' onClick={this.onClickHandler}>Delete</Button>
+                <Button color='red' name='delete' loading={this.props.main.isButtonLoading} onClick={this.onClickHandler}>Delete</Button>
             </div>
         );
     }

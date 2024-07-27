@@ -32,7 +32,7 @@ class Login extends Component
                 <div className='containerItems'>
                     <Input placeholder='Username' name='username' style={{marginTop: '20px'}} onChange={this.onChangehandler}></Input>
                     <Input placeholder='Password' name='password' type='password' style={{marginTop: '20px'}} onChange={this.onChangehandler}></Input>
-                    <Button color='green' name='login' onClick={this.onClickHandler} style={{marginTop: '20px'}}>Login</Button>
+                    <Button color='green' name='login' loading={this.props.main.isButtonLoading} onClick={this.onClickHandler} style={{marginTop: '20px'}}>Login</Button>
                     <ErrorModal/>
                 </div>
             </div>

@@ -38,7 +38,7 @@ class OrderCreateModal extends Component {
                         options={this.props.orders.addressOptions} style={{marginTop: '20px'}}/><br/>
                 </ModalContent>
                 <ModalActions>
-                    <Button color='green' onClick={this.onClickHandler}>Create order</Button>
+                    <Button color='green' onClick={this.onClickHandler} loading={this.props.main.isButtonLoading}>Create order</Button>
                 </ModalActions>
             </Modal>
         );
@@ -47,7 +47,8 @@ class OrderCreateModal extends Component {
 
 function MapStateToProps(state) {
     return {
-        orders: state.orders
+        orders: state.orders,
+        main: state.main
     };
 }
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { SET_PRODUCT_CREATE_MODAL } from './ProductCreateModalReducer'
 import { GetWarehouseProducts } from '../WarehouseAction';
-import { SetErrorModal } from '../../MainAction';
+import { SetButtonLoading, SetErrorModal } from '../../MainAction';
 
 export const SetProductCreateModal = (open) => {
     return (dispatch) => {
@@ -11,6 +11,7 @@ export const SetProductCreateModal = (open) => {
 
 export const PostInventoryProduct = (product) => {
     return async (dispatch, getstate) => {
+        dispatch(SetButtonLoading(true));
         const userId = getstate().main.userId;
         product.createdUserId = userId;
         product.updatedUserId = userId;
@@ -22,5 +23,6 @@ export const PostInventoryProduct = (product) => {
         } else {
             dispatch(SetErrorModal(true, result.data.message));
         }
+        dispatch(SetButtonLoading(false));
     }
 }

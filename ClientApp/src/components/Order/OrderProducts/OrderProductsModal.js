@@ -55,7 +55,7 @@ class OrderProductsModal extends Component {
                     </div>
                 </ModalContent>
                 <ModalActions>
-                    <Button color='green' onClick={this.onClickHandler}>Add product</Button>
+                    <Button color='green' onClick={this.onClickHandler} loading={this.props.main.isButtonLoading}>Add product</Button>
                 </ModalActions>
             </Modal>
         );
@@ -64,7 +64,8 @@ class OrderProductsModal extends Component {
 
 function MapStateToProps(state) {
     return {
-        orderProducts: state.orderProducts
+        orderProducts: state.orderProducts,
+        main: state.main
     };
 }
 

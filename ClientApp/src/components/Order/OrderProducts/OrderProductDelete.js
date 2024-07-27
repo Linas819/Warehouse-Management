@@ -12,7 +12,7 @@ class OrderProductDelete extends Component {
     }
     render(){
         return(
-            <Button color='red' onClick={this.onClickHandler}>Delete</Button>
+            <Button color='red' loading={this.props.main.isButtonLoading} onClick={this.onClickHandler}>Delete</Button>
         );
     }
 }

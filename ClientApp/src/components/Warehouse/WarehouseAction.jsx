@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { SET_WAREHOUSE_DATA } from './WarehouseReducer';
-import { SetDateTimeFormat, SetErrorModal } from '../MainAction';
+import { SetButtonLoading, SetDateTimeFormat, SetErrorModal } from '../MainAction';
 
 export const GetWarehouseProducts = () => {
     return async (dispatch) => {
@@ -20,6 +20,7 @@ export const GetWarehouseProducts = () => {
 
 export const DeleteWarehouseProduct = (productId) => {
     return async (dispatch) => {
+        dispatch(SetButtonLoading(true));
         let result = await axios.delete(`warehouse/${productId}`);
         if(result.data.success)
         {
@@ -27,6 +28,7 @@ export const DeleteWarehouseProduct = (productId) => {
         } else {
             dispatch(SetErrorModal(true, result.data.message));
         }
+        dispatch(SetButtonLoading(false));
     }
 }
 

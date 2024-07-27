@@ -1,6 +1,6 @@
 import axios from "axios";
 import { SET_ORDERS_DATA, SET_ORDER_CREATE_MODAL, SET_ADDRESS_OPTIONS } from "./OrderReducer";
-import { SetDateTimeFormat, SetErrorModal } from "../MainAction";
+import { SetButtonLoading, SetDateTimeFormat, SetErrorModal } from "../MainAction";
 
 export const GetOrdersData = () => {
     return async(dispatch) => {
@@ -12,6 +12,7 @@ export const GetOrdersData = () => {
 
 export const DeleteOrderData = (orderId) => {
     return async(dispatch) => {
+        dispatch(SetButtonLoading(true));
         let result = await axios.delete(`order/${orderId}`);
         if(result.data.success)
         {
@@ -19,11 +20,13 @@ export const DeleteOrderData = (orderId) => {
         } else {
             dispatch(SetErrorModal(true, result.data.message));
         }
+        dispatch(SetButtonLoading(false));
     }
 }
 
 export const PostNewOrder = (order) => {
     return async(dispatch) => {
+        dispatch(SetButtonLoading(true));
         const result = await axios.post(`order`, order);
         if(result.data.success)
         {
@@ -32,6 +35,7 @@ export const PostNewOrder = (order) => {
         } else {
             dispatch(SetErrorModal(true, result.data.message));
         }
+        dispatch(SetButtonLoading(false));
     }
 }
 

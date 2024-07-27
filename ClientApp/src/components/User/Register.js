@@ -96,7 +96,7 @@ class Register extends Component {
                             return <Checkbox name='rights' key={rights.accessId} label={rights.accessName} onChange={this.onChangehandler}/>
                         })}
                     </div>
-                    <Button color='green' style={{marginTop: '20px'}} onClick={this.onClickHandler}>Register</Button>
+                    <Button color='green' loading={this.props.main.isButtonLoading} style={{marginTop: '20px'}} onClick={this.onClickHandler}>Register</Button>
                 </div>
                 <ErrorModal/>
             </div>
