@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { GridColumn, Grid, Button } from 'semantic-ui-react';
 import { Header } from 'semantic-ui-react';
 import { SetProductCreateModal } from './Warehouse/ProductCreateModal/ProductCreateModalAction';
+import { SetOrderCreateModal, GetAddressOptions } from './Order/OrderAction';
 import { withRouter } from 'react-router-dom';
 
 class AppHeader extends Component {
@@ -11,6 +12,10 @@ class AppHeader extends Component {
         switch(data.name) {
             case "createProduct":
                 this.props.SetProductCreateModal(true);
+                break;
+            case "createOrder":
+                this.props.GetAddressOptions();
+                this.props.SetOrderCreateModal(true);
                 break;
             case "menu":
                 history.push("/menu");
@@ -41,7 +46,8 @@ class AppHeader extends Component {
                     </Header>
                 </GridColumn>
                 <GridColumn textAlign='center'>
-                    {pathname === "/warehouseinventory" ? <Button color='green' name='createProduct' onClick={this.onClickHandler}>Create Product</Button> : ""}
+                    {pathname === "/warehouseinventory" ? <Button color='green' name='createProduct' onClick={this.onClickHandler}>Create Product</Button> : 
+                        pathname === "/orders" ? <Button color='green' name='createOrder' onClick={this.onClickHandler}>Create order</Button> : ""}
                 </GridColumn>
             </Grid>
         );
@@ -55,5 +61,5 @@ function MapStateToProps(state) {
 }
 
 export default withRouter(
-    connect( MapStateToProps, {SetProductCreateModal})
+    connect( MapStateToProps, {SetProductCreateModal, SetOrderCreateModal, GetAddressOptions})
     (AppHeader));

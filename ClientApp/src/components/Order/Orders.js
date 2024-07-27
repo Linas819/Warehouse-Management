@@ -8,6 +8,7 @@ import AppHeader from '../AppHeader';
 import { LoginAuthentication } from '../MainAction';
 import { ordersListColumnDefs } from './OrdersUtils';
 import OrderProductsModal from './OrderProducts/OrderProductsModal';
+import OrderCreateModal from './OrderCreateModal';
 
 class Orders extends Component
 {
@@ -27,6 +28,7 @@ class Orders extends Component
                 </div>
                 <ErrorModal/>
                 <OrderProductsModal/>
+                <OrderCreateModal/>
             </div>
         );
     }

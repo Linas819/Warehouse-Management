@@ -36,12 +36,32 @@ public class OrderController : ControllerBase
             Data = orderProducts
         }));
     }
+    [HttpGet]
+    [Route("address")]
+    public IActionResult GetAddresses()
+    {
+        List<Address> addresses = orderServices.GetAddresses();
+        return(Ok(new{
+            Success = true,
+            Data = addresses
+        }));
+    }
     [HttpPost]
     [Route("neworderproduct")]
-    public IActionResult SetNewOrderProduct(NewOrderProduct newOrderProduct)
+    public IActionResult SetNewOrderProduct([FromBody] NewOrderProduct newOrderProduct)
     {
         string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
         DatabaseUpdateResponce responce = orderServices.SetNewOrderProduct(newOrderProduct, userId);
+        return(Ok(new{
+            Success = responce.Success,
+            Message = responce.Message
+        }));
+    }
+    [HttpPost]
+    public IActionResult PostNewOrder([FromBody] NewOrder newOrder)
+    {
+        string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
+        DatabaseUpdateResponce responce = orderServices.PostNewOrder(newOrder, userId);
         return(Ok(new{
             Success = responce.Success,
             Message = responce.Message

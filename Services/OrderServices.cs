@@ -17,6 +17,10 @@ public class OrderServices
     {
         return ordersContext.Orders.ToList();
     }
+    public List<Address> GetAddresses()
+    {
+        return ordersContext.Addresses.ToList();
+    }
     public List<OrderProductsList> GetOrderProducts(string orderId)
     {
         List<OrderProductsList> orderProducts = 
@@ -62,6 +66,19 @@ public class OrderServices
                 responce.Message = "Not enaugh product quantity in warehouse. Add product with lower quantity";
             }
         }
+        return responce;
+    }
+    public DatabaseUpdateResponce PostNewOrder(NewOrder newOrder, string userId)
+    {
+        Order order = new Order{
+            OrderId = newOrder.OrderId,
+            AddressFrom = newOrder.AddressFrom,
+            AddressTo = newOrder.AddressTo,
+            CreatedBy = userId,
+            CreatedDateTime = DateTime.Now
+        };
+        ordersContext.Orders.Add(order);
+        DatabaseUpdateResponce responce = SaveOrdersDatabaseChanges();
         return responce;
     }
     public DatabaseUpdateResponce DeleteOrder(string orderId)
