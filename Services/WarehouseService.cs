@@ -35,7 +35,7 @@ public class WarehouseService
     }
     public DatabaseUpdateResponce DeleteWarehouseProduct(string productId)
     {
-        warehouseContext.Remove(warehouseContext.Products.Single(x => x.ProductId == productId));
+        warehouseContext.Remove(warehouseContext.Products.Where(x => x.ProductId == productId).First());
         DatabaseUpdateResponce responseModel = SaveWarehouseDatabaseChanges();
         return responseModel;
     }

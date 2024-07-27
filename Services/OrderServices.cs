@@ -37,34 +37,42 @@ public class OrderServices
     public DatabaseUpdateResponce SetNewOrderProduct(NewOrderProduct newOrderProduct, string userId)
     {
         DatabaseUpdateResponce responce = new DatabaseUpdateResponce();
-        var product = warehouseContext.Products.Where(x => x.ProductId == newOrderProduct.ProductId 
-            && x.ProductQuantity >= newOrderProduct.productQuantity).FirstOrDefault();
-        if(product != null)
+        var existingProductLine = ordersContext.OrderProductLines
+            .Where(x => x.OrderId == newOrderProduct.OrderId && x.ProductId == newOrderProduct.ProductId).FirstOrDefault();
+        if(existingProductLine != null)
         {
-            OrderProductLine productLine = new OrderProductLine{
-            OrderId = newOrderProduct.OrderId,
-            ProductId = newOrderProduct.ProductId,
-            OrderProductQuantity = newOrderProduct.productQuantity,
-            CreatedDateTime = DateTime.Now,
-            CreatedBy = userId
-            };
-            ordersContext.OrderProductLines.Add(productLine);
-            responce = SaveOrdersDatabaseChanges();
-        } else {
             responce.Success = false;
-            responce.Message = "Not enaugh product quantity in warehouse. Add product with lower quantity";
+            responce.Message = "Product is already in this order";
+        } else {
+            var product = warehouseContext.Products.Where(x => x.ProductId == newOrderProduct.ProductId 
+                && x.ProductQuantity >= newOrderProduct.productQuantity).FirstOrDefault();
+            if(product != null)
+            {
+                OrderProductLine productLine = new OrderProductLine{
+                OrderId = newOrderProduct.OrderId,
+                ProductId = newOrderProduct.ProductId,
+                OrderProductQuantity = newOrderProduct.productQuantity,
+                CreatedDateTime = DateTime.Now,
+                CreatedBy = userId
+                };
+                ordersContext.OrderProductLines.Add(productLine);
+                responce = SaveOrdersDatabaseChanges();
+            } else {
+                responce.Success = false;
+                responce.Message = "Not enaugh product quantity in warehouse. Add product with lower quantity";
+            }
         }
         return responce;
     }
     public DatabaseUpdateResponce DeleteOrder(string orderId)
     {
-        ordersContext.Remove(ordersContext.Orders.Single(x => x.OrderId == orderId));
+        ordersContext.Remove(ordersContext.Orders.Where(x => x.OrderId == orderId).First());
         DatabaseUpdateResponce responce = SaveOrdersDatabaseChanges();
         return responce;
     }
     public DatabaseUpdateResponce DeleteOrderProduct(string orderId, string productId)
     {
-        ordersContext.OrderProductLines.Remove(ordersContext.OrderProductLines.Single(x => x.OrderId == orderId && x.ProductId == productId));
+        ordersContext.OrderProductLines.Remove(ordersContext.OrderProductLines.Where(x => x.OrderId == orderId && x.ProductId == productId).First());
         DatabaseUpdateResponce responce = SaveOrdersDatabaseChanges();
         return responce;
     }
