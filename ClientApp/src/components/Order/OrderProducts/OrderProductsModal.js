@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { SetOrderProductsModal, SetNewProductToOrder } from './OrderProductsAction';
 import { AgGridReact } from 'ag-grid-react';
 import { orderProductsColumnDefs } from '../OrdersUtils';
+import { SetErrorModal } from '../../MainAction';
 
 class OrderProductsModal extends Component {
     constructor(props)
@@ -33,6 +34,16 @@ class OrderProductsModal extends Component {
         }
     }
     onClickHandler = () => {
+        if(this.state.productId === "")
+        {
+            this.props.SetErrorModal(true, "Product ID required");
+            return;
+        }
+        if(this.state.productQuantity === 0)
+        {
+            this.props.SetErrorModal(true, "Product quantity cannot be 0");
+            return;
+        }
         const orderId = this.props.orderProducts.orderId;
         this.props.SetNewProductToOrder(orderId, this.state.productId, this.state.productQuantity)
     }
@@ -70,5 +81,5 @@ function MapStateToProps(state) {
 }
 
 export default withRouter(
-    connect( MapStateToProps, {SetOrderProductsModal, SetNewProductToOrder})
+    connect( MapStateToProps, {SetOrderProductsModal, SetNewProductToOrder, SetErrorModal})
     (OrderProductsModal));

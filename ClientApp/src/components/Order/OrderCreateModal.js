@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Button, Dropdown, Input, Modal, ModalActions, ModalContent, ModalHeader } from 'semantic-ui-react';
 import { SetOrderCreateModal, PostNewOrder } from './OrderAction';
+import { SetErrorModal } from '../MainAction';
 
 class OrderCreateModal extends Component {
     constructor(props)
@@ -24,6 +25,23 @@ class OrderCreateModal extends Component {
         });
     }
     onClickHandler = () => {
+        if(this.state.orderId === "")
+        {
+            this.props.SetErrorModal(true, "Order ID required");
+            return;
+        }
+            
+        if(this.state.addressFrom === "")
+        {
+            this.props.SetErrorModal(true, "Address from required");
+            return;
+        }
+            
+        if(this.state.addressTo === "")
+        {
+            this.props.SetErrorModal(true, "Address to required");
+            return;
+        }
         this.props.PostNewOrder(this.state);
     }
     render(){
@@ -53,5 +71,5 @@ function MapStateToProps(state) {
 }
 
 export default withRouter(
-    connect( MapStateToProps, {SetOrderCreateModal, PostNewOrder})
+    connect( MapStateToProps, {SetOrderCreateModal, PostNewOrder, SetErrorModal})
     (OrderCreateModal));
