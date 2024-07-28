@@ -85,7 +85,7 @@ class ProductCreateModal extends Component {
     }
     render() {
         return (
-            <Modal open={this.props.productCreate.productCreateModalOpen} onClose={this.onModalClose}>
+            <Modal size='mini' open={this.props.productCreate.productCreateModalOpen} onClose={this.onModalClose}>
                 <ModalHeader>Product Creation</ModalHeader>
                 <ModalContent>
                     <Form>

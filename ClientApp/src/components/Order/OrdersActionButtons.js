@@ -4,6 +4,7 @@ import { Button } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { DeleteOrderData } from './OrderAction';
 import { SetOrderProductsModal, GetOrderProducts } from './OrderProducts/OrderProductsAction';
+import { SetOrderAddressChangeModal, GetAddressOptions } from './OrderAction';
 
 class OrdersActionButtons extends Component {
     onClickHandler = (event, data) => {
@@ -14,6 +15,8 @@ class OrdersActionButtons extends Component {
                 this.props.SetOrderProductsModal(true);
                 break;
             case "changeAddress":
+                this.props.GetAddressOptions(true);
+                this.props.SetOrderAddressChangeModal(true, orderId);
                 break;
             case "delete":
                 this.props.DeleteOrderData(orderId);
@@ -40,5 +43,6 @@ function MapStateToProps(state) {
 }
 
 export default withRouter(
-    connect( MapStateToProps, {DeleteOrderData, SetOrderProductsModal, GetOrderProducts})
+    connect( MapStateToProps, {DeleteOrderData, SetOrderProductsModal, GetOrderProducts, 
+        SetOrderAddressChangeModal, GetAddressOptions})
 (OrdersActionButtons));

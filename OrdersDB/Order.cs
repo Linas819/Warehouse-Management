@@ -15,6 +15,10 @@ public partial class Order
 
     public string CreatedBy { get; set; } = null!;
 
+    public DateTime UpdateDateTime { get; set; }
+
+    public string? UpdatedUserId { get; set; }
+
     public virtual Address AddressFromNavigation { get; set; } = null!;
 
     public virtual Address AddressToNavigation { get; set; } = null!;

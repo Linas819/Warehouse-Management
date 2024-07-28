@@ -67,6 +67,17 @@ public class OrderController : ControllerBase
             Message = responce.Message
         }));
     }
+    [HttpPut]
+    [Route("address")]
+    public IActionResult UpdateOrderAddress([FromBody] NewOrder newOrder)
+    {
+        string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
+        DatabaseUpdateResponce responce = orderServices.UpdateOrderAddress(newOrder, userId);
+        return(Ok(new{
+            Success = responce.Success,
+            Message = responce.Message
+        }));
+    }
     [HttpDelete("{*orderId}")]
     public IActionResult DeleteOrder(string orderId)
     {

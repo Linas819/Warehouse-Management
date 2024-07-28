@@ -9,6 +9,7 @@ import { LoginAuthentication } from '../MainAction';
 import { ordersListColumnDefs } from './OrdersUtils';
 import OrderProductsModal from './OrderProducts/OrderProductsModal';
 import OrderCreateModal from './OrderCreateModal';
+import OrderAddressChangeModal from './OrderAddressChangeModal';
 
 class Orders extends Component
 {
@@ -29,6 +30,7 @@ class Orders extends Component
                 <ErrorModal/>
                 <OrderProductsModal/>
                 <OrderCreateModal/>
+                <OrderAddressChangeModal/>
             </div>
         );
     }

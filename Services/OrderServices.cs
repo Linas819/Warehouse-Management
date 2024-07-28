@@ -107,6 +107,16 @@ public class OrderServices
         responce = SaveOrdersDatabaseChanges();
         return responce;
     }
+    public DatabaseUpdateResponce UpdateOrderAddress(NewOrder newOrder, string userId)
+    {
+        Order order = ordersContext.Orders.Where(x => x.OrderId == newOrder.OrderId).First();
+        order.AddressFrom = newOrder.AddressFrom;
+        order.AddressTo = newOrder.AddressTo;
+        order.UpdateDateTime = DateTime.Now;
+        order.UpdatedUserId = userId;
+        DatabaseUpdateResponce responce = SaveOrdersDatabaseChanges();
+        return responce;
+    }
     public DatabaseUpdateResponce DeleteOrderProduct(string orderId, string productId, string userId)
     {
         DatabaseUpdateResponce responce = new DatabaseUpdateResponce();

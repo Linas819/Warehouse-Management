@@ -25,6 +25,10 @@ public partial class Address
 
     public DateTime CreatedDateTime { get; set; }
 
+    public DateTime UpdateDateTime { get; set; }
+
+    public string UpdateUserId { get; set; } = null!;
+
     public virtual ICollection<Order> OrderAddressFromNavigations { get; } = new List<Order>();
 
     public virtual ICollection<Order> OrderAddressToNavigations { get; } = new List<Order>();

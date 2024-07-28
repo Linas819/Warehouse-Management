@@ -8,7 +8,9 @@ export const ordersListColumnDefs = [
     {headerName: "Address to", field: "addressTo", filter: true, sortable: true, flex: 1, resizable: true, floatingFilter: true},
     {headerName: "Created by", field: "createdBy", filter: true, sortable: true, flex: 1, resizable: true, floatingFilter: true},
     {headerName: "Created date", field: "createdDateTime", filter: true, sortable: true, flex: 1, resizable: true, floatingFilter: true},
-    {headerName: "Action", field: "action", flex: 1, resizable: true, cellStyle: {textAlign: "center"}, cellRenderer: OrdersActionButtons}
+    {headerName: "Updated by", field: "updatedUserId", filter: true, sortable: true, flex: 1, resizable: true, floatingFilter: true},
+    {headerName: "Updated date", field: "updateDateTime", filter: true, sortable: true, flex: 1, resizable: true, floatingFilter: true},
+    {headerName: "Action", field: "action", flex: 2, resizable: true, cellStyle: {textAlign: "center"}, cellRenderer: OrdersActionButtons}
 ];
 
 export const orderProductsColumnDefs = [

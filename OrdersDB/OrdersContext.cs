@@ -35,6 +35,8 @@ public partial class OrdersContext : DbContext
 
             entity.ToTable("address");
 
+            entity.HasIndex(e => e.UpdateUserId, "Updated User");
+
             entity.HasIndex(e => e.CreatedBy, "User");
 
             entity.Property(e => e.AddressId)
@@ -67,6 +69,12 @@ public partial class OrdersContext : DbContext
             entity.Property(e => e.CreatedDateTime)
                 .HasMaxLength(6)
                 .HasColumnName("Created_Date_Time");
+            entity.Property(e => e.UpdateDateTime)
+                .HasMaxLength(6)
+                .HasColumnName("Update_Date_Time");
+            entity.Property(e => e.UpdateUserId)
+                .HasMaxLength(20)
+                .HasColumnName("Update_User_ID");
         });
 
         modelBuilder.Entity<Order>(entity =>
@@ -80,6 +88,8 @@ public partial class OrdersContext : DbContext
             entity.HasIndex(e => e.AddressTo, "Address to");
 
             entity.HasIndex(e => e.CreatedBy, "Order user");
+
+            entity.HasIndex(e => e.UpdatedUserId, "Update_id");
 
             entity.Property(e => e.OrderId)
                 .HasMaxLength(20)
@@ -96,6 +106,13 @@ public partial class OrdersContext : DbContext
             entity.Property(e => e.CreatedDateTime)
                 .HasMaxLength(6)
                 .HasColumnName("Created_Date_Time");
+            entity.Property(e => e.UpdateDateTime)
+                .HasMaxLength(6)
+                .HasColumnName("Update_Date_Time");
+            entity.Property(e => e.UpdatedUserId)
+                .HasMaxLength(20)
+                .HasDefaultValueSql("'NULL'")
+                .HasColumnName("Updated_User_ID");
 
             entity.HasOne(d => d.AddressFromNavigation).WithMany(p => p.OrderAddressFromNavigations)
                 .HasForeignKey(d => d.AddressFrom)

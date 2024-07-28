@@ -30,13 +30,11 @@ class OrderCreateModal extends Component {
             this.props.SetErrorModal(true, "Order ID required");
             return;
         }
-            
         if(this.state.addressFrom === "")
         {
             this.props.SetErrorModal(true, "Address from required");
             return;
-        }
-            
+        }  
         if(this.state.addressTo === "")
         {
             this.props.SetErrorModal(true, "Address to required");
@@ -46,7 +44,7 @@ class OrderCreateModal extends Component {
     }
     render(){
         return(
-            <Modal open={this.props.orders.orderCreateModalOpen} onClose={this.onModalClose}>
+            <Modal size='mini' open={this.props.orders.orderCreateModalOpen} onClose={this.onModalClose}>
                 <ModalHeader>New order</ModalHeader>
                 <ModalContent style={{marginTop: '20px'}}>
                     <Input placeholder='Order ID' name='orderId' onChange={this.onChangeHandler}/><br/>
