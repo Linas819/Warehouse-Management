@@ -40,6 +40,11 @@ class OrderCreateModal extends Component {
             this.props.SetErrorModal(true, "Address to required");
             return;
         }
+        if(this.state.addressTo === this.state.addressFrom)
+        {
+            this.props.SetErrorModal(true, "Address to cannot be the same as address from");
+            return;
+        }
         this.props.PostNewOrder(this.state);
     }
     render(){

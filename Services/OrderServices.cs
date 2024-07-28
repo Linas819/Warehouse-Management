@@ -87,7 +87,9 @@ public class OrderServices
             AddressFrom = newOrder.AddressFrom,
             AddressTo = newOrder.AddressTo,
             CreatedBy = userId,
-            CreatedDateTime = DateTime.Now
+            CreatedDateTime = DateTime.Now,
+            UpdateDateTime = DateTime.Now,
+            UpdatedUserId = userId
         };
         ordersContext.Orders.Add(order);
         DatabaseUpdateResponce responce = SaveOrdersDatabaseChanges();
