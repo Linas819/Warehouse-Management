@@ -21,7 +21,7 @@ class ProductViewModal extends Component {
     render() {
         let productView = this.props.productView;
         return (
-            <Modal open={productView.productViewModalOpen} onClose={this.onModalClose}>
+            <Modal open={productView.productViewModal} onClose={this.onModalClose}>
                 <ModalHeader>{productView.productViewModalHeader}</ModalHeader>
                 <ModalContent>
                     <Tab panes={panes} renderActiveOnly={true}/>

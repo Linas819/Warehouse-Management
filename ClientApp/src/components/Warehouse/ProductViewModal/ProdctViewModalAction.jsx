@@ -9,18 +9,18 @@ export const SetProductViewModal = (open) => {
     }
 }
 
-export const SetProductViewModalContentHeader = (productId) => {
+export const SetProductViewModalContentAndHeader = (productId) => {
     return (dispatch, getstate) => {
         const products = getstate().warehouse.warehouseData; 
         const product = products.find(x => x.productId === productId);
         dispatch({type: SET_PRODUCT_VIEW_MODAL_HEADER, header: product.productId+"|"+product.productName});
         dispatch({type: SET_PRODUCT_VIEW_MODAL_CONTENT, product: product});
-        dispatch(GetProductViewPriceHistory(productId, 0));
-        dispatch(GetProductViewQuantityHistory(productId, 0));
+        dispatch(GetProductPriceHistory(productId, 0));
+        dispatch(GetProductQuantityHistory(productId, 0));
     }
 }
 
-export const GetProductViewPriceHistory = (productId, limit) => {
+export const GetProductPriceHistory = (productId, limit) => {
     return async(dispatch) => {
         let result = await axios.get(`warehouse/priceHistory`, {params: {
             productId: productId,
@@ -34,7 +34,7 @@ export const GetProductViewPriceHistory = (productId, limit) => {
     }
 }
 
-export const GetProductViewQuantityHistory = (productId, limit) => {
+export const GetProductQuantityHistory = (productId, limit) => {
     return async(dispatch) => {
         let result = await axios.get(`warehouse/quantityHistory`, {params: {
             productId: productId,

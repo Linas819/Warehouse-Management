@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { Input } from 'semantic-ui-react';
-import { GetProductViewQuantityHistory } from './ProdctViewModalAction';
+import { GetProductQuantityHistory } from './ProdctViewModalAction';
 import { withRouter } from 'react-router-dom';
 
   class QuantityHistoryTab extends Component {
@@ -39,7 +39,7 @@ import { withRouter } from 'react-router-dom';
     }
     onChangeHandler = async(event, data) => {
         const productId = this.props.productView.productViewContent.productId;
-        const quantityHistory = await this.props.GetProductViewQuantityHistory(productId, parseFloat(data.value));
+        const quantityHistory = await this.props.GetProductQuantityHistory(productId, parseFloat(data.value));
         this.setState({
             ...this.state,
             options: {
@@ -78,5 +78,5 @@ import { withRouter } from 'react-router-dom';
 }
 
 export default withRouter(
-    connect( MapStateToProps, {GetProductViewQuantityHistory})
+    connect( MapStateToProps, {GetProductQuantityHistory})
     (QuantityHistoryTab));

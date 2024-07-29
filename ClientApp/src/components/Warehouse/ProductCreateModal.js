@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, FormField, Input, Modal, ModalActions, ModalContent, ModalHeader } from 'semantic-ui-react';
-import { SetProductCreateModal, PostInventoryProduct } from './ProductCreateModalAction';
+import { SetProductCreateModal, PostWarehouseProduct } from './WarehouseAction';
 import { withRouter } from 'react-router-dom';
-import { SetErrorModal } from '../../MainAction';
+import { SetErrorModal } from '../MainAction';
 
 class ProductCreateModal extends Component {
     constructor(props) {
@@ -58,7 +58,7 @@ class ProductCreateModal extends Component {
             this.props.SetErrorModal(true, "Product quantity must be more than 0");
             return;
         }
-        this.props.PostInventoryProduct(this.state);
+        this.props.PostWarehouseProduct(this.state);
     }
     onChangeHandler = (event, data) => {
         switch(data.name){
@@ -85,7 +85,7 @@ class ProductCreateModal extends Component {
     }
     render() {
         return (
-            <Modal size='mini' open={this.props.productCreate.productCreateModalOpen} onClose={this.onModalClose}>
+            <Modal size='mini' open={this.props.warehouse.productCreateModal} onClose={this.onModalClose}>
                 <ModalHeader>Product Creation</ModalHeader>
                 <ModalContent>
                     <Form>
@@ -122,11 +122,11 @@ class ProductCreateModal extends Component {
 
 function MapStateToProps(state) {
     return {
-        productCreate: state.productCreateModal,
+        warehouse: state.warehouse,
         main: state.main
     };
 }
 
 export default withRouter(
-    connect( MapStateToProps, {SetProductCreateModal, PostInventoryProduct, SetErrorModal})
+    connect( MapStateToProps, {SetProductCreateModal, PostWarehouseProduct, SetErrorModal})
     (ProductCreateModal));

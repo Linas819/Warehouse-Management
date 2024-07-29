@@ -21,13 +21,13 @@ public class OrderServices
     {
         return ordersContext.Addresses.ToList();
     }
-    public List<OrderProductsList> GetOrderProducts(string orderId)
+    public List<OrderProduct> GetOrderProducts(string orderId)
     {
-        List<OrderProductsList> orderProducts = 
+        List<OrderProduct> orderProducts = 
             (from order in ordersContext.OrderProductLines 
             join prod in ordersContext.ProductsViews on order.ProductId equals prod.ProductId
             where order.OrderId == orderId 
-            select new OrderProductsList
+            select new OrderProduct
             {
                 OrderId = order.OrderId,
                 ProductId=prod.ProductId,
@@ -38,7 +38,7 @@ public class OrderServices
             }).ToList();
         return orderProducts;
     }
-    public DatabaseUpdateResponce SetNewOrderProduct(NewOrderProduct newOrderProduct, string userId)
+    public DatabaseUpdateResponce PostOrderProduct(NewOrderProduct newOrderProduct, string userId)
     {
         DatabaseUpdateResponce responce = new DatabaseUpdateResponce();
         var existingProductLine = ordersContext.OrderProductLines
@@ -80,7 +80,7 @@ public class OrderServices
         }
         return responce;
     }
-    public DatabaseUpdateResponce PostNewOrder(NewOrder newOrder, string userId)
+    public DatabaseUpdateResponce PostOrder(NewOrder newOrder, string userId)
     {
         Order order = new Order{
             OrderId = newOrder.OrderId,

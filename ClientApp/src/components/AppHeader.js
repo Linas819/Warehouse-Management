@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GridColumn, Grid, Button } from 'semantic-ui-react';
 import { Header } from 'semantic-ui-react';
-import { SetProductCreateModal } from './Warehouse/ProductCreateModal/ProductCreateModalAction';
 import { SetOrderCreateModal, GetAddressOptions } from './Order/OrderAction';
 import { withRouter } from 'react-router-dom';
 import { GetAddresses, SetAddressModal } from './Order/OrderAction';
+import { SetProductCreateModal } from './Warehouse/WarehouseAction';
 
 class AppHeader extends Component {
     onClickHandler = (event, data) => {

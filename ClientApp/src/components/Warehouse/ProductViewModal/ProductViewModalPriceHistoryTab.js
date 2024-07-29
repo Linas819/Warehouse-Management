@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Input } from 'semantic-ui-react';
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
-import { GetProductViewPriceHistory } from './ProdctViewModalAction';
+import { GetProductPriceHistory } from './ProdctViewModalAction';
 import { withRouter } from 'react-router-dom';
 
 class PriceHistoryTab extends Component {
@@ -21,7 +21,7 @@ class PriceHistoryTab extends Component {
                     title: {
                         text: "Changed date"
                     },
-                    categories: this.props.productView.productQuantityHistory.map((element) => {return element.createdDateTime + " " + element.createdUserId})
+                    categories: this.props.productView.productPriceHistory.map((element) => {return element.createdDateTime + " " + element.createdUserId})
                 },
                 yAxis: {
                     title: {
@@ -39,7 +39,7 @@ class PriceHistoryTab extends Component {
     }
     onChangeHandler = async(event, data) => {
         const productId = this.props.productView.productViewContent.productId;
-        const priceHistory = await this.props.GetProductViewPriceHistory(productId, parseFloat(data.value));
+        const priceHistory = await this.props.GetProductPriceHistory(productId, parseFloat(data.value));
         this.setState({
             ...this.state,
             options: {
@@ -78,5 +78,5 @@ function MapStateToProps(state) {
 }
 
 export default withRouter(
-    connect( MapStateToProps, {GetProductViewPriceHistory})
+    connect( MapStateToProps, {GetProductPriceHistory})
     (PriceHistoryTab));

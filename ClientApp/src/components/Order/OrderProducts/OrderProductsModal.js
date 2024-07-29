@@ -50,12 +50,12 @@ class OrderProductsModal extends Component {
     render(){
         const windowHeight = window.innerHeight;
         return(
-            <Modal open={this.props.orderProducts.orderProductsModalOpen} onClose={this.onModalClose}>
+            <Modal open={this.props.orderProducts.orderProductsModal} onClose={this.onModalClose}>
                 <ModalHeader>{this.props.orderProducts.orderId}</ModalHeader>
                 <ModalContent>
                     <Header as='h2'>Add product</Header>
                     <Dropdown placeholder='Products' name='productsDropdown' onChange={this.onChangeHandler}
-                        options={this.props.orderProducts.dropdownProducts}/>
+                        options={this.props.orderProducts.dropdownProductsOptions}/>
                     <Input placeholder='Quantity' type='number' min='1' step='1' onChange={this.onChangeHandler} name='newProductQuantity'/>
                     <Divider/>
                     <div className='ag-theme-quartz' style={{width: '100%', height: windowHeight/2}}>

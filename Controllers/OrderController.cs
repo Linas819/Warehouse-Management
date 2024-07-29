@@ -30,7 +30,7 @@ public class OrderController : ControllerBase
     [Route("products")]
     public IActionResult GetOrderProducts(string orderId)
     {
-        List<OrderProductsList> orderProducts = orderServices.GetOrderProducts(orderId);
+        List<OrderProduct> orderProducts = orderServices.GetOrderProducts(orderId);
         return(Ok(new{
             Success = true,
             Data = orderProducts
@@ -47,21 +47,21 @@ public class OrderController : ControllerBase
         }));
     }
     [HttpPost]
-    [Route("neworderproduct")]
-    public IActionResult SetNewOrderProduct([FromBody] NewOrderProduct newOrderProduct)
+    [Route("product")]
+    public IActionResult PostOrderProduct([FromBody] NewOrderProduct newOrderProduct)
     {
         string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
-        DatabaseUpdateResponce responce = orderServices.SetNewOrderProduct(newOrderProduct, userId);
+        DatabaseUpdateResponce responce = orderServices.PostOrderProduct(newOrderProduct, userId);
         return(Ok(new{
             Success = responce.Success,
             Message = responce.Message
         }));
     }
     [HttpPost]
-    public IActionResult PostNewOrder([FromBody] NewOrder newOrder)
+    public IActionResult PostOrder([FromBody] NewOrder newOrder)
     {
         string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
-        DatabaseUpdateResponce responce = orderServices.PostNewOrder(newOrder, userId);
+        DatabaseUpdateResponce responce = orderServices.PostOrder(newOrder, userId);
         return(Ok(new{
             Success = responce.Success,
             Message = responce.Message
@@ -89,7 +89,7 @@ public class OrderController : ControllerBase
             Message = responce.Message
         }));
     }
-    [HttpDelete("{*orderId}")]
+    [HttpDelete]
     public IActionResult DeleteOrder(string orderId)
     {
         string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;

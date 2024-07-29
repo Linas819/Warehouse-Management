@@ -28,7 +28,7 @@ public class WarehouseService
             warehouseContext.ProductQuantityHistories.Where(x => x.ProductId == productId).OrderBy(x => x.CreatedDateTime).Take(limit).ToList();
         return productPriceHistories;
     }
-    public List<Product> GetProductOptions()
+    public List<Product> GetProductsDropdownOptions()
     {
         List<Product> products = warehouseContext.Products.Where(x => x.ProductQuantity > 0).ToList();
         return products;
@@ -39,7 +39,7 @@ public class WarehouseService
         DatabaseUpdateResponce responseModel = SaveWarehouseDatabaseChanges();
         return responseModel;
     }
-    public DatabaseUpdateResponce AddWarehouseProduct (Product product)
+    public DatabaseUpdateResponce PostWarehouseProduct(Product product)
     {
         product.CreatedDateTime = DateTime.Now;
         product.UpdateDateTime = DateTime.Now;
@@ -61,7 +61,7 @@ public class WarehouseService
         DatabaseUpdateResponce responseModel = SaveWarehouseDatabaseChanges();
         return responseModel;
     }
-    public DatabaseUpdateResponce AddWarehouseProductPriceHistory(ProductValueUpdateForm productValueUpdateForm, string userId)
+    public DatabaseUpdateResponce PostWarehouseProductPriceHistory(ProductValueUpdateForm productValueUpdateForm, string userId)
     {
         ProductPriceHistory newProductPrice = new ProductPriceHistory
         {
@@ -74,7 +74,7 @@ public class WarehouseService
         DatabaseUpdateResponce responseModel = UpdateWarehouseProduct(productValueUpdateForm, userId);
         return responseModel;
     }
-    public DatabaseUpdateResponce AddWarehouseProductQuantityHistory(ProductValueUpdateForm productValueUpdateForm, string userId)
+    public DatabaseUpdateResponce PostWarehouseProductQuantityHistory(ProductValueUpdateForm productValueUpdateForm, string userId)
     {
         ProductQuantityHistory newProductQuantity = new ProductQuantityHistory
         {

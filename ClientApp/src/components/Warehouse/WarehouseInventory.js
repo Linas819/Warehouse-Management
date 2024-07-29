@@ -4,11 +4,11 @@ import { AgGridReact } from 'ag-grid-react';
 import { warehouseInventoryColumnDefs } from './WarehouseInventoryUtils';
 import { GetWarehouseProducts, UpdateWarehouseProduct, UpdateWarehouseProductPrice, UpdateWarehouseProductQuantity } from './WarehouseAction';
 import AppHeader from './../AppHeader';
-import ProductCreateModal from './ProductCreateModal/ProductCreateModal';
 import ProductViewModal from './ProductViewModal/ProductViewModal';
 import { withRouter } from 'react-router-dom';
 import { LoginAuthentication } from '../MainAction';
 import ErrorModal from '../ErrorModal';
+import ProductCreateModal from './ProductCreateModal';
 
 class WarehouseInventory extends Component
 {

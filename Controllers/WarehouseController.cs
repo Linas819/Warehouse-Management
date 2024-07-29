@@ -48,15 +48,15 @@ public class WarehouseController : ControllerBase
     }
     [HttpGet]
     [Route("products")]
-    public IActionResult GetProductOptions()
+    public IActionResult GetProductsDropdownOptions()
     {
-        List<Product> products = warehouseService.GetProductOptions();
+        List<Product> products = warehouseService.GetProductsDropdownOptions();
         return(Ok(new{
             Success = true,
             Data = products
         }));
     }
-    [HttpDelete("{*productId}")]
+    [HttpDelete]
     public IActionResult DeleteWarehouseProduct(string productId)
     {
         DatabaseUpdateResponce responceModel = warehouseService.DeleteWarehouseProduct(productId);
@@ -66,9 +66,9 @@ public class WarehouseController : ControllerBase
         }));
     }
     [HttpPost]
-    public IActionResult AddWarehouseProduct([FromBody] Product product)
+    public IActionResult PostWarehouseProduct([FromBody] Product product)
     {
-        DatabaseUpdateResponce responceModel = warehouseService.AddWarehouseProduct(product);
+        DatabaseUpdateResponce responceModel = warehouseService.PostWarehouseProduct(product);
         return(Ok(new{
             Success = responceModel.Success,
             Message = responceModel.Message
@@ -89,7 +89,7 @@ public class WarehouseController : ControllerBase
     public IActionResult UpdateWarehouseProductPrice([FromBody] ProductValueUpdateForm productUpdateForm)
     {
         string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
-        DatabaseUpdateResponce responceModel = warehouseService.AddWarehouseProductPriceHistory(productUpdateForm, userId);
+        DatabaseUpdateResponce responceModel = warehouseService.PostWarehouseProductPriceHistory(productUpdateForm, userId);
         return(Ok(new{
             Success = responceModel.Success,
             Message = responceModel.Message
@@ -100,7 +100,7 @@ public class WarehouseController : ControllerBase
     public IActionResult UpdateWarehouseProductQuantity([FromBody] ProductValueUpdateForm productUpdateForm)
     {
         string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
-        DatabaseUpdateResponce responceModel = warehouseService.AddWarehouseProductQuantityHistory(productUpdateForm, userId);
+        DatabaseUpdateResponce responceModel = warehouseService.PostWarehouseProductQuantityHistory(productUpdateForm, userId);
         return(Ok(new{
             Success = responceModel.Success,
             Message = responceModel.Message

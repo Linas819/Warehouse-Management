@@ -34,7 +34,7 @@ export const SetAddressModal = (open) => {
 export const DeleteOrderData = (orderId) => {
     return async(dispatch) => {
         dispatch(SetButtonLoading(true));
-        let result = await axios.delete(`order/${orderId}`);
+        let result = await axios.delete(`order`, {params: {orderId: orderId}});
         if(result.data.success)
         {
             dispatch(GetOrdersData());
@@ -45,7 +45,7 @@ export const DeleteOrderData = (orderId) => {
     }
 }
 
-export const PostNewOrder = (order) => {
+export const PostOrder = (order) => {
     return async(dispatch) => {
         dispatch(SetButtonLoading(true));
         const result = await axios.post(`order`, order);

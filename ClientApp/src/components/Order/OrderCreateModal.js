@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Button, Dropdown, Input, Modal, ModalActions, ModalContent, ModalHeader } from 'semantic-ui-react';
-import { SetOrderCreateModal, PostNewOrder } from './OrderAction';
+import { SetOrderCreateModal, PostOrder } from './OrderAction';
 import { SetErrorModal } from '../MainAction';
 
 class OrderCreateModal extends Component {
@@ -45,11 +45,11 @@ class OrderCreateModal extends Component {
             this.props.SetErrorModal(true, "Address to cannot be the same as address from");
             return;
         }
-        this.props.PostNewOrder(this.state);
+        this.props.PostOrder(this.state);
     }
     render(){
         return(
-            <Modal size='mini' open={this.props.orders.orderCreateModalOpen} onClose={this.onModalClose}>
+            <Modal size='mini' open={this.props.orders.orderCreateModal} onClose={this.onModalClose}>
                 <ModalHeader>New order</ModalHeader>
                 <ModalContent style={{marginTop: '20px'}}>
                     <Input placeholder='Order ID' name='orderId' onChange={this.onChangeHandler}/><br/>
@@ -74,5 +74,5 @@ function MapStateToProps(state) {
 }
 
 export default withRouter(
-    connect( MapStateToProps, {SetOrderCreateModal, PostNewOrder, SetErrorModal})
+    connect( MapStateToProps, {SetOrderCreateModal, PostOrder, SetErrorModal})
     (OrderCreateModal));

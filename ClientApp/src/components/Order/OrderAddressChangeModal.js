@@ -44,7 +44,7 @@ class OrderAddressChangeModal extends Component {
     }
     render(){
         return(
-            <Modal size='mini' open={this.props.orders.orderAddressChangeModalOpen} onClose={this.onModalClose}>
+            <Modal size='mini' open={this.props.orders.orderAddressChangeModal} onClose={this.onModalClose}>
                 <ModalHeader>{this.props.orders.orderAddressChangeModalOrderId} change address</ModalHeader>
                 <ModalContent >
                     <Dropdown placeholder='Address from' name='addressFrom' options={this.props.orders.addressOptions} onChange={this.onChangeHandler}/><br/>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SET_ORDER_ID, SET_ORDER_PRODUCTS, SET_ORDER_PRODUCTS_MODAL, SET_PRODUCT_OPTIONS } from "./OrderProductsReducer";
+import { SET_ORDER_ID, SET_ORDER_PRODUCTS, SET_ORDER_PRODUCTS_MODAL, SET_DROPDOWN_PRODUCT_OPTIONS } from "./OrderProductsReducer";
 import { SetButtonLoading, SetDateTimeFormat, SetErrorModal } from "../../MainAction";
 
 export const GetOrderProducts = (orderId) => {
@@ -28,7 +28,7 @@ export const SetNewProductOptions = () => {
                 value: element.productId
             }
         });
-        dispatch({type: SET_PRODUCT_OPTIONS, value: options});
+        dispatch({type: SET_DROPDOWN_PRODUCT_OPTIONS, value: options});
     }
 }
 
@@ -40,7 +40,7 @@ export const SetNewProductToOrder = (orderId, productId, productQuantity) => {
             productId: productId,
             productQuantity: productQuantity
         }
-        const result = await axios.post(`order/neworderproduct`, payload);
+        const result = await axios.post(`order/product`, payload);
         if(result.data.success)
         {
             dispatch(GetOrderProducts(orderId));

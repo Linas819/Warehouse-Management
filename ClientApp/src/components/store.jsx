@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { mainReducer } from './MainReducer';
 import { warehouseReducer } from './Warehouse/WarehouseReducer';
-import { productCreateModalReducer } from './Warehouse/ProductCreateModal/ProductCreateModalReducer';
 import { productViewModalReducer } from './Warehouse/ProductViewModal/ProductViewModalReducer';
 import { ordersReducer } from './Order/OrderReducer';
 import { orderProductsModalReducer } from './Order/OrderProducts/OrderProductsReducer';
@@ -16,7 +15,6 @@ export const store = configureStore({
     reducer: {
         main: mainReducer,
         warehouse: warehouseReducer,
-        productCreateModal: productCreateModalReducer,
         productViewModal :productViewModalReducer,
         orders: ordersReducer,
         orderProducts: orderProductsModalReducer

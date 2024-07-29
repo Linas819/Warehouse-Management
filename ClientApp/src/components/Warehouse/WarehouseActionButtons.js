@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 import { DeleteWarehouseProduct } from './WarehouseAction';
-import { SetProductViewModal, SetProductViewModalContentHeader } from './ProductViewModal/ProdctViewModalAction';
+import { SetProductViewModal, SetProductViewModalContentAndHeader } from './ProductViewModal/ProdctViewModalAction';
 import { withRouter } from 'react-router-dom';
 
 
@@ -15,7 +15,7 @@ class WarehouseActionButtons extends Component
                 this.props.DeleteWarehouseProduct(productId);
                 break;
             case "view":
-                this.props.SetProductViewModalContentHeader(productId);
+                this.props.SetProductViewModalContentAndHeader(productId);
                 this.props.SetProductViewModal(true);
                 break;
             default:
@@ -39,5 +39,5 @@ function MapStateToProps(state) {
 }
 
 export default withRouter(
-    connect( MapStateToProps, {DeleteWarehouseProduct, SetProductViewModal, SetProductViewModalContentHeader})
+    connect( MapStateToProps, {DeleteWarehouseProduct, SetProductViewModal, SetProductViewModalContentAndHeader})
 (WarehouseActionButtons));

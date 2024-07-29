@@ -70,7 +70,7 @@ class AddressModal extends Component {
     render(){
         const windowHeight = window.innerHeight;
         return(
-            <Modal size='fullscreen' open={this.props.orders.addressModalOpen} onClose={this.onModalClose}>
+            <Modal size='fullscreen' open={this.props.orders.addressModal} onClose={this.onModalClose}>
                 <ModalHeader>Addresses</ModalHeader>
                 <ModalContent>
                     <Header as='h2'>Add address</Header>

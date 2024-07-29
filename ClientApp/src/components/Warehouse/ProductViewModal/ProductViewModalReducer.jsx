@@ -6,7 +6,7 @@ export const SET_PRODUCT_VIEW_QUANTITY_HISTORY = "SET_PRODUCT_VIEW_QUANTITY_HIST
 export const SET_INITIAL_STATE = "SET_INITIAL_STATE";
 
 const initialState = {
-    productViewModalOpen: false,
+    productViewModal: false,
     productViewModalHeader: "",
     productViewContent: {},
     productPriceHistory: [],
@@ -19,7 +19,7 @@ export const productViewModalReducer = (state, action) => {
         case SET_PRODUCT_VIEW_MODAL:
             state = {
                 ...state,
-                productViewModalOpen: action.open
+                productViewModal: action.open
             };
             break;
         case SET_PRODUCT_VIEW_MODAL_HEADER:
