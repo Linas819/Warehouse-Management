@@ -95,6 +95,17 @@ public class OrderServices
         DatabaseUpdateResponce responce = SaveOrdersDatabaseChanges();
         return responce;
     }
+    public DatabaseUpdateResponce PostAddress(Address address, string userId)
+    {
+        address.AddressId = address.AddressId + ((int)DateTime.Now.Ticks/100000).ToString();
+        address.CreatedBy = userId;
+        address.UpdateUserId = userId;
+        address.CreatedDateTime = DateTime.Now;
+        address.UpdateDateTime = DateTime.Now;
+        ordersContext.Addresses.Add(address);
+        DatabaseUpdateResponce responce = SaveOrdersDatabaseChanges();
+        return responce;
+    }
     public DatabaseUpdateResponce DeleteOrder(string orderId, string userId)
     {
         DatabaseUpdateResponce responce = new DatabaseUpdateResponce();
@@ -138,6 +149,13 @@ public class OrderServices
             ordersContext.OrderProductLines.Remove(ordersContext.OrderProductLines.Where(x => x.OrderId == orderId && x.ProductId == productId).First());
             responce = SaveOrdersDatabaseChanges();
         }
+        return responce;
+    }
+    public DatabaseUpdateResponce DeleteAddress(string addressId)
+    {
+        Address address = ordersContext.Addresses.Where(x => x.AddressId == addressId).First();
+        ordersContext.Addresses.Remove(address);
+        DatabaseUpdateResponce responce = SaveOrdersDatabaseChanges();
         return responce;
     }
     public DatabaseUpdateResponce SaveOrdersDatabaseChanges()

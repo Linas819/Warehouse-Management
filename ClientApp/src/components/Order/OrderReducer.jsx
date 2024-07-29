@@ -5,6 +5,7 @@ export const SET_ORDER_CREATE_MODAL = "SET_ORDER_CREATE_MODAL";
 export const SET_ADDRESS_OPTIONS = "SET_ADDRESS_OPTIONS";
 export const SET_ADDRESS_CHANGE_MODAL =  "SET_ADDRESS_CHANGE_MODAL";
 export const SET_ADDRESS_CHANGE_MODAL_ORDER_ID =  "SET_ADDRESS_CHANGE_MODAL_ORDER_ID";
+export const SET_ADDRESS_MODAL =  "SET_ADDRESS_MODAL";
 
 const initialstate = {
     ordersData: [],
@@ -13,7 +14,8 @@ const initialstate = {
     orderCreateModalOpen: false,
     addressOptions: [],
     orderAddressChangeModalOpen: false,
-    orderAddressChangeModalOrderId: false
+    orderAddressChangeModalOrderId: false,
+    addressModalOpen: false
 }
 
 export const ordersReducer = (state, action) => {
@@ -59,6 +61,12 @@ export const ordersReducer = (state, action) => {
             state = {
                 ...state,
                 orderAddressChangeModalOrderId: action.orderId
+            };
+            break;
+        case SET_ADDRESS_MODAL:
+            state = {
+                ...state,
+                addressModalOpen: action.open
             };
             break;
         default:

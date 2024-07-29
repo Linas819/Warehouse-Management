@@ -67,8 +67,19 @@ public class OrderController : ControllerBase
             Message = responce.Message
         }));
     }
-    [HttpPut]
+    [HttpPost]
     [Route("address")]
+    public IActionResult PostAddress([FromBody] Address address)
+    {
+        string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
+        DatabaseUpdateResponce responce = orderServices.PostAddress(address, userId);
+        return(Ok(new{
+            Success = responce.Success,
+            Message = responce.Message
+        }));
+    }
+    [HttpPut]
+    [Route("orderaddress")]
     public IActionResult UpdateOrderAddress([FromBody] NewOrder newOrder)
     {
         string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
@@ -94,6 +105,16 @@ public class OrderController : ControllerBase
     {
         string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
         DatabaseUpdateResponce responce = orderServices.DeleteOrderProduct(orderId, productId, userId);
+        return(Ok(new{
+            Success = responce.Success,
+            Message = responce.Message
+        }));
+    }
+    [HttpDelete]
+    [Route("address")]
+    public IActionResult DeleteAddress(string addressId)
+    {
+        DatabaseUpdateResponce responce = orderServices.DeleteAddress(addressId);
         return(Ok(new{
             Success = responce.Success,
             Message = responce.Message

@@ -5,6 +5,7 @@ import { Header } from 'semantic-ui-react';
 import { SetProductCreateModal } from './Warehouse/ProductCreateModal/ProductCreateModalAction';
 import { SetOrderCreateModal, GetAddressOptions } from './Order/OrderAction';
 import { withRouter } from 'react-router-dom';
+import { GetAddresses, SetAddressModal } from './Order/OrderAction';
 
 class AppHeader extends Component {
     onClickHandler = (event, data) => {
@@ -16,6 +17,10 @@ class AppHeader extends Component {
             case "createOrder":
                 this.props.GetAddressOptions();
                 this.props.SetOrderCreateModal(true);
+                break;
+            case "checkAddresses":
+                this.props.GetAddresses();
+                this.props.SetAddressModal(true);
                 break;
             case "menu":
                 history.push("/menu");
@@ -42,12 +47,15 @@ class AppHeader extends Component {
                             pathname === "/menu" ? "Menu" :
                             pathname === "/warehouseinventory" ? "Warehouse Inventory" : 
                             pathname === "/register" ? "Register User" : 
-                            pathname === "/orders" ? "Orders" : ""}
+                            pathname === "/orders" ? "Orders" : ""} | {this.props.main.userId}
                     </Header>
                 </GridColumn>
                 <GridColumn textAlign='center'>
                     {pathname === "/warehouseinventory" ? <Button color='green' name='createProduct' onClick={this.onClickHandler}>Create Product</Button> : 
-                        pathname === "/orders" ? <Button color='green' name='createOrder' onClick={this.onClickHandler}>Create order</Button> : ""}
+                        pathname === "/orders" ? <div>
+                            <Button color='green' name='createOrder' onClick={this.onClickHandler}>Create order</Button>
+                            <Button color='blue' name='checkAddresses' onClick={this.onClickHandler}>Check addresses</Button>
+                        </div> : ""}
                 </GridColumn>
             </Grid>
         );
@@ -61,5 +69,5 @@ function MapStateToProps(state) {
 }
 
 export default withRouter(
-    connect( MapStateToProps, {SetProductCreateModal, SetOrderCreateModal, GetAddressOptions})
+    connect( MapStateToProps, {SetProductCreateModal, SetOrderCreateModal, GetAddressOptions, GetAddresses, SetAddressModal})
     (AppHeader));

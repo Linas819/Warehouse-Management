@@ -10,6 +10,7 @@ import { ordersListColumnDefs } from './OrdersUtils';
 import OrderProductsModal from './OrderProducts/OrderProductsModal';
 import OrderCreateModal from './OrderCreateModal';
 import OrderAddressChangeModal from './OrderAddressChangeModal';
+import AddressModal from './AddressModal';
 
 class Orders extends Component
 {
@@ -31,6 +32,7 @@ class Orders extends Component
                 <OrderProductsModal/>
                 <OrderCreateModal/>
                 <OrderAddressChangeModal/>
+                <AddressModal/>
             </div>
         );
     }
