@@ -6,6 +6,7 @@ import { SetAddressModal, PostAddress } from './OrderAction';
 import { AgGridReact } from 'ag-grid-react';
 import { addressesColumnDefs } from './OrdersUtils';
 import { SetErrorModal } from '../MainAction';
+import { UpdateAddress } from './OrderAction';
 
 class AddressModal extends Component {
     constructor(props)
@@ -59,7 +60,13 @@ class AddressModal extends Component {
         this.props.PostAddress(this.state);
     }
     onCellValueChangeHandler = (event) => {
-
+        event.data[event.colDef.field] = event.oldValue; //Prevent error in change of data value from AGGrid before redux dispatch
+        const addressUpdate = {
+            addressId: event.data.addressId,
+            fieldName: event.colDef.field,
+            newValue: event.newValue.toString()
+        };
+        this.props.UpdateAddress(addressUpdate);
     }
     onChangeHandler = (event, data) => {
         this.setState({
@@ -106,5 +113,5 @@ function MapStateToProps(state) {
 }
 
 export default withRouter(
-    connect( MapStateToProps, {SetAddressModal, PostAddress, SetErrorModal})
+    connect( MapStateToProps, {SetAddressModal, PostAddress, SetErrorModal, UpdateAddress})
     (AddressModal));

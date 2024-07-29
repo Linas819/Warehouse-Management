@@ -92,6 +92,18 @@ export const DeleteAddress = (addressId) => {
     }
 }
 
+export const UpdateAddress = (address) => {
+    return async(dispatch) => {
+        const result = await axios.put(`order/address`, address);
+        if(result.data.success)
+        {
+            dispatch(GetAddresses());
+        } else {
+            dispatch(SetErrorModal(true, result.data.message));
+        }
+    }
+}
+
 export const SetOrderCreateModal = (open) => {
     return(dispatch) => {
         dispatch({type: SET_ORDER_CREATE_MODAL, open: open});

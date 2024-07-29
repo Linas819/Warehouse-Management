@@ -106,6 +106,17 @@ public class OrderServices
         DatabaseUpdateResponce responce = SaveOrdersDatabaseChanges();
         return responce;
     }
+    public DatabaseUpdateResponce UpdateAddress(AddressUpdate updateAddress, string userId)
+    {
+        //Changing the first letter of FieldName to match Product property names
+        updateAddress.FieldName = char.ToUpper(updateAddress.FieldName[0])+updateAddress.FieldName.Substring(1);
+        Address address = ordersContext.Addresses.Where(x => x.AddressId == updateAddress.AddressId).First();
+        address.UpdateDateTime = DateTime.Now;
+        address.UpdateUserId = userId;
+        address.GetType().GetProperty(updateAddress.FieldName)!.SetValue(address, updateAddress.NewValue);
+        DatabaseUpdateResponce responce = SaveOrdersDatabaseChanges();
+        return responce;
+    }
     public DatabaseUpdateResponce DeleteOrder(string orderId, string userId)
     {
         DatabaseUpdateResponce responce = new DatabaseUpdateResponce();

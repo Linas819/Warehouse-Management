@@ -79,6 +79,17 @@ public class OrderController : ControllerBase
         }));
     }
     [HttpPut]
+    [Route("address")]
+    public IActionResult UpdateAddress([FromBody] AddressUpdate address)
+    {
+        string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
+        DatabaseUpdateResponce responce = orderServices.UpdateAddress(address, userId);
+        return(Ok(new{
+            Success = responce.Success,
+            Message = responce.Message
+        }));
+    }
+    [HttpPut]
     [Route("orderaddress")]
     public IActionResult UpdateOrderAddress([FromBody] NewOrder newOrder)
     {
