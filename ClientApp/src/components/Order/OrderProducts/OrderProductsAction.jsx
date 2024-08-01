@@ -1,6 +1,7 @@
 import axios from "axios";
 import { SET_ORDER_ID, SET_ORDER_PRODUCTS, SET_ORDER_PRODUCTS_MODAL, SET_DROPDOWN_PRODUCT_OPTIONS } from "./OrderProductsReducer";
 import { SetButtonLoading, SetDateTimeFormat, SetErrorModal } from "../../MainAction";
+import { GetOrdersData } from "../OrderAction";
 
 export const GetOrderProducts = (orderId) => {
     return async(dispatch) => {
@@ -58,6 +59,21 @@ export const DeleteOrderProduct = (orderId, productId) => {
         if(result.data.success)
         {
             dispatch(GetOrderProducts(orderId));
+        } else {
+            dispatch(SetErrorModal(true, result.data.message));
+        }   
+        dispatch(SetButtonLoading(false));
+    }
+}
+
+export const GetPayslip = (orderId) => {
+    return async(dispatch) => {
+        dispatch(SetButtonLoading(true));
+        const result = await axios.get(`order/complete`, {params: {orderId: orderId}});
+        if(result.data.success)
+        {
+            dispatch(GetOrdersData());
+            dispatch(SetOrderProductsModal(false));
         } else {
             dispatch(SetErrorModal(true, result.data.message));
         }   

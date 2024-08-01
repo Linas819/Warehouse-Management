@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PdfSharp.Pdf;
 using warehouse_management.Models;
 using warehouse_management.OrdersDB;
 using warehouse_management.Services;
@@ -44,6 +45,16 @@ public class OrderController : ControllerBase
         return(Ok(new{
             Success = true,
             Data = addresses
+        }));
+    }
+    [HttpGet]
+    [Route("complete")]
+    public IActionResult CompleteOrder(string orderId)
+    {
+        DatabaseUpdateResponce responce = orderServices.CompleteOrder(orderId);
+        return(Ok(new{
+            Success = responce.Success,
+            Message = responce.Message
         }));
     }
     [HttpPost]

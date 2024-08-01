@@ -51,7 +51,7 @@ public partial class WarehouseContext : DbContext
                 .HasMaxLength(20)
                 .HasColumnName("Created_User_ID");
             entity.Property(e => e.ProductEan)
-                .HasMaxLength(11)
+                .HasMaxLength(15)
                 .HasColumnName("Product_EAN");
             entity.Property(e => e.ProductName)
                 .HasMaxLength(10)

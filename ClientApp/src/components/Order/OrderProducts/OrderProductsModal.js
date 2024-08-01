@@ -6,6 +6,7 @@ import { SetOrderProductsModal, SetNewProductToOrder } from './OrderProductsActi
 import { AgGridReact } from 'ag-grid-react';
 import { orderProductsColumnDefs } from '../OrdersUtils';
 import { SetErrorModal } from '../../MainAction';
+import { GetPayslip } from './OrderProductsAction';
 
 class OrderProductsModal extends Component {
     constructor(props)
@@ -33,19 +34,24 @@ class OrderProductsModal extends Component {
             });
         }
     }
-    onClickHandler = () => {
-        if(this.state.productId === "")
-        {
-            this.props.SetErrorModal(true, "Product ID required");
-            return;
-        }
-        if(this.state.productQuantity === 0)
-        {
-            this.props.SetErrorModal(true, "Product quantity cannot be 0");
-            return;
-        }
+    onClickHandler = (event, data) => {
         const orderId = this.props.orderProducts.orderId;
-        this.props.SetNewProductToOrder(orderId, this.state.productId, this.state.productQuantity)
+        if(data.name === "addProduct")
+        {
+            if(this.state.productId === "")
+            {
+                this.props.SetErrorModal(true, "Product ID required");
+                return;
+            }
+            if(this.state.productQuantity === 0)
+            {
+                this.props.SetErrorModal(true, "Product quantity cannot be 0");
+                return;
+            }
+            this.props.SetNewProductToOrder(orderId, this.state.productId, this.state.productQuantity)
+        } else if (data.name === "completeOrder") {
+            this.props.GetPayslip(orderId);
+        }
     }
     render(){
         const windowHeight = window.innerHeight;
@@ -66,7 +72,8 @@ class OrderProductsModal extends Component {
                     </div>
                 </ModalContent>
                 <ModalActions>
-                    <Button color='green' onClick={this.onClickHandler} loading={this.props.main.isButtonLoading}>Add product</Button>
+                    <Button color='green' name='addProduct' onClick={this.onClickHandler} loading={this.props.main.isButtonLoading}>Add product</Button>
+                    <Button color='blue' name='completeOrder' onClick={this.onClickHandler} loading={this.props.main.isButtonLoading}>Complete</Button>
                 </ModalActions>
             </Modal>
         );
@@ -81,5 +88,5 @@ function MapStateToProps(state) {
 }
 
 export default withRouter(
-    connect( MapStateToProps, {SetOrderProductsModal, SetNewProductToOrder, SetErrorModal})
+    connect( MapStateToProps, {SetOrderProductsModal, SetNewProductToOrder, SetErrorModal, GetPayslip})
     (OrderProductsModal));

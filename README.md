@@ -34,7 +34,7 @@ MySQL Entity Framework 7.
 7. ~Create Log in page and menu~
 8. ~Create orders page~
 9. ~Create order creation and assigning page~
-10. Create order payslip generation
+10. ~Create order payslip generation~
 11. ~Create an error modal~
 12. ~Create functionality based on user access~
 13. ~Create registration page~
@@ -47,7 +47,7 @@ MySQL Entity Framework 7.
 5. ~Create User back-end functionaity (Log in, register, assign rights)~
 6. ~Add orders database~
 7. ~Add order creation functions.~
-8. Add Payslip pdf generation and saving
+8. ~Add Payslip pdf generation and saving~
 9. ~Set access and send back to Fornt-End~
 10. ~Create registration to back-end~
 

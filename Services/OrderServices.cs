@@ -1,3 +1,8 @@
+using MigraDoc.DocumentObjectModel;
+using MigraDoc.DocumentObjectModel.Tables;
+using MigraDoc.Rendering;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 using warehouse_management.Models;
 using warehouse_management.OrdersDB;
 using warehouse_management.WarehouseDB;
@@ -37,6 +42,177 @@ public class OrderServices
                 CreatedDateTime = order.CreatedDateTime
             }).ToList();
         return orderProducts;
+    }
+    public DatabaseUpdateResponce CompleteOrder(string orderId)
+    {
+        PayslipInfo payslipInfo = (
+            from order in ordersContext.Orders
+            join fromAddress in ordersContext.Addresses on order.AddressFrom equals fromAddress.AddressId
+            join toAddress in ordersContext.Addresses on order.AddressTo equals toAddress.AddressId
+            where order.OrderId == orderId
+            select new PayslipInfo{
+                OrderId = order.OrderId,
+                AddressFrom = fromAddress,
+                AddressTo = toAddress,
+            }).First();
+        payslipInfo.products = (
+            from orderProducts in ordersContext.OrderProductLines
+            join products in ordersContext.ProductsViews on orderProducts.ProductId equals products.ProductId
+            where orderProducts.OrderId == orderId
+            select new Product{
+                ProductId = products.ProductId,
+                ProductName = products.ProductName,
+                ProductEan = products.ProductEan,
+                ProductType = products.ProductType,
+                ProductWeight = products.ProductWeight,
+                ProductPrice = products.ProductPrice,
+                ProductQuantity = orderProducts.OrderProductQuantity
+            }).ToList();
+        string fileName = "Payslips/Payslip " + orderId + ".pdf";
+        Document document = new Document();
+        document.UseCmykColor = true;
+        PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
+        Section section = document.AddSection();
+
+        Paragraph paragraphTitle = section.AddParagraph();
+        paragraphTitle.Format.Font.Color = Color.FromCmyk(100, 30, 20, 50);
+        paragraphTitle.Format.Font.Size = 24;
+        paragraphTitle.Format.Alignment = ParagraphAlignment.Center;
+        paragraphTitle.AddFormattedText("Payslip: " + payslipInfo.OrderId, TextFormat.Bold);
+
+        Paragraph paragraphDateLocation = section.AddParagraph();
+        paragraphDateLocation.Format.Font.Color = Color.FromCmyk(100, 30, 20, 50);
+        paragraphDateLocation.Format.Font.Size = 12;
+        paragraphDateLocation.Format.Alignment = ParagraphAlignment.Center;
+        paragraphDateLocation.AddText(DateTime.Now.ToString("yyyy'-'MM'-'dd") + ", Kaunas");
+
+        section.AddParagraph().AddText("\n" + "\n");
+
+        Table addressTable = section.AddTable();
+        addressTable.Style = "Table";
+        addressTable.Borders.Width = 0;
+        addressTable.Rows.LeftIndent = 5;
+
+        Column addressTableColumn = addressTable.AddColumn("8cm");
+        addressTableColumn.Format.Alignment = ParagraphAlignment.Left;
+
+        addressTableColumn = addressTable.AddColumn("8cm");
+        addressTableColumn.Format.Alignment = ParagraphAlignment.Right;
+
+        string addressApartment = payslipInfo.AddressFrom.AddressApartment != "" ? "-"+payslipInfo.AddressFrom.AddressApartment : "";
+        Row addressTableRow = addressTable.AddRow();
+        addressTableRow.Cells[0].AddParagraph().AddFormattedText("Delivery from:", TextFormat.Bold);
+        addressTableRow.Cells[0].AddParagraph(payslipInfo.AddressFrom.AddressStreet + " st. " + payslipInfo.AddressFrom.AddressHouse + addressApartment);
+        addressTableRow.Cells[0].AddParagraph(payslipInfo.AddressFrom.AddressCity + " " + payslipInfo.AddressFrom.AddressRegion);
+        addressTableRow.Cells[0].AddParagraph(payslipInfo.AddressFrom.AddressZipCode + " " + payslipInfo.AddressFrom.AddressCountry);
+
+        addressApartment = payslipInfo.AddressTo.AddressApartment != "" ? "-"+payslipInfo.AddressTo.AddressApartment : "";
+        addressTableRow.Cells[1].AddParagraph().AddFormattedText("Delivery to:", TextFormat.Bold);
+        addressTableRow.Cells[1].AddParagraph(payslipInfo.AddressTo.AddressStreet + " st. " + payslipInfo.AddressTo.AddressHouse + addressApartment);
+        addressTableRow.Cells[1].AddParagraph(payslipInfo.AddressTo.AddressCity + " " + payslipInfo.AddressTo.AddressRegion);
+        addressTableRow.Cells[1].AddParagraph(payslipInfo.AddressTo.AddressZipCode + " " + payslipInfo.AddressTo.AddressCountry);
+
+        section.AddParagraph().AddText("\n" + "\n" + "\n" + "\n");
+
+        Table productTable = section.AddTable();
+        productTable.Style = "Table";
+        productTable.Borders.Width = 0.5;
+        productTable.Rows.LeftIndent = 5;
+
+        Column productTableColumn = productTable.AddColumn("1cm");
+        productTableColumn.Format.Alignment = ParagraphAlignment.Left;
+        productTableColumn = productTable.AddColumn("3cm");
+        productTableColumn.Format.Alignment = ParagraphAlignment.Left;
+        productTableColumn = productTable.AddColumn("3cm");
+        productTableColumn.Format.Alignment = ParagraphAlignment.Left;
+        productTableColumn = productTable.AddColumn("3cm");
+        productTableColumn.Format.Alignment = ParagraphAlignment.Left;
+        productTableColumn = productTable.AddColumn("2cm");
+        productTableColumn.Format.Alignment = ParagraphAlignment.Left;
+        productTableColumn = productTable.AddColumn("2cm");
+        productTableColumn.Format.Alignment = ParagraphAlignment.Left;
+        productTableColumn = productTable.AddColumn("2cm");
+        productTableColumn.Format.Alignment = ParagraphAlignment.Left;
+
+        Row productTableRow = productTable.AddRow();
+        productTableRow.HeadingFormat = true;
+        productTableRow.Format.Font.Bold = true;
+        productTableRow.Cells[0].AddParagraph("#");
+        productTableRow.Cells[1].AddParagraph("Product name");
+        productTableRow.Cells[2].AddParagraph("EAN");
+        productTableRow.Cells[3].AddParagraph("Product type");
+        productTableRow.Cells[4].AddParagraph("Product weight (kg)");
+        productTableRow.Cells[5].AddParagraph("Product price ($)");
+        productTableRow.Cells[6].AddParagraph("Product quantity");
+
+        int i = 1;
+        foreach(Product product in payslipInfo.products)
+        {
+            productTableRow = productTable.AddRow();
+            productTableRow.HeadingFormat = false;
+            productTableRow.Format.Font.Bold = false;
+            productTableRow.Cells[0].AddParagraph(i.ToString());
+            productTableRow.Cells[1].AddParagraph(product.ProductName);
+            productTableRow.Cells[2].AddParagraph(product.ProductEan);
+            productTableRow.Cells[3].AddParagraph(product.ProductType);
+            productTableRow.Cells[4].AddParagraph(product.ProductWeight.ToString());
+            productTableRow.Cells[5].AddParagraph(product.ProductPrice.ToString());
+            productTableRow.Cells[6].AddParagraph(product.ProductQuantity.ToString());
+            i++;
+        }
+
+        float totalWeight = payslipInfo.products.Sum(x => x.ProductWeight);
+        float totalPrice = payslipInfo.products.Sum(x => x.ProductPrice);
+        productTableRow = productTable.AddRow();
+        productTableRow.HeadingFormat = false;
+        productTableRow.Format.Font.Bold = true;  
+        productTableRow.Cells[0].Borders.Left.Width = 0;
+        productTableRow.Cells[0].Borders.Right.Width = 0;
+        productTableRow.Cells[0].Borders.Bottom.Width = 0;
+        productTableRow.Cells[1].Borders.Left.Width = 0;
+        productTableRow.Cells[1].Borders.Right.Width = 0;
+        productTableRow.Cells[1].Borders.Bottom.Width = 0;
+        productTableRow.Cells[2].Borders.Left.Width = 0;
+        productTableRow.Cells[2].Borders.Right.Width = 0;
+        productTableRow.Cells[2].Borders.Bottom.Width = 0;
+        productTableRow.Cells[3].Borders.Left.Width = 0;
+        productTableRow.Cells[3].Borders.Bottom.Width = 0;
+        productTableRow.Cells[3].AddParagraph("Total:");
+        productTableRow.Cells[3].Format.Alignment = ParagraphAlignment.Right;
+        productTableRow.Cells[4].AddParagraph(totalWeight.ToString());
+        productTableRow.Cells[5].AddParagraph(totalPrice.ToString());
+        productTableRow.Cells[6].Borders.Right.Width = 0;
+        productTableRow.Cells[6].Borders.Bottom.Width = 0;
+
+        section.AddParagraph().AddText("\n" + "\n" + "\n" + "\n");
+
+        Table signatureTable = section.AddTable();
+        signatureTable.Style = "Table";
+        signatureTable.Borders.Width = 0;
+        signatureTable.Rows.LeftIndent = 5;
+
+        Column signatureTableColumn = signatureTable.AddColumn("8cm");
+        signatureTableColumn.Format.Alignment = ParagraphAlignment.Center;
+
+        signatureTableColumn = signatureTable.AddColumn("8cm");
+        signatureTableColumn.Format.Alignment = ParagraphAlignment.Center;
+
+        Row signatureTableRow = signatureTable.AddRow();
+        signatureTableRow.Cells[0].AddParagraph().AddFormattedText("Driver:", TextFormat.Bold);
+        signatureTableRow.Cells[1].AddParagraph().AddFormattedText("Recieving foreman:", TextFormat.Bold);
+
+        signatureTableRow = signatureTable.AddRow();
+        signatureTableRow.Format.SpaceBefore = "2cm";
+        signatureTableRow.Cells[0].AddParagraph("____________________");
+        signatureTableRow.Cells[1].AddParagraph("____________________");
+
+        pdfRenderer.Document = document;
+        pdfRenderer.RenderDocument();
+        pdfRenderer.PdfDocument.Save(fileName);
+
+        ordersContext.Orders.Remove(ordersContext.Orders.Where(x => x.OrderId == orderId).First());
+
+        return SaveOrdersDatabaseChanges();
     }
     public DatabaseUpdateResponce PostOrderProduct(NewOrderProduct newOrderProduct, string userId)
     {
