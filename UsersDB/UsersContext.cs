@@ -66,7 +66,6 @@ public partial class UsersContext : DbContext
             entity.Property(e => e.LastName)
                 .HasMaxLength(20)
                 .HasColumnName("Last_Name");
-            entity.Property(e => e.Password).HasMaxLength(20);
             entity.Property(e => e.Username).HasMaxLength(20);
         });
 

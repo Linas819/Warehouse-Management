@@ -1,6 +1,7 @@
 import axios from "axios";
 import { SET_ERROR_MESSAGE, SET_ERROR_MODAL, SET_LOGIN, SET_USER_ID, SET_USER_ACCESS,
     SET_BUTTON_LOADING } from "./MainReducer";
+import bcrypt from 'bcryptjs';
 
 export const accessRights = [
     {
@@ -29,6 +30,7 @@ export const SetButtonLoading = (loading) => {
 export const LoginUser = (user, history) => {
     return async (dispatch) => {
         dispatch(SetButtonLoading(true));
+        user.password = SetHashPassword(user.password);
         let result = await axios.post(`user`, user);
         if(result.data.login)
         {
@@ -47,6 +49,7 @@ export const LoginUser = (user, history) => {
 export const RegisterUser = (user, history) => {
     return async (dispatch) => {
         dispatch(SetButtonLoading(true));
+        user.password = SetHashPassword(user.password);
         let result = await axios.post(`user/register`, user)
         if(result.data.success)
         {
@@ -128,4 +131,9 @@ export function SetDateTimeFormat(date) {
     let formatedDate = dateTime.getFullYear() + "-" + month + "-" + day 
         + " " + hours + ":" + minutes + ":" + seconds;
     return formatedDate;
+}
+
+export function SetHashPassword(password) {
+    const hashedPassword = bcrypt.hashSync(password, "$2a$10$CwTycUXWue0Thq9StjUM0u");
+    return hashedPassword;
 }
