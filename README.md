@@ -19,6 +19,7 @@ A .NET React.JS web app for warehouse management. Uses Entity Framework and MySQ
 2. [Semantic UI React](https://react.semantic-ui.com/).
 3. [AG Grid](https://www.ag-grid.com/react-data-grid/getting-started/).
 4. [Axios](https://www.npmjs.com/package/react-axios).
+5. Redux
 ### Back-End
 .NET (C#) 7.
 MySQL Entity Framework 7.
