@@ -8,10 +8,10 @@ A .NET React.JS web app for warehouse management. Uses Entity Framework and MySQ
 2. Person can add/delete items in warehouse inventory.
 3. Person can edit item's attributes (name, price, quantity).
 4. Person can check the history of item's price/quantity.
-5. Person can registr new users and assign them accesability rights for features in the web app
-6. Person can check orders
-7. Person can add, delete and change orders
-8. Person can complete orders and save payslips of the order
+5. Person can register new users and assign them accesability rights for features in the web app.
+6. Person can check orders.
+7. Person can add, delete and change orders.
+8. Person can complete orders and save payslips of the order inside the project directory.
 
 ## Services used
 ### Front-End
