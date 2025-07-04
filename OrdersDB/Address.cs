@@ -7,27 +7,27 @@ public partial class Address
 {
     public string AddressId { get; set; } = null!;
 
-    public string AddressCountry { get; set; } = null!;
+    public string Country { get; set; } = null!;
 
-    public string AddressZipCode { get; set; } = null!;
+    public string Zip { get; set; } = null!;
 
-    public string AddressRegion { get; set; } = null!;
+    public string Region { get; set; } = null!;
 
-    public string AddressCity { get; set; } = null!;
+    public string City { get; set; } = null!;
 
-    public string AddressStreet { get; set; } = null!;
+    public string Street { get; set; } = null!;
 
-    public string AddressHouse { get; set; } = null!;
+    public string House { get; set; } = null!;
 
-    public string AddressApartment { get; set; } = null!;
+    public string? Apartment { get; set; }
 
     public string CreatedBy { get; set; } = null!;
 
     public DateTime CreatedDateTime { get; set; }
 
-    public DateTime UpdateDateTime { get; set; }
+    public string UpdatedBy { get; set; } = null!;
 
-    public string UpdateUserId { get; set; } = null!;
+    public DateTime UpdatedDateTime { get; set; }
 
     public virtual ICollection<Order> OrderAddressFromNavigations { get; } = new List<Order>();
 

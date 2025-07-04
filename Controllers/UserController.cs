@@ -32,7 +32,7 @@ public class UserController : ControllerBase
     [Route("register")]
     public IActionResult Register([FromBody] RegisterUser user)
     {
-        DatabaseUpdateResponce responce = userService.Register(user);
+        DatabaseUpdateResponse responce = userService.Register(user);
         return(Ok(new{
             Success = responce.Success,
             Message = responce.Message

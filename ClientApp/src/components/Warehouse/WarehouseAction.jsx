@@ -9,7 +9,7 @@ export const GetWarehouseProducts = () => {
         {
             result.data.data.map((element) => {
                 element.createdDateTime = SetDateTimeFormat(element.createdDateTime);
-                element.updateDateTime = SetDateTimeFormat(element.updateDateTime);
+                element.updatedDateTime = SetDateTimeFormat(element.updatedDateTime);
             });
             dispatch({type: SET_WAREHOUSE_DATA, warehouseData: result.data.data})
         } else {
@@ -78,8 +78,8 @@ export const PostWarehouseProduct = (product) => {
     return async (dispatch, getstate) => {
         dispatch(SetButtonLoading(true));
         const userId = getstate().main.userId;
-        product.createdUserId = userId;
-        product.updatedUserId = userId;
+        product.createdBy = userId;
+        product.updatedBy = userId;
         let result = await axios.post(`warehouse`, product);
         if(result.data.success)
         {

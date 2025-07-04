@@ -10,12 +10,12 @@ class ProductCreateModal extends Component {
         super(props);
         this.state = {
             productId: "",
-            productName: "",
-            productEan: "",
-            productType: "",
-            productWeight: 0,
-            productPrice: 0,
-            productQuantity: 0
+            name: "",
+            ean: "",
+            type: "",
+            weight: 0,
+            price: 0,
+            quantity: 0
         }
     }
     onModalClose = () => {
@@ -28,32 +28,32 @@ class ProductCreateModal extends Component {
             this.props.SetErrorModal(true, "Product ID is required");
             return;
         }
-        if(state.productName === "")
+        if(state.name === "")
         {
             this.props.SetErrorModal(true, "Product name is required");
             return;
         }
-        if(state.productEan === "")
+        if(state.ean === "")
         {
             this.props.SetErrorModal(true, "Product EAN is required");
             return;
         }
-        if(state.productType === "")
+        if(state.type === "")
         {
             this.props.SetErrorModal(true, "Product type is required");
             return;
         }
-        if(state.productWeight === 0)
+        if(state.weight === 0)
         {
             this.props.SetErrorModal(true, "Product weight must be more than 0");
             return;
         }
-        if(state.productPrice === 0)
+        if(state.price === 0)
         {
             this.props.SetErrorModal(true, "Product price must be more than 0");
             return;
         }
-        if(state.productQuantity === 0)
+        if(state.quantity === 0)
         {
             this.props.SetErrorModal(true, "Product quantity must be more than 0");
             return;
@@ -63,17 +63,17 @@ class ProductCreateModal extends Component {
     onChangeHandler = (event, data) => {
         switch(data.name){
             case "productId":
-            case "productName":
-            case "productEan":
-            case "productType":
+            case "name":
+            case "ean":
+            case "type":
                 this.setState({
                     ...this.state,
                     [data.name]: data.value
                 });
                 break;
-            case "productWeight":
-            case "productPrice":
-            case "productQuantity":
+            case "weight":
+            case "price":
+            case "quantity":
                 this.setState({
                     ...this.state,
                     [data.name]: parseFloat(data.value)
@@ -93,22 +93,22 @@ class ProductCreateModal extends Component {
                             <Input placeholder='Product Id' name='productId' onChange={this.onChangeHandler}></Input>
                         </FormField>
                         <FormField>
-                            <Input placeholder='Product Name' name='productName' onChange={this.onChangeHandler}></Input>
+                            <Input placeholder='Product Name' name='name' onChange={this.onChangeHandler}></Input>
                         </FormField>
                         <FormField>
-                            <Input placeholder='Product EAN' name='productEan' onChange={this.onChangeHandler}></Input>
+                            <Input placeholder='Product EAN' name='ean' onChange={this.onChangeHandler}></Input>
                         </FormField>
                         <FormField>
-                            <Input placeholder='Product Type' name='productType' onChange={this.onChangeHandler}></Input>
+                            <Input placeholder='Product Type' name='type' onChange={this.onChangeHandler}></Input>
                         </FormField>
                         <FormField>
-                            <Input placeholder='Product Weight (kg)' onChange={this.onChangeHandler} type='number' name='productWeight' min='0' step='0.01'></Input>
+                            <Input placeholder='Product Weight (kg)' onChange={this.onChangeHandler} type='number' name='weight' min='0' step='0.01'></Input>
                         </FormField>
                         <FormField>
-                            <Input placeholder='Product Price ($)' onChange={this.onChangeHandler} type='number' name='productPrice' min='0' step='0.01'></Input>
+                            <Input placeholder='Product Price ($)' onChange={this.onChangeHandler} type='number' name='price' min='0' step='0.01'></Input>
                         </FormField>
                         <FormField>
-                            <Input placeholder='Product Quantity' onChange={this.onChangeHandler} type='number' name='productQuantity' min='0' step='1'></Input>
+                            <Input placeholder='Product Quantity' onChange={this.onChangeHandler} type='number' name='quantity' min='0' step='1'></Input>
                         </FormField>
                     </Form>
                 </ModalContent>

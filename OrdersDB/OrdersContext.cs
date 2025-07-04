@@ -19,9 +19,11 @@ public partial class OrdersContext : DbContext
 
     public virtual DbSet<Order> Orders { get; set; }
 
-    public virtual DbSet<OrderProductLine> OrderProductLines { get; set; }
+    public virtual DbSet<Orderline> Orderlines { get; set; }
 
-    public virtual DbSet<ProductsView> ProductsViews { get; set; }
+    public virtual DbSet<ProductView> ProductViews { get; set; }
+
+    public virtual DbSet<UsersView> UsersViews { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -35,46 +37,24 @@ public partial class OrdersContext : DbContext
 
             entity.ToTable("address");
 
-            entity.HasIndex(e => e.UpdateUserId, "Updated User");
+            entity.HasIndex(e => e.CreatedBy, "UserCreated");
 
-            entity.HasIndex(e => e.CreatedBy, "User");
+            entity.HasIndex(e => e.UpdatedBy, "UserUpdated");
 
-            entity.Property(e => e.AddressId)
+            entity.Property(e => e.AddressId).HasMaxLength(20);
+            entity.Property(e => e.Apartment)
                 .HasMaxLength(20)
-                .HasColumnName("Address_ID");
-            entity.Property(e => e.AddressApartment)
-                .HasMaxLength(20)
-                .HasColumnName("Address_Apartment");
-            entity.Property(e => e.AddressCity)
-                .HasMaxLength(20)
-                .HasColumnName("Address_City");
-            entity.Property(e => e.AddressCountry)
-                .HasMaxLength(20)
-                .HasColumnName("Address_Country");
-            entity.Property(e => e.AddressHouse)
-                .HasMaxLength(10)
-                .HasColumnName("Address_House");
-            entity.Property(e => e.AddressRegion)
-                .HasMaxLength(20)
-                .HasColumnName("Address_Region");
-            entity.Property(e => e.AddressStreet)
-                .HasMaxLength(20)
-                .HasColumnName("Address_Street");
-            entity.Property(e => e.AddressZipCode)
-                .HasMaxLength(20)
-                .HasColumnName("Address_ZIP_Code");
-            entity.Property(e => e.CreatedBy)
-                .HasMaxLength(20)
-                .HasColumnName("Created_By");
-            entity.Property(e => e.CreatedDateTime)
-                .HasMaxLength(6)
-                .HasColumnName("Created_Date_Time");
-            entity.Property(e => e.UpdateDateTime)
-                .HasMaxLength(6)
-                .HasColumnName("Update_Date_Time");
-            entity.Property(e => e.UpdateUserId)
-                .HasMaxLength(20)
-                .HasColumnName("Update_User_ID");
+                .HasDefaultValueSql("'NULL'");
+            entity.Property(e => e.City).HasMaxLength(20);
+            entity.Property(e => e.Country).HasMaxLength(20);
+            entity.Property(e => e.CreatedBy).HasMaxLength(20);
+            entity.Property(e => e.CreatedDateTime).HasMaxLength(6);
+            entity.Property(e => e.House).HasMaxLength(20);
+            entity.Property(e => e.Region).HasMaxLength(20);
+            entity.Property(e => e.Street).HasMaxLength(20);
+            entity.Property(e => e.UpdatedBy).HasMaxLength(20);
+            entity.Property(e => e.UpdatedDateTime).HasMaxLength(6);
+            entity.Property(e => e.Zip).HasMaxLength(20);
         });
 
         modelBuilder.Entity<Order>(entity =>
@@ -83,115 +63,90 @@ public partial class OrdersContext : DbContext
 
             entity.ToTable("order");
 
-            entity.HasIndex(e => e.AddressFrom, "Address from");
+            entity.HasIndex(e => e.AddressFrom, "AddressFrom");
 
-            entity.HasIndex(e => e.AddressTo, "Address to");
+            entity.HasIndex(e => e.AddressTo, "AddressTo");
 
-            entity.HasIndex(e => e.CreatedBy, "Order user");
+            entity.HasIndex(e => e.CreatedBy, "OrderCreatedUser");
 
-            entity.HasIndex(e => e.UpdatedUserId, "Update_id");
+            entity.HasIndex(e => e.UpdatedBy, "OrderUpdatedUser");
 
-            entity.Property(e => e.OrderId)
-                .HasMaxLength(20)
-                .HasColumnName("Order_ID");
-            entity.Property(e => e.AddressFrom)
-                .HasMaxLength(20)
-                .HasColumnName("Address_From");
-            entity.Property(e => e.AddressTo)
-                .HasMaxLength(20)
-                .HasColumnName("Address_To");
-            entity.Property(e => e.CreatedBy)
-                .HasMaxLength(20)
-                .HasColumnName("Created_By");
-            entity.Property(e => e.CreatedDateTime)
-                .HasMaxLength(6)
-                .HasColumnName("Created_Date_Time");
-            entity.Property(e => e.UpdateDateTime)
-                .HasMaxLength(6)
-                .HasColumnName("Update_Date_Time");
-            entity.Property(e => e.UpdatedUserId)
-                .HasMaxLength(20)
-                .HasDefaultValueSql("'NULL'")
-                .HasColumnName("Updated_User_ID");
+            entity.Property(e => e.OrderId).HasMaxLength(20);
+            entity.Property(e => e.AddressFrom).HasMaxLength(20);
+            entity.Property(e => e.AddressTo).HasMaxLength(20);
+            entity.Property(e => e.CreatedBy).HasMaxLength(20);
+            entity.Property(e => e.CreatedDateTime).HasMaxLength(6);
+            entity.Property(e => e.UpdatedBy).HasMaxLength(20);
+            entity.Property(e => e.UpdatedDateTime).HasMaxLength(6);
 
             entity.HasOne(d => d.AddressFromNavigation).WithMany(p => p.OrderAddressFromNavigations)
                 .HasForeignKey(d => d.AddressFrom)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Address from");
+                .HasConstraintName("AddressFrom");
 
             entity.HasOne(d => d.AddressToNavigation).WithMany(p => p.OrderAddressToNavigations)
                 .HasForeignKey(d => d.AddressTo)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Address to");
+                .HasConstraintName("AddressTo");
         });
 
-        modelBuilder.Entity<OrderProductLine>(entity =>
+        modelBuilder.Entity<Orderline>(entity =>
         {
             entity.HasKey(e => e.OrderLineId).HasName("PRIMARY");
 
-            entity.ToTable("order_product_line");
+            entity.ToTable("orderlines");
 
-            entity.HasIndex(e => e.CreatedBy, "Created By");
+            entity.HasIndex(e => e.OrderId, "OrderId");
 
-            entity.HasIndex(e => e.OrderId, "Order");
+            entity.HasIndex(e => e.CreatedBy, "OrderLineCreated");
 
-            entity.HasIndex(e => e.ProductId, "Product");
+            entity.HasIndex(e => e.ProductId, "ProductId");
 
-            entity.Property(e => e.OrderLineId)
-                .HasColumnType("int(11)")
-                .HasColumnName("Order_Line_ID");
-            entity.Property(e => e.CreatedBy)
-                .HasMaxLength(20)
-                .HasColumnName("Created_By");
+            entity.Property(e => e.OrderLineId).HasColumnType("int(11)");
+            entity.Property(e => e.CreatedBy).HasMaxLength(20);
             entity.Property(e => e.CreatedDateTime)
                 .HasMaxLength(6)
-                .HasColumnName("Created_Date_Time");
-            entity.Property(e => e.OrderId)
-                .HasMaxLength(20)
-                .HasColumnName("Order_ID");
-            entity.Property(e => e.OrderProductQuantity).HasColumnName("Order_Product_Quantity");
-            entity.Property(e => e.ProductId)
-                .HasMaxLength(6)
-                .HasColumnName("Product_ID");
+                .HasDefaultValueSql("'current_timestamp(6)'");
+            entity.Property(e => e.OrderId).HasMaxLength(20);
+            entity.Property(e => e.ProductId).HasMaxLength(11);
+            entity.Property(e => e.Quantity).HasColumnType("int(11)");
 
-            entity.HasOne(d => d.Order).WithMany(p => p.OrderProductLines)
+            entity.HasOne(d => d.Order).WithMany(p => p.Orderlines)
                 .HasForeignKey(d => d.OrderId)
-                .HasConstraintName("Order");
+                .HasConstraintName("OrderId");
         });
 
-        modelBuilder.Entity<ProductsView>(entity =>
+        modelBuilder.Entity<ProductView>(entity =>
         {
             entity
                 .HasNoKey()
-                .ToView("products_view");
+                .ToView("product_view");
+
+            entity.Property(e => e.CreatedBy).HasMaxLength(20);
+            entity.Property(e => e.CreatedDateTime).HasColumnType("datetime");
+            entity.Property(e => e.Ean).HasMaxLength(20);
+            entity.Property(e => e.Name).HasMaxLength(20);
+            entity.Property(e => e.ProductId).HasMaxLength(20);
+            entity.Property(e => e.Quantity).HasColumnType("int(11)");
+            entity.Property(e => e.Type).HasMaxLength(20);
+            entity.Property(e => e.UpdatedBy).HasMaxLength(20);
+            entity.Property(e => e.UpdatedDateTime).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<UsersView>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("users_view");
 
             entity.Property(e => e.CreatedDateTime)
                 .HasMaxLength(6)
-                .HasColumnName("Created_Date_Time");
-            entity.Property(e => e.CreatedUserId)
-                .HasMaxLength(20)
-                .HasColumnName("Created_User_ID");
-            entity.Property(e => e.ProductEan)
-                .HasMaxLength(11)
-                .HasColumnName("Product_EAN");
-            entity.Property(e => e.ProductId)
-                .HasMaxLength(6)
-                .HasColumnName("Product_ID");
-            entity.Property(e => e.ProductName)
-                .HasMaxLength(10)
-                .HasColumnName("Product_Name");
-            entity.Property(e => e.ProductPrice).HasColumnName("Product_Price");
-            entity.Property(e => e.ProductQuantity).HasColumnName("Product_Quantity");
-            entity.Property(e => e.ProductType)
-                .HasMaxLength(20)
-                .HasColumnName("Product_Type");
-            entity.Property(e => e.ProductWeight).HasColumnName("Product_Weight");
-            entity.Property(e => e.UpdateDateTime)
-                .HasMaxLength(6)
-                .HasColumnName("Update_Date_Time");
-            entity.Property(e => e.UpdatedUserId)
-                .HasMaxLength(20)
-                .HasColumnName("Updated_User_ID");
+                .HasDefaultValueSql("'current_timestamp(6)'");
+            entity.Property(e => e.FirstName).HasMaxLength(20);
+            entity.Property(e => e.LastName).HasMaxLength(20);
+            entity.Property(e => e.Password).HasMaxLength(50);
+            entity.Property(e => e.UserId).HasMaxLength(20);
+            entity.Property(e => e.Username).HasMaxLength(20);
         });
 
         OnModelCreatingPartial(modelBuilder);

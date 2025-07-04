@@ -33,15 +33,11 @@ public class UserService
         }
         return user;
     }
-    public DatabaseUpdateResponce Register(RegisterUser user)
+    public DatabaseUpdateResponse Register(RegisterUser user)
     {
         User registerUser = user.RegisterUserToDbUser(user);
         usersContext.Users.Add(registerUser);
-        DatabaseUpdateResponce responce = SaveUserDatabaseChanges();
-        if(!responce.Success)
-        {
-            return responce;
-        }
+        DatabaseUpdateResponse responce = new DatabaseUpdateResponse();
         PropertyInfo[] properties = user.userRights.GetType().GetProperties();
         foreach(PropertyInfo property in properties)
         {
@@ -51,8 +47,7 @@ public class UserService
                 string accessId = usersContext.AccessFunctions.Where(x => x.AccessName == userAccessRightsNames[property.Name]).Select(x => x.AccessId).First();
                 UsersAccess usersAccess = new UsersAccess{
                     AccessId = accessId,
-                    UserId = registerUser.UserId,
-                    CreatedDateTime = DateTime.Now
+                    UserId = registerUser.UserId
                 };
                 usersContext.UsersAccesses.Add(usersAccess);
             }
@@ -101,9 +96,9 @@ public class UserService
         usersAccesses = usersContext.UsersAccesses.Where(x => x.UserId == userId).Select(x => x.AccessId).ToList();
         return usersAccesses;
     }
-    public DatabaseUpdateResponce SaveUserDatabaseChanges()
+    public DatabaseUpdateResponse SaveUserDatabaseChanges()
     {
-        DatabaseUpdateResponce responseModel = new DatabaseUpdateResponce();
+        DatabaseUpdateResponse responseModel = new DatabaseUpdateResponse();
         try{
             usersContext.SaveChanges();
         }catch(Exception e){

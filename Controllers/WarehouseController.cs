@@ -59,29 +59,30 @@ public class WarehouseController : ControllerBase
     [HttpDelete]
     public IActionResult DeleteWarehouseProduct(string productId)
     {
-        DatabaseUpdateResponce responceModel = warehouseService.DeleteWarehouseProduct(productId);
+        DatabaseUpdateResponse responseModel = warehouseService.DeleteWarehouseProduct(productId);
         return(Ok(new{
-            Success = responceModel.Success,
-            Message = responceModel.Message
+            Success = responseModel.Success,
+            Message = responseModel.Message
         }));
     }
     [HttpPost]
     public IActionResult PostWarehouseProduct([FromBody] Product product)
     {
-        DatabaseUpdateResponce responceModel = warehouseService.PostWarehouseProduct(product);
+        string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
+        DatabaseUpdateResponse responseModel = warehouseService.PostWarehouseProduct(product, userId);
         return(Ok(new{
-            Success = responceModel.Success,
-            Message = responceModel.Message
+            Success = responseModel.Success,
+            Message = responseModel.Message
         }));
     }
     [HttpPut]
     public IActionResult UpdateWarehouseProduct([FromBody] ProductValueUpdateForm productUpdateForm)
     {
         string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
-        DatabaseUpdateResponce responceModel = warehouseService.UpdateWarehouseProduct(productUpdateForm, userId);
+        DatabaseUpdateResponse responseModel = warehouseService.UpdateWarehouseProduct(productUpdateForm, userId);
         return(Ok(new{
-            Success = responceModel.Success,
-            Message = responceModel.Message
+            Success = responseModel.Success,
+            Message = responseModel.Message
         }));
     }
     [HttpPut]
@@ -89,10 +90,10 @@ public class WarehouseController : ControllerBase
     public IActionResult UpdateWarehouseProductPrice([FromBody] ProductValueUpdateForm productUpdateForm)
     {
         string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
-        DatabaseUpdateResponce responceModel = warehouseService.PostWarehouseProductPriceHistory(productUpdateForm, userId);
+        DatabaseUpdateResponse responseModel = warehouseService.PostWarehouseProductPriceHistory(productUpdateForm, userId);
         return(Ok(new{
-            Success = responceModel.Success,
-            Message = responceModel.Message
+            Success = responseModel.Success,
+            Message = responseModel.Message
         }));
     }
     [HttpPut]
@@ -100,10 +101,10 @@ public class WarehouseController : ControllerBase
     public IActionResult UpdateWarehouseProductQuantity([FromBody] ProductValueUpdateForm productUpdateForm)
     {
         string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
-        DatabaseUpdateResponce responceModel = warehouseService.PostWarehouseProductQuantityHistory(productUpdateForm, userId);
+        DatabaseUpdateResponse responseModel = warehouseService.PostWarehouseProductQuantityHistory(productUpdateForm, userId);
         return(Ok(new{
-            Success = responceModel.Success,
-            Message = responceModel.Message
+            Success = responseModel.Success,
+            Message = responseModel.Message
         }));
     }
 }

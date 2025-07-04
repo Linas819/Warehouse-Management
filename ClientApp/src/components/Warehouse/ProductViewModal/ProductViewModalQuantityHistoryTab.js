@@ -21,7 +21,7 @@ import { withRouter } from 'react-router-dom';
                     title: {
                         text: "Changed date"
                     },
-                    categories: this.props.productView.productQuantityHistory.map((element) => {return element.createdDateTime + " " + element.createdUserId})
+                    categories: this.props.productView.productQuantityHistory.map((element) => {return element.createdDateTime + " " + element.createdBy})
                 },
                 yAxis: {
                     title: {
@@ -31,7 +31,7 @@ import { withRouter } from 'react-router-dom';
                 series: [
                     {
                         name: 'Quantity history',
-                        data: this.props.productView.productQuantityHistory.map((element) => {return element.productQuantity})
+                        data: this.props.productView.productQuantityHistory.map((element) => {return element.quantity})
                     }
                 ]
             }
@@ -48,12 +48,12 @@ import { withRouter } from 'react-router-dom';
                     title: {
                         text: "Changed date"
                     },
-                    categories: quantityHistory.map((element) => {return element.createdDateTime + " " + element.createdUserId})
+                    categories: quantityHistory.map((element) => {return element.createdDateTime + " " + element.createdBy})
                 },
                 series: [
                     {
                         name: 'Price history',
-                        data: quantityHistory.map((element) => {return element.productQuantity})
+                        data: quantityHistory.map((element) => {return element.quantity})
                     }
                 ]
             }

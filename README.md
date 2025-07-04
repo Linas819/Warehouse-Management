@@ -25,9 +25,9 @@ A .NET React.JS web app for warehouse management. Uses Entity Framework and MySQ
 MySQL Entity Framework 7.
 
 ## DB scaffold commands
-### Warehouse
-dotnet ef dbcontext scaffold "Server=localhost;Database=warehouse;user=root;password=;" MySql.EntityFrameworkCore -o WarehouseDB -f
 ### Users
 dotnet ef dbcontext scaffold "Server=localhost;Database=users;user=root;password=;" MySql.EntityFrameworkCore -o UsersDB -f
+### Warehouse
+dotnet ef dbcontext scaffold "Server=localhost;Database=warehouse;user=root;password=;" MySql.EntityFrameworkCore -o WarehouseDB -f
 ### Orders
 dotnet ef dbcontext scaffold "Server=localhost;Database=orders;user=root;password=;" MySql.EntityFrameworkCore -o OrdersDB -f

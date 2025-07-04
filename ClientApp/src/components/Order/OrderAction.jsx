@@ -8,7 +8,7 @@ export const GetOrdersData = () => {
         let result = await axios.get(`order`);
         result.data.data.map((element) => {
             return element.createdDateTime = SetDateTimeFormat(element.createdDateTime), 
-                element.updateDateTime = SetDateTimeFormat(element.updateDateTime);
+                element.updatedDateTime = SetDateTimeFormat(element.updatedDateTime);
         });
         dispatch({type: SET_ORDERS_DATA, ordersData: result.data.data});
     }
@@ -19,7 +19,7 @@ export const GetAddresses = () => {
         let result = await axios.get(`order/address`);
         result.data.data.map((element) => {
             return element.createdDateTime = SetDateTimeFormat(element.createdDateTime), 
-                element.updateDateTime = SetDateTimeFormat(element.updateDateTime);
+                element.updatedDateTime = SetDateTimeFormat(element.updatedDateTime);
         });
         dispatch({type: SET_ADDRESSES_DATA, addressData: result.data.data});
     }
@@ -64,10 +64,10 @@ export const PostAddress = (address) => {
     return async(dispatch, getstate) => {
         dispatch(SetButtonLoading(true));
         const { userId } = getstate().main;
-        address.addressId = address.addressCountry.charAt(0) + address.addressZipCode.charAt(0) + address.addressRegion.charAt(0) + 
-            address.addressCity.charAt(0) + address.addressStreet.charAt(0) + address.addressHouse.charAt(0) + address.addressApartment.charAt(0);
+        address.addressId = address.country.charAt(0) + address.zip.charAt(0) + address.region.charAt(0) + 
+            address.city.charAt(0) + address.street.charAt(0) + address.house.charAt(0) + address.apartment.charAt(0);
         address.createdBy = userId;
-        address.updateUserId = userId;
+        address.updatedBy = userId;
         const result = await axios.post(`order/address`, address);
         if(result.data.success)
         {
@@ -116,8 +116,8 @@ export const GetAddressOptions = () => {
         const options = result.data.data.map((element) => {
             return {
                 key: element.addressId,
-                text: element.addressCountry + " " + element.addressCity + " " +
-                    element.addressStreet + " " + element.addressHouse,
+                text: element.country + " " + element.city + " " +
+                    element.street + " " + element.house,
                 value: element.addressId
             }
         });

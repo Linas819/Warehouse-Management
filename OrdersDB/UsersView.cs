@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace warehouse_management.WarehouseDB;
+namespace warehouse_management.OrdersDB;
 
 public partial class UsersView
 {

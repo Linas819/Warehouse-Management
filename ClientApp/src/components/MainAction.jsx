@@ -30,7 +30,7 @@ export const SetButtonLoading = (loading) => {
 export const LoginUser = (user, history) => {
     return async (dispatch) => {
         dispatch(SetButtonLoading(true));
-        user.password = SetHashPassword(user.password);
+        //user.password = SetHashPassword(user.password);
         let result = await axios.post(`user`, user);
         if(result.data.login)
         {
@@ -49,7 +49,7 @@ export const LoginUser = (user, history) => {
 export const RegisterUser = (user, history) => {
     return async (dispatch) => {
         dispatch(SetButtonLoading(true));
-        user.password = SetHashPassword(user.password);
+        //user.password = SetHashPassword(user.password);
         let result = await axios.post(`user/register`, user)
         if(result.data.success)
         {

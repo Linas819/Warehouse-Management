@@ -21,7 +21,7 @@ class PriceHistoryTab extends Component {
                     title: {
                         text: "Changed date"
                     },
-                    categories: this.props.productView.productPriceHistory.map((element) => {return element.createdDateTime + " " + element.createdUserId})
+                    categories: this.props.productView.productPriceHistory.map((element) => {return element.createdDateTime + " " + element.createdBy})
                 },
                 yAxis: {
                     title: {
@@ -31,7 +31,7 @@ class PriceHistoryTab extends Component {
                 series: [
                     {
                         name: 'Price history',
-                        data: this.props.productView.productPriceHistory.map((element) => {return element.productPrice})
+                        data: this.props.productView.productPriceHistory.map((element) => {return element.price})
                     }
                 ]
             }
@@ -48,12 +48,12 @@ class PriceHistoryTab extends Component {
                     title: {
                         text: "Changed date"
                     },
-                    categories: priceHistory.map((element) => {return element.createdDateTime + " " + element.createdUserId})
+                    categories: priceHistory.map((element) => {return element.createdDateTime + " " + element.createdBy})
                 },
                 series: [
                     {
                         name: 'Price history',
-                        data: priceHistory.map((element) => {return element.productPrice})
+                        data: priceHistory.map((element) => {return element.price})
                     }
                 ]
             }

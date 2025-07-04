@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace warehouse_management.WarehouseDB;
+namespace warehouse_management.OrdersDB;
 
-public partial class ProductQuantityHistory
+public partial class Orderline
 {
-    public int Id { get; set; }
+    public int OrderLineId { get; set; }
+
+    public string OrderId { get; set; } = null!;
 
     public string ProductId { get; set; } = null!;
 
@@ -15,5 +17,5 @@ public partial class ProductQuantityHistory
 
     public DateTime CreatedDateTime { get; set; }
 
-    public virtual Product Product { get; set; } = null!;
+    public virtual Order Order { get; set; } = null!;
 }

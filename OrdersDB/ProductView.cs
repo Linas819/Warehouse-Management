@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace warehouse_management.WarehouseDB;
+namespace warehouse_management.OrdersDB;
 
-public partial class Product
+public partial class ProductView
 {
     public string ProductId { get; set; } = null!;
 
@@ -26,8 +26,4 @@ public partial class Product
     public string UpdatedBy { get; set; } = null!;
 
     public DateTime UpdatedDateTime { get; set; }
-
-    public virtual ICollection<ProductPriceHistory> ProductPriceHistories { get; } = new List<ProductPriceHistory>();
-
-    public virtual ICollection<ProductQuantityHistory> ProductQuantityHistories { get; } = new List<ProductQuantityHistory>();
 }

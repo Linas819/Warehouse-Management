@@ -13,46 +13,46 @@ class AddressModal extends Component {
     {
         super(props);
         this.state = {
-            addressCountry: "",
-            addressZipCode: "",
-            addressRegion: "",
-            addressCity: "",
-            addressStreet: "",
-            addressHouse: "",
-            addressApartment: ""
+            country: "",
+            zip: "",
+            region: "",
+            city: "",
+            street: "",
+            house: "",
+            apartment: ""
         }
     }
     onModalClose = () => {
         this.props.SetAddressModal(false);
     }
     onClickHandler = () => {
-        const { addressCountry, addressZipCode, addressRegion, addressCity, addressStreet, addressHouse } = this.state;
-        if(addressCountry === "")
+        const { country, zip, region, city, street, house } = this.state;
+        if(country === "")
         {
             this.props.SetErrorModal(true, "Country is required");
             return;
         }
-        if(addressZipCode === "")
+        if(zip === "")
         {
             this.props.SetErrorModal(true, "Zip is required");
             return;
         }
-        if(addressRegion === "")
+        if(region === "")
         {
             this.props.SetErrorModal(true, "Region is required");
             return;
         }
-        if(addressCity === "")
+        if(city === "")
         {
             this.props.SetErrorModal(true, "City is required");
             return;
         }
-        if(addressStreet === "")
+        if(street === "")
         {
             this.props.SetErrorModal(true, "Street is required");
             return;
         }
-        if(addressHouse === "")
+        if(house === "")
         {
             this.props.SetErrorModal(true, "House is required");
             return;
@@ -81,13 +81,13 @@ class AddressModal extends Component {
                 <ModalHeader>Addresses</ModalHeader>
                 <ModalContent>
                     <Header as='h2'>Add address</Header>
-                    <Input placeholder='Country' name='addressCountry' onChange={this.onChangeHandler}/>
-                    <Input placeholder='ZIP' name='addressZipCode' onChange={this.onChangeHandler}/>
-                    <Input placeholder='Region' name='addressRegion' onChange={this.onChangeHandler}/>
-                    <Input placeholder='City' name='addressCity' onChange={this.onChangeHandler}/>
-                    <Input placeholder='Street' name='addressStreet' onChange={this.onChangeHandler}/>
-                    <Input placeholder='House' name='addressHouse' onChange={this.onChangeHandler}/>
-                    <Input placeholder='Apartment' name='addressApartment' onChange={this.onChangeHandler}/>
+                    <Input placeholder='Country' name='country' onChange={this.onChangeHandler}/>
+                    <Input placeholder='ZIP' name='zip' onChange={this.onChangeHandler}/>
+                    <Input placeholder='Region' name='region' onChange={this.onChangeHandler}/>
+                    <Input placeholder='City' name='city' onChange={this.onChangeHandler}/>
+                    <Input placeholder='Street' name='street' onChange={this.onChangeHandler}/>
+                    <Input placeholder='House' name='house' onChange={this.onChangeHandler}/>
+                    <Input placeholder='Apartment' name='apartment' onChange={this.onChangeHandler}/>
                     <Divider/>
                     <div className='ag-theme-quartz' style={{width: '100%', height: windowHeight/2}}>
                         <AgGridReact

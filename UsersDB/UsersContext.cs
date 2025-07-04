@@ -31,19 +31,10 @@ public partial class UsersContext : DbContext
         {
             entity.HasKey(e => e.AccessId).HasName("PRIMARY");
 
-            entity.ToTable("access_functions");
+            entity.ToTable("access_function");
 
-            entity.HasIndex(e => e.AccessId, "Access_ID").IsUnique();
-
-            entity.Property(e => e.AccessId)
-                .HasMaxLength(10)
-                .HasColumnName("Access_ID");
-            entity.Property(e => e.AccessName)
-                .HasMaxLength(20)
-                .HasColumnName("Access_Name");
-            entity.Property(e => e.CreatedDateTime)
-                .HasMaxLength(6)
-                .HasColumnName("Created_Date_Time");
+            entity.Property(e => e.AccessId).HasMaxLength(20);
+            entity.Property(e => e.AccessName).HasMaxLength(20);
         });
 
         modelBuilder.Entity<User>(entity =>
@@ -52,20 +43,13 @@ public partial class UsersContext : DbContext
 
             entity.ToTable("users");
 
-            entity.HasIndex(e => e.UserId, "User_ID").IsUnique();
-
-            entity.Property(e => e.UserId)
-                .HasMaxLength(20)
-                .HasColumnName("User_ID");
+            entity.Property(e => e.UserId).HasMaxLength(20);
             entity.Property(e => e.CreatedDateTime)
                 .HasMaxLength(6)
-                .HasColumnName("Created_Date_Time");
-            entity.Property(e => e.FirstName)
-                .HasMaxLength(20)
-                .HasColumnName("First_Name");
-            entity.Property(e => e.LastName)
-                .HasMaxLength(20)
-                .HasColumnName("Last_Name");
+                .HasDefaultValueSql("'current_timestamp(6)'");
+            entity.Property(e => e.FirstName).HasMaxLength(20);
+            entity.Property(e => e.LastName).HasMaxLength(20);
+            entity.Property(e => e.Password).HasMaxLength(50);
             entity.Property(e => e.Username).HasMaxLength(20);
         });
 
@@ -75,32 +59,21 @@ public partial class UsersContext : DbContext
 
             entity.ToTable("users_access");
 
-            entity.HasIndex(e => e.AccessId, "Access");
+            entity.HasIndex(e => e.AccessId, "accessId");
 
-            entity.HasIndex(e => e.UserId, "User");
+            entity.HasIndex(e => e.UserId, "userId");
 
-            entity.HasIndex(e => e.UserAccessId, "User_Access_ID").IsUnique();
-
-            entity.Property(e => e.UserAccessId)
-                .HasColumnType("int(11)")
-                .HasColumnName("User_Access_ID");
-            entity.Property(e => e.AccessId)
-                .HasMaxLength(20)
-                .HasColumnName("Access_ID");
-            entity.Property(e => e.CreatedDateTime)
-                .HasMaxLength(6)
-                .HasColumnName("Created_Date_Time");
-            entity.Property(e => e.UserId)
-                .HasMaxLength(20)
-                .HasColumnName("User_ID");
+            entity.Property(e => e.UserAccessId).HasColumnType("int(11)");
+            entity.Property(e => e.AccessId).HasMaxLength(20);
+            entity.Property(e => e.UserId).HasMaxLength(20);
 
             entity.HasOne(d => d.Access).WithMany(p => p.UsersAccesses)
                 .HasForeignKey(d => d.AccessId)
-                .HasConstraintName("Access");
+                .HasConstraintName("accessId");
 
             entity.HasOne(d => d.User).WithMany(p => p.UsersAccesses)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("User");
+                .HasConstraintName("userId");
         });
 
         OnModelCreatingPartial(modelBuilder);

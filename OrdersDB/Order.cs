@@ -11,17 +11,17 @@ public partial class Order
 
     public string AddressTo { get; set; } = null!;
 
-    public DateTime CreatedDateTime { get; set; }
-
     public string CreatedBy { get; set; } = null!;
 
-    public DateTime UpdateDateTime { get; set; }
+    public DateTime CreatedDateTime { get; set; }
 
-    public string? UpdatedUserId { get; set; }
+    public string UpdatedBy { get; set; } = null!;
+
+    public DateTime UpdatedDateTime { get; set; }
 
     public virtual Address AddressFromNavigation { get; set; } = null!;
 
     public virtual Address AddressToNavigation { get; set; } = null!;
 
-    public virtual ICollection<OrderProductLine> OrderProductLines { get; } = new List<OrderProductLine>();
+    public virtual ICollection<Orderline> Orderlines { get; } = new List<Orderline>();
 }

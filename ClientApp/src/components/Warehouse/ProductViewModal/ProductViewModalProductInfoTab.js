@@ -22,7 +22,7 @@ class ProductInfoTab extends Component {
                         <b>Product name: </b>
                     </GridColumn>
                     <GridColumn>
-                        {product.productName}
+                        {product.name}
                     </GridColumn>
                 </GridRow>
                 <GridRow>
@@ -30,7 +30,7 @@ class ProductInfoTab extends Component {
                         <b>Product EAN: </b>
                     </GridColumn>
                     <GridColumn>
-                        {product.productEan}
+                        {product.ean}
                     </GridColumn>
                 </GridRow>
                 <GridRow>
@@ -38,7 +38,7 @@ class ProductInfoTab extends Component {
                         <b>Product type: </b>
                     </GridColumn>
                     <GridColumn>
-                        {product.productType}
+                        {product.type}
                     </GridColumn>
                 </GridRow>
                 <GridRow>
@@ -46,7 +46,7 @@ class ProductInfoTab extends Component {
                         <b>Product weight: </b>
                     </GridColumn>
                     <GridColumn>
-                        {product.productWeight} (kg)
+                        {product.weight} (kg)
                     </GridColumn>
                 </GridRow>
                 <GridRow>
@@ -54,7 +54,7 @@ class ProductInfoTab extends Component {
                         <b>Product price: </b>
                     </GridColumn>
                     <GridColumn>
-                        ${product.productPrice}
+                        ${product.price}
                     </GridColumn>
                 </GridRow>
                 <GridRow>
@@ -62,7 +62,7 @@ class ProductInfoTab extends Component {
                         <b>Product quantity: </b>
                     </GridColumn>
                     <GridColumn>
-                        {product.productQuantity}
+                        {product.quantity}
                     </GridColumn>
                 </GridRow>
                 <GridRow>
@@ -78,7 +78,7 @@ class ProductInfoTab extends Component {
                         <b>Product created by: </b>
                     </GridColumn>
                     <GridColumn>
-                        {product.createdUserId}
+                        {product.createdBy}
                     </GridColumn>
                 </GridRow>
                 <GridRow>
@@ -86,7 +86,7 @@ class ProductInfoTab extends Component {
                         <b>Product update date: </b>
                     </GridColumn>
                     <GridColumn>
-                        {product.updateDateTime}
+                        {product.updatedDateTime}
                     </GridColumn>
                 </GridRow>
                 <GridRow>
@@ -94,7 +94,7 @@ class ProductInfoTab extends Component {
                         <b>Product updated by: </b>
                     </GridColumn>
                     <GridColumn>
-                        {product.updatedUserId}
+                        {product.updatedBy}
                     </GridColumn>
                 </GridRow>
                 <GridRow/>

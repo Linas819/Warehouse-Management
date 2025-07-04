@@ -1,8 +1,6 @@
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
-using PdfSharp.Drawing;
-using PdfSharp.Pdf;
 using warehouse_management.Models;
 using warehouse_management.OrdersDB;
 using warehouse_management.WarehouseDB;
@@ -13,10 +11,12 @@ public class OrderServices
 {
     private OrdersContext ordersContext;
     private WarehouseContext warehouseContext;
-    public OrderServices(OrdersContext ordersContext, WarehouseContext warehouseContext)
+    private WarehouseService warehouseService;
+    public OrderServices(OrdersContext ordersContext, WarehouseContext warehouseContext, WarehouseService warehouseService)
     {
         this.ordersContext = ordersContext;
         this.warehouseContext = warehouseContext;
+        this.warehouseService = warehouseService;
     }
     public List<Order> GetOrders()
     {
@@ -29,21 +29,21 @@ public class OrderServices
     public List<OrderProduct> GetOrderProducts(string orderId)
     {
         List<OrderProduct> orderProducts = 
-            (from order in ordersContext.OrderProductLines 
-            join prod in ordersContext.ProductsViews on order.ProductId equals prod.ProductId
+            (from order in ordersContext.Orderlines 
+            join prod in ordersContext.ProductViews on order.ProductId equals prod.ProductId
             where order.OrderId == orderId 
             select new OrderProduct
             {
                 OrderId = order.OrderId,
                 ProductId=prod.ProductId,
-                OrderProductQuantity = order.OrderProductQuantity,
-                ProductName = prod.ProductName,
+                OrderProductQuantity = order.Quantity,
+                ProductName = prod.Name,
                 CreatedBy = order.CreatedBy,
                 CreatedDateTime = order.CreatedDateTime
             }).ToList();
         return orderProducts;
     }
-    public DatabaseUpdateResponce CompleteOrder(string orderId)
+    public DatabaseUpdateResponse CompleteOrder(string orderId)
     {
         PayslipInfo payslipInfo = (
             from order in ordersContext.Orders
@@ -56,17 +56,17 @@ public class OrderServices
                 AddressTo = toAddress,
             }).First();
         payslipInfo.products = (
-            from orderProducts in ordersContext.OrderProductLines
-            join products in ordersContext.ProductsViews on orderProducts.ProductId equals products.ProductId
+            from orderProducts in ordersContext.Orderlines
+            join products in ordersContext.ProductViews on orderProducts.ProductId equals products.ProductId
             where orderProducts.OrderId == orderId
             select new Product{
                 ProductId = products.ProductId,
-                ProductName = products.ProductName,
-                ProductEan = products.ProductEan,
-                ProductType = products.ProductType,
-                ProductWeight = products.ProductWeight,
-                ProductPrice = products.ProductPrice,
-                ProductQuantity = orderProducts.OrderProductQuantity
+                Name = products.Name,
+                Ean = products.Ean,
+                Type = products.Type,
+                Weight = products.Weight,
+                Price = products.Price,
+                Quantity = orderProducts.Quantity
             }).ToList();
         string fileName = "Payslips/Payslip " + orderId + ".pdf";
         Document document = new Document();
@@ -99,18 +99,18 @@ public class OrderServices
         addressTableColumn = addressTable.AddColumn("8cm");
         addressTableColumn.Format.Alignment = ParagraphAlignment.Right;
 
-        string addressApartment = payslipInfo.AddressFrom.AddressApartment != "" ? "-"+payslipInfo.AddressFrom.AddressApartment : "";
+        string addressApartment = payslipInfo.AddressFrom.Apartment != "" ? "-"+payslipInfo.AddressFrom.Apartment : "";
         Row addressTableRow = addressTable.AddRow();
         addressTableRow.Cells[0].AddParagraph().AddFormattedText("Delivery from:", TextFormat.Bold);
-        addressTableRow.Cells[0].AddParagraph(payslipInfo.AddressFrom.AddressStreet + " st. " + payslipInfo.AddressFrom.AddressHouse + addressApartment);
-        addressTableRow.Cells[0].AddParagraph(payslipInfo.AddressFrom.AddressCity + " " + payslipInfo.AddressFrom.AddressRegion);
-        addressTableRow.Cells[0].AddParagraph(payslipInfo.AddressFrom.AddressZipCode + " " + payslipInfo.AddressFrom.AddressCountry);
+        addressTableRow.Cells[0].AddParagraph(payslipInfo.AddressFrom.Street + " st. " + payslipInfo.AddressFrom.House + addressApartment);
+        addressTableRow.Cells[0].AddParagraph(payslipInfo.AddressFrom.City + " " + payslipInfo.AddressFrom.Region);
+        addressTableRow.Cells[0].AddParagraph(payslipInfo.AddressFrom.Zip + " " + payslipInfo.AddressFrom.Country);
 
-        addressApartment = payslipInfo.AddressTo.AddressApartment != "" ? "-"+payslipInfo.AddressTo.AddressApartment : "";
+        addressApartment = payslipInfo.AddressTo.Apartment != "" ? "-"+payslipInfo.AddressTo.Apartment : "";
         addressTableRow.Cells[1].AddParagraph().AddFormattedText("Delivery to:", TextFormat.Bold);
-        addressTableRow.Cells[1].AddParagraph(payslipInfo.AddressTo.AddressStreet + " st. " + payslipInfo.AddressTo.AddressHouse + addressApartment);
-        addressTableRow.Cells[1].AddParagraph(payslipInfo.AddressTo.AddressCity + " " + payslipInfo.AddressTo.AddressRegion);
-        addressTableRow.Cells[1].AddParagraph(payslipInfo.AddressTo.AddressZipCode + " " + payslipInfo.AddressTo.AddressCountry);
+        addressTableRow.Cells[1].AddParagraph(payslipInfo.AddressTo.Street + " st. " + payslipInfo.AddressTo.House + addressApartment);
+        addressTableRow.Cells[1].AddParagraph(payslipInfo.AddressTo.City + " " + payslipInfo.AddressTo.Region);
+        addressTableRow.Cells[1].AddParagraph(payslipInfo.AddressTo.Zip + " " + payslipInfo.AddressTo.Country);
 
         section.AddParagraph().AddText("\n" + "\n" + "\n" + "\n");
 
@@ -152,17 +152,17 @@ public class OrderServices
             productTableRow.HeadingFormat = false;
             productTableRow.Format.Font.Bold = false;
             productTableRow.Cells[0].AddParagraph(i.ToString());
-            productTableRow.Cells[1].AddParagraph(product.ProductName);
-            productTableRow.Cells[2].AddParagraph(product.ProductEan);
-            productTableRow.Cells[3].AddParagraph(product.ProductType);
-            productTableRow.Cells[4].AddParagraph(product.ProductWeight.ToString());
-            productTableRow.Cells[5].AddParagraph(product.ProductPrice.ToString());
-            productTableRow.Cells[6].AddParagraph(product.ProductQuantity.ToString());
+            productTableRow.Cells[1].AddParagraph(product.Name);
+            productTableRow.Cells[2].AddParagraph(product.Ean);
+            productTableRow.Cells[3].AddParagraph(product.Type);
+            productTableRow.Cells[4].AddParagraph(product.Weight.ToString());
+            productTableRow.Cells[5].AddParagraph(product.Price.ToString());
+            productTableRow.Cells[6].AddParagraph(product.Quantity.ToString());
             i++;
         }
 
-        float totalWeight = payslipInfo.products.Sum(x => x.ProductWeight);
-        float totalPrice = payslipInfo.products.Sum(x => x.ProductPrice);
+        float totalWeight = payslipInfo.products.Sum(x => x.Weight);
+        float totalPrice = payslipInfo.products.Sum(x => x.Price);
         productTableRow = productTable.AddRow();
         productTableRow.HeadingFormat = false;
         productTableRow.Format.Font.Bold = true;  
@@ -214,49 +214,47 @@ public class OrderServices
 
         return SaveOrdersDatabaseChanges();
     }
-    public DatabaseUpdateResponce PostOrderProduct(NewOrderProduct newOrderProduct, string userId)
+    public DatabaseUpdateResponse PostOrderProduct(NewOrderProduct newOrderProduct, string userId)
     {
-        DatabaseUpdateResponce responce = new DatabaseUpdateResponce();
-        var existingProductLine = ordersContext.OrderProductLines
+        DatabaseUpdateResponse response = new DatabaseUpdateResponse();
+        Orderline? existingProductLine = ordersContext.Orderlines
             .Where(x => x.OrderId == newOrderProduct.OrderId && x.ProductId == newOrderProduct.ProductId).FirstOrDefault();
         if(existingProductLine != null)
         {
-            responce.Success = false;
-            responce.Message = "Product is already in this order";
+            response.Success = false;
+            response.Message = "Product is already in this order";
         } else {
-            var product = warehouseContext.Products.Where(x => x.ProductId == newOrderProduct.ProductId 
-                && x.ProductQuantity >= newOrderProduct.productQuantity).FirstOrDefault();
-            if(product != null)
+            Product? product = warehouseContext.Products.Where(x => x.ProductId == newOrderProduct.ProductId 
+                && x.Quantity >= newOrderProduct.productQuantity).FirstOrDefault();
+            if (product == null)
             {
-                OrderProductLine productLine = new OrderProductLine{
-                OrderId = newOrderProduct.OrderId,
-                ProductId = newOrderProduct.ProductId,
-                OrderProductQuantity = newOrderProduct.productQuantity,
-                CreatedDateTime = DateTime.Now,
-                CreatedBy = userId
-                };
-                product.ProductQuantity = product.ProductQuantity - newOrderProduct.productQuantity;
-                product.UpdateDateTime = DateTime.Now;
-                product.UpdatedUserId = userId;
-                try{
-                    warehouseContext.SaveChanges();
-                } catch(Exception e) {
-                    responce.Success = false;
-                    responce.Message = e.Message;
-                }
-                if(responce.Success)
+                response.Success = false;
+                response.Message = "Not enaugh product quantity in warehouse. Add product with lower quantity";
+            }
+            else
+            {
+                Orderline productLine = new Orderline
                 {
-                    ordersContext.OrderProductLines.Add(productLine);
-                    responce = SaveOrdersDatabaseChanges();
-                }
-            } else {
-                responce.Success = false;
-                responce.Message = "Not enaugh product quantity in warehouse. Add product with lower quantity";
+                    OrderId = newOrderProduct.OrderId,
+                    ProductId = newOrderProduct.ProductId,
+                    Quantity = newOrderProduct.productQuantity,
+                    CreatedDateTime = DateTime.Now,
+                    CreatedBy = userId
+                };
+                ordersContext.Orderlines.Add(productLine);
+                ProductValueUpdateForm productValueUpdateForm = new ProductValueUpdateForm
+                {
+                    ProductId = newOrderProduct.ProductId,
+                    FieldName = "Quantity",
+                    NewValue = (product.Quantity - newOrderProduct.productQuantity).ToString()
+                };
+                response = warehouseService.PostWarehouseProductQuantityHistory(productValueUpdateForm, userId);
+                response = response.Success ? SaveOrdersDatabaseChanges() : response;
             }
         }
-        return responce;
+        return response;
     }
-    public DatabaseUpdateResponce PostOrder(NewOrder newOrder, string userId)
+    public DatabaseUpdateResponse PostOrder(NewOrder newOrder, string userId)
     {
         Order order = new Order{
             OrderId = newOrder.OrderId,
@@ -264,96 +262,91 @@ public class OrderServices
             AddressTo = newOrder.AddressTo,
             CreatedBy = userId,
             CreatedDateTime = DateTime.Now,
-            UpdateDateTime = DateTime.Now,
-            UpdatedUserId = userId
+            UpdatedDateTime = DateTime.Now,
+            UpdatedBy = userId
         };
         ordersContext.Orders.Add(order);
-        DatabaseUpdateResponce responce = SaveOrdersDatabaseChanges();
-        return responce;
+        DatabaseUpdateResponse response = SaveOrdersDatabaseChanges();
+        return response;
     }
-    public DatabaseUpdateResponce PostAddress(Address address, string userId)
+    public DatabaseUpdateResponse PostAddress(Address address, string userId)
     {
         address.AddressId = address.AddressId + ((int)DateTime.Now.Ticks/100000).ToString();
         address.CreatedBy = userId;
-        address.UpdateUserId = userId;
+        address.UpdatedBy = userId;
         address.CreatedDateTime = DateTime.Now;
-        address.UpdateDateTime = DateTime.Now;
+        address.UpdatedDateTime = DateTime.Now;
         ordersContext.Addresses.Add(address);
-        DatabaseUpdateResponce responce = SaveOrdersDatabaseChanges();
-        return responce;
+        DatabaseUpdateResponse response = SaveOrdersDatabaseChanges();
+        return response;
     }
-    public DatabaseUpdateResponce UpdateAddress(AddressUpdate updateAddress, string userId)
+    public DatabaseUpdateResponse UpdateAddress(AddressUpdate updateAddress, string userId)
     {
         //Changing the first letter of FieldName to match Product property names
         updateAddress.FieldName = char.ToUpper(updateAddress.FieldName[0])+updateAddress.FieldName.Substring(1);
         Address address = ordersContext.Addresses.Where(x => x.AddressId == updateAddress.AddressId).First();
-        address.UpdateDateTime = DateTime.Now;
-        address.UpdateUserId = userId;
+        address.UpdatedDateTime = DateTime.Now;
+        address.UpdatedBy = userId;
         address.GetType().GetProperty(updateAddress.FieldName)!.SetValue(address, updateAddress.NewValue);
-        DatabaseUpdateResponce responce = SaveOrdersDatabaseChanges();
-        return responce;
+        DatabaseUpdateResponse response = SaveOrdersDatabaseChanges();
+        return response;
     }
-    public DatabaseUpdateResponce DeleteOrder(string orderId, string userId)
+    public DatabaseUpdateResponse DeleteOrder(string orderId, string userId)
     {
-        DatabaseUpdateResponce responce = new DatabaseUpdateResponce();
-        List<string> productIds = ordersContext.OrderProductLines.Where(x => x.OrderId == orderId).Select(x => x.ProductId).ToList();
+        DatabaseUpdateResponse response = new DatabaseUpdateResponse();
+        List<string> productIds = ordersContext.Orderlines.Where(x => x.OrderId == orderId).Select(x => x.ProductId).ToList();
         foreach(string productId in productIds)
         {
-            responce = DeleteOrderProduct(orderId, productId, userId);
-            if(!responce.Success)
-                return responce;
+            response = DeleteOrderProduct(orderId, productId.ToString(), userId);
+            if(!response.Success)
+                return response;
         }
         ordersContext.Remove(ordersContext.Orders.Where(x => x.OrderId == orderId).First());
-        responce = SaveOrdersDatabaseChanges();
-        return responce;
+        response = SaveOrdersDatabaseChanges();
+        return response;
     }
-    public DatabaseUpdateResponce UpdateOrderAddress(NewOrder newOrder, string userId)
+    public DatabaseUpdateResponse UpdateOrderAddress(NewOrder newOrder, string userId)
     {
         Order order = ordersContext.Orders.Where(x => x.OrderId == newOrder.OrderId).First();
         order.AddressFrom = newOrder.AddressFrom;
         order.AddressTo = newOrder.AddressTo;
-        order.UpdateDateTime = DateTime.Now;
-        order.UpdatedUserId = userId;
-        DatabaseUpdateResponce responce = SaveOrdersDatabaseChanges();
-        return responce;
+        order.UpdatedDateTime = DateTime.Now;
+        order.UpdatedBy = userId;
+        DatabaseUpdateResponse response = SaveOrdersDatabaseChanges();
+        return response;
     }
-    public DatabaseUpdateResponce DeleteOrderProduct(string orderId, string productId, string userId)
+    public DatabaseUpdateResponse DeleteOrderProduct(string orderId, string productId, string userId)
     {
-        DatabaseUpdateResponce responce = new DatabaseUpdateResponce();
+        DatabaseUpdateResponse response = new DatabaseUpdateResponse();
         Product product = warehouseContext.Products.Where(x => x.ProductId == productId).First();
-        float orderProductQuantity = ordersContext.OrderProductLines.Where(x => x.OrderId == orderId && x.ProductId == productId).Select(x => x.OrderProductQuantity).First();
-        product.ProductQuantity = product.ProductQuantity+orderProductQuantity;
-        product.UpdateDateTime = DateTime.Now;
-        product.UpdatedUserId = userId;
-        try{
-            warehouseContext.SaveChanges();
-        } catch(Exception e) {
-            responce.Success = false;
-            responce.Message = e.Message;
-        }
-        if(responce.Success)
+        int orderProductQuantity = ordersContext.Orderlines.Where(x => x.OrderId == orderId && x.ProductId == productId).Select(x => x.Quantity).First();
+        ProductValueUpdateForm productValueUpdateForm = new ProductValueUpdateForm
         {
-            ordersContext.OrderProductLines.Remove(ordersContext.OrderProductLines.Where(x => x.OrderId == orderId && x.ProductId == productId).First());
-            responce = SaveOrdersDatabaseChanges();
-        }
-        return responce;
+            ProductId = productId,
+            FieldName = "Quantity",
+            NewValue = (product.Quantity+orderProductQuantity).ToString()
+        };
+        ordersContext.Orderlines.Remove(ordersContext.Orderlines.Where(x => x.OrderId == orderId && x.ProductId == productId).First());
+        response = warehouseService.PostWarehouseProductQuantityHistory(productValueUpdateForm, userId);
+        response = response.Success ? SaveOrdersDatabaseChanges() : response;
+        return response;
     }
-    public DatabaseUpdateResponce DeleteAddress(string addressId)
+    public DatabaseUpdateResponse DeleteAddress(string addressId)
     {
         Address address = ordersContext.Addresses.Where(x => x.AddressId == addressId).First();
         ordersContext.Addresses.Remove(address);
-        DatabaseUpdateResponce responce = SaveOrdersDatabaseChanges();
-        return responce;
+        DatabaseUpdateResponse response = SaveOrdersDatabaseChanges();
+        return response;
     }
-    public DatabaseUpdateResponce SaveOrdersDatabaseChanges()
+    public DatabaseUpdateResponse SaveOrdersDatabaseChanges()
     {
-        DatabaseUpdateResponce responce = new DatabaseUpdateResponce();
+        DatabaseUpdateResponse response = new DatabaseUpdateResponse();
         try{
             ordersContext.SaveChanges();
         }catch(Exception e){
-            responce.Success = false;
-            responce.Message = e.Message;
+            response.Success = false;
+            response.Message = e.Message;
         }
-        return responce;
+        return response;
     }
 }

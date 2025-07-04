@@ -25,7 +25,7 @@ export const SetNewProductOptions = () => {
         const options = result.data.data.map((element) => {
             return {
                 key: element.productId,
-                text: element.productId + " " + element.productName,
+                text: element.productId + " " + element.name,
                 value: element.productId
             }
         });

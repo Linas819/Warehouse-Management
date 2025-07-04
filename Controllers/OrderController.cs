@@ -51,7 +51,7 @@ public class OrderController : ControllerBase
     [Route("complete")]
     public IActionResult CompleteOrder(string orderId)
     {
-        DatabaseUpdateResponce responce = orderServices.CompleteOrder(orderId);
+        DatabaseUpdateResponse responce = orderServices.CompleteOrder(orderId);
         return(Ok(new{
             Success = responce.Success,
             Message = responce.Message
@@ -62,7 +62,7 @@ public class OrderController : ControllerBase
     public IActionResult PostOrderProduct([FromBody] NewOrderProduct newOrderProduct)
     {
         string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
-        DatabaseUpdateResponce responce = orderServices.PostOrderProduct(newOrderProduct, userId);
+        DatabaseUpdateResponse responce = orderServices.PostOrderProduct(newOrderProduct, userId);
         return(Ok(new{
             Success = responce.Success,
             Message = responce.Message
@@ -72,7 +72,7 @@ public class OrderController : ControllerBase
     public IActionResult PostOrder([FromBody] NewOrder newOrder)
     {
         string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
-        DatabaseUpdateResponce responce = orderServices.PostOrder(newOrder, userId);
+        DatabaseUpdateResponse responce = orderServices.PostOrder(newOrder, userId);
         return(Ok(new{
             Success = responce.Success,
             Message = responce.Message
@@ -83,7 +83,7 @@ public class OrderController : ControllerBase
     public IActionResult PostAddress([FromBody] Address address)
     {
         string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
-        DatabaseUpdateResponce responce = orderServices.PostAddress(address, userId);
+        DatabaseUpdateResponse responce = orderServices.PostAddress(address, userId);
         return(Ok(new{
             Success = responce.Success,
             Message = responce.Message
@@ -94,7 +94,7 @@ public class OrderController : ControllerBase
     public IActionResult UpdateAddress([FromBody] AddressUpdate address)
     {
         string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
-        DatabaseUpdateResponce responce = orderServices.UpdateAddress(address, userId);
+        DatabaseUpdateResponse responce = orderServices.UpdateAddress(address, userId);
         return(Ok(new{
             Success = responce.Success,
             Message = responce.Message
@@ -105,7 +105,7 @@ public class OrderController : ControllerBase
     public IActionResult UpdateOrderAddress([FromBody] NewOrder newOrder)
     {
         string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
-        DatabaseUpdateResponce responce = orderServices.UpdateOrderAddress(newOrder, userId);
+        DatabaseUpdateResponse responce = orderServices.UpdateOrderAddress(newOrder, userId);
         return(Ok(new{
             Success = responce.Success,
             Message = responce.Message
@@ -115,7 +115,7 @@ public class OrderController : ControllerBase
     public IActionResult DeleteOrder(string orderId)
     {
         string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
-        DatabaseUpdateResponce responce = orderServices.DeleteOrder(orderId, userId);
+        DatabaseUpdateResponse responce = orderServices.DeleteOrder(orderId, userId);
         return(Ok(new{
             Success = responce.Success,
             Message = responce.Message
@@ -126,7 +126,7 @@ public class OrderController : ControllerBase
     public IActionResult DeleteOrderProduct(string orderId, string productId)
     {
         string userId = User.FindFirst(ClaimTypes.SerialNumber)?.Value!;
-        DatabaseUpdateResponce responce = orderServices.DeleteOrderProduct(orderId, productId, userId);
+        DatabaseUpdateResponse responce = orderServices.DeleteOrderProduct(orderId, productId, userId);
         return(Ok(new{
             Success = responce.Success,
             Message = responce.Message
@@ -136,7 +136,7 @@ public class OrderController : ControllerBase
     [Route("address")]
     public IActionResult DeleteAddress(string addressId)
     {
-        DatabaseUpdateResponce responce = orderServices.DeleteAddress(addressId);
+        DatabaseUpdateResponse responce = orderServices.DeleteAddress(addressId);
         return(Ok(new{
             Success = responce.Success,
             Message = responce.Message

@@ -24,16 +24,16 @@ class WarehouseInventory extends Component
             newValue: event.newValue.toString()
         }
         switch(event.colDef.field) {
-            case "productName":
-            case "productEan":
-            case "productType":
-            case "productWeight":
+            case "name":
+            case "ean":
+            case "type":
+            case "weight":
                 this.props.UpdateWarehouseProduct(productUpdate)
                 break;
-            case "productPrice":
+            case "price":
                 this.props.UpdateWarehouseProductPrice(productUpdate)
                 break;
-            case "productQuantity":
+            case "quantity":
                 this.props.UpdateWarehouseProductQuantity(productUpdate)
                 break;
             default:
