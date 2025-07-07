@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
+using Org.BouncyCastle.Crypto.Generators;
 
 namespace warehouse_management.Services;
 public class UserService
@@ -24,8 +25,8 @@ public class UserService
     }
     public LoginUser Login(LoginUser user)
     {
-        User dbUser = usersContext.Users.Where(x => x.Username == user.Username && x.Password == user.Password).FirstOrDefault()!;
-        if(dbUser != null)
+        User dbUser = usersContext.Users.Where(x => x.Username == user.Username).FirstOrDefault()!;
+        if(dbUser != null && BCrypt.Net.BCrypt.Verify(user.Password, dbUser.Password))
         {
             user = user.DbUserToLoginUser(dbUser, user);
             user.Token = GetToken(user.UserId);
@@ -35,9 +36,16 @@ public class UserService
     }
     public DatabaseUpdateResponse Register(RegisterUser user)
     {
+        DatabaseUpdateResponse responce = new DatabaseUpdateResponse();
+        User existingUser = usersContext.Users.Where(x => x.Username == user.Username).FirstOrDefault()!;
+        if (existingUser != null)
+        {
+            responce.Success = false;
+            responce.Message = "Username already exists";
+            return responce;
+        }
         User registerUser = user.RegisterUserToDbUser(user);
         usersContext.Users.Add(registerUser);
-        DatabaseUpdateResponse responce = new DatabaseUpdateResponse();
         PropertyInfo[] properties = user.userRights.GetType().GetProperties();
         foreach(PropertyInfo property in properties)
         {
