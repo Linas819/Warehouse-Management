@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 04, 2025 at 02:13 PM
+-- Generation Time: Jul 08, 2025 at 07:06 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -50,7 +50,7 @@ INSERT INTO `access_function` (`AccessId`, `AccessName`) VALUES
 CREATE TABLE `users` (
   `UserId` varchar(20) NOT NULL,
   `Username` varchar(20) NOT NULL,
-  `Password` varchar(50) NOT NULL,
+  `Password` varchar(100) NOT NULL,
   `FirstName` varchar(20) NOT NULL,
   `LastName` varchar(20) NOT NULL,
   `CreatedDateTime` datetime(6) NOT NULL DEFAULT current_timestamp(6)
@@ -61,7 +61,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`UserId`, `Username`, `Password`, `FirstName`, `LastName`, `CreatedDateTime`) VALUES
-('admin', 'admin', 'admin', 'admin', 'admin', '2025-07-04 12:04:21.000000');
+('admin', 'admin', '$2a$10$CwTycUXWue0Thq9StjUM0uQxTmrjFScyO75eSyjhW70lhBvVR/VTK', 'admin', 'admin', '2025-07-04 12:04:21.000000');
 
 -- --------------------------------------------------------
 
@@ -98,7 +98,8 @@ ALTER TABLE `access_function`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`UserId`);
+  ADD PRIMARY KEY (`UserId`),
+  ADD UNIQUE KEY `Username` (`Username`);
 
 --
 -- Indexes for table `users_access`
@@ -116,7 +117,7 @@ ALTER TABLE `users_access`
 -- AUTO_INCREMENT for table `users_access`
 --
 ALTER TABLE `users_access`
-  MODIFY `UserAccessId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `UserAccessId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
